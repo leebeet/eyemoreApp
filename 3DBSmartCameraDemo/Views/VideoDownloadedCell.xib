@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="TYM-JC-VBg" customClass="VideoDownloadedCell">
+            <rect key="frame" x="0.0" y="0.0" width="89" height="88"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="89" height="88"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GI3-bc-A9X">
+                        <rect key="frame" x="0.0" y="0.0" width="89" height="88"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Movie.png" translatesAutoresizingMaskIntoConstraints="NO" id="nqO-8A-Ab6">
+                        <rect key="frame" x="0.0" y="68" width="26" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="X1h-RA-flY"/>
+                            <constraint firstAttribute="width" constant="26" id="hk4-G8-dgH"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C69-BF-419">
+                        <rect key="frame" x="47" y="67" width="42" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="P7f-oq-S3T"/>
+                            <constraint firstAttribute="width" constant="42" id="PXt-xb-cxS"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="12"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YhH-Sw-yw4">
+                        <rect key="frame" x="21" y="73" width="16" height="10"/>
+                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="CGu-1T-JgK"/>
+                            <constraint firstAttribute="width" constant="16" id="Zsd-E6-3zW"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="10"/>
+                        <color key="textColor" red="0.14901960780000001" green="0.14901960780000001" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="highlightedColor" red="0.14901960780000001" green="0.14901960780000001" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="YhH-Sw-yw4" secondAttribute="bottom" constant="5" id="AMl-PZ-Di0"/>
+                <constraint firstItem="GI3-bc-A9X" firstAttribute="leading" secondItem="TYM-JC-VBg" secondAttribute="leading" id="DUV-vH-wL3"/>
+                <constraint firstAttribute="trailing" secondItem="C69-BF-419" secondAttribute="trailing" id="TOo-nW-7Iz"/>
+                <constraint firstItem="YhH-Sw-yw4" firstAttribute="leading" secondItem="nqO-8A-Ab6" secondAttribute="trailing" constant="-5" id="Uan-Ay-Umg"/>
+                <constraint firstItem="nqO-8A-Ab6" firstAttribute="leading" secondItem="TYM-JC-VBg" secondAttribute="leading" id="XgC-DA-S0N"/>
+                <constraint firstAttribute="bottom" secondItem="nqO-8A-Ab6" secondAttribute="bottom" id="cRh-G4-swc"/>
+                <constraint firstAttribute="bottom" secondItem="C69-BF-419" secondAttribute="bottom" id="iex-jl-2e0"/>
+                <constraint firstAttribute="trailing" secondItem="GI3-bc-A9X" secondAttribute="trailing" id="paV-ge-0Hr"/>
+                <constraint firstAttribute="bottom" secondItem="GI3-bc-A9X" secondAttribute="bottom" id="uzB-1F-I2b"/>
+                <constraint firstItem="GI3-bc-A9X" firstAttribute="top" secondItem="TYM-JC-VBg" secondAttribute="top" id="yEB-VQ-Wtx"/>
+            </constraints>
+            <size key="customSize" width="89" height="88"/>
+            <connections>
+                <outlet property="HDLabel" destination="YhH-Sw-yw4" id="8Fu-pe-bUK"/>
+                <outlet property="backgroundImageView" destination="GI3-bc-A9X" id="vIG-lM-EWX"/>
+                <outlet property="icon" destination="nqO-8A-Ab6" id="8pM-4a-uc7"/>
+                <outlet property="lengthLabel" destination="C69-BF-419" id="ihr-2j-M93"/>
+            </connections>
+            <point key="canvasLocation" x="408.5" y="354"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Movie.png" width="32" height="32"/>
+    </resources>
+</document>

@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  eyemoreCamera
+
+  Created by 李伯通 on 16/3/21.
+  Copyright © 2016年 3DB. All rights reserved.
+*/
+"Take photo" = "Take photo";
+"Select photo from photo library" = "Select photo from photo library";
+"Record video" = "Record video";
+"Select video from photo library" = "Select video from photo library";
+"Cancel" = "Cancel";
+"Save" = "Save";

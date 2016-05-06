@@ -320,7 +320,7 @@
 - (void)didReceiveLensStatus:(LENS_PARAMS)lensStatus
 {
 }
-- (void)didReceiveDebugInfo
+- (void)didReceiveDebugInfo:(DEBUG_INFO)info
 {
     
 }

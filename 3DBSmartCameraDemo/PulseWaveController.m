@@ -1781,7 +1781,7 @@
     [manager saveFirmware];
 }
 
-- (void)didReceiveDebugInfo
+- (void)didReceiveDebugInfo:(DEBUG_INFO)info
 {}
 
 - (void)didSendData

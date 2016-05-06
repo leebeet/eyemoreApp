@@ -241,6 +241,8 @@
     self.myProfile = [Config myProfile];
     BOOL isLogin = self.myID != 0;
     if (isLogin) {
+        int followListCount = (int)self.myProfile.followerList.count;
+        int fansListCount = (int)self.myProfile.fansList.count;
         if (![self.myProfile.avatorURL.absoluteString isEqualToString:@""]) {
             [[SDWebImageManager sharedManager] downloadImageWithURL:self.myProfile.avatorURL
                                                             options:0
@@ -248,16 +250,16 @@
                                                           completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL){
                                                               [self.myProfileView changeStateToLoginWithName:self.myProfile.nickName
                                                                                                        Image:image
-                                                                                                  LeftString:[NSString stringWithFormat:@"人气  0"]
-                                                                                                 RightString:[NSString stringWithFormat:@"喜欢  0"]];
+                                                                                                  LeftString:[NSString stringWithFormat:@"已关注  %d", followListCount]
+                                                                                                 RightString:[NSString stringWithFormat:@"粉丝  %d", fansListCount]];
                                                               [self.navigationItem setTitle:self.myProfile.nickName];
                                                           }];
         }
         else {
             [self.myProfileView changeStateToLoginWithName:self.myProfile.nickName
                                                      Image:nil
-                                                LeftString:[NSString stringWithFormat:@"人气  0"]
-                                               RightString:[NSString stringWithFormat:@"喜欢  0"]];
+                                                LeftString:[NSString stringWithFormat:@"已关注  %d", followListCount]
+                                               RightString:[NSString stringWithFormat:@"粉丝  %d", fansListCount]];
             [self.navigationItem setTitle:self.myProfile.nickName];
 
         }
@@ -289,7 +291,10 @@
                  NSInteger status = [[result objectForKey:@"status"] integerValue];
                  if (status == 1) {
                      NSLog(@"%@", [result objectForKey:@"results"]);
+                     //更新用户，并保留关注列表, 粉丝列表
                      self.myProfile = [[eyemoreUser alloc] initWithProfileDict:result];
+                     self.myProfile.followerList = [Config myProfile].followerList;
+                     self.myProfile.fansList = [Config myProfile].fansList;
                      [Config updateProfile:self.myProfile];
                      [self refreshMyProfileView];
                      dispatch_async(dispatch_get_main_queue(), ^(){[self.tableView reloadData];});

@@ -10,6 +10,7 @@
 #import "TCPSocketManager.h"
 #import "ProgressHUD.h"
 #import "CMDManager.h"
+#import "WIFIDetector.h"
 
 @interface DebugInfoViewController ()<TCPSocketManagerDelegate>
 
@@ -91,8 +92,10 @@
         NSDate *localeDate = [date  dateByAddingTimeInterval: interval];
         
         NSString *newString = [NSString stringWithFormat:
-                               @"\n--------%@-------- \nFPGA_Temperature = %d; \nVoltage = %hu mv; \nStateOfCharge = %hu ％; \nbq24192_registers = %@; \nControl = %@; \nTemperature = %@; \nNominalAvailableCapacity = %hu mAH; \nFullAvailableCapacity = %hu mAH; \nRemainingCapacity = %hu mAH; \nFullChargeCapacity = %hu mAH; \nAverageCurrent = %hi mA; \nStandbyCurrent = %hi mA; \nMaxLoadCurrent = %hi mA; \nAveragePower = %hi mW; \nIntTemperature = %@; \nStateOfHealth = %hu ％; \nSTM32 Version = %s\n",
+                               @"\n\n--------%@-------- \nDeviceSSID = %@; \nSTM32 Version = %s; \nFPGA_Temperature = %d; \nVoltage = %hu mv; \nStateOfCharge = %hu ％; \nbq24192_registers = %@; \nControl = %@; \nTemperature = %@; \nNominalAvailableCapacity = %hu mAH; \nFullAvailableCapacity = %hu mAH; \nRemainingCapacity = %hu mAH; \nFullChargeCapacity = %hu mAH; \nAverageCurrent = %hi mA; \nStandbyCurrent = %hi mA; \nMaxLoadCurrent = %hi mA; \nAveragePower = %hi mW; \nIntTemperature = %@; \nStateOfHealth = %hu ％;",
                                localeDate,
+                               [[WIFIDetector sharedWIFIDetector] getDeviceSSID],
+                               info.stm32_version,
                                info.fpga_temp,
                                info.Voltage,
                                info.StateOfCharge,
@@ -108,8 +111,7 @@
                                (signed short)info.MaxLoadCurrent,
                                (signed short)info.AveragePower,
                                intTemperature,
-                               info.StateOfHealth,
-                               info.stm32_version];
+                               info.StateOfHealth];
         
         NSString *text = self.debugInfoTextView.text;
         text = [text stringByAppendingString:newString];

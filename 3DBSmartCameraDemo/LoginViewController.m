@@ -375,9 +375,46 @@
                       user.followerList = followList;
                       [Config saveProfile:user];
                   }
+                  [self fetchFansListWith:[Config myProfile]];
+//                  dispatch_async(dispatch_get_main_queue(), ^(){
+//                      [self dismissViewControllerAnimated:YES completion:nil];
+//                  });
+              }
+              else {
+                  [ProgressHUD showError:[NSString stringWithFormat:@"%@",[result objectForKey:@"error"]] Interaction:YES];
+              }
+          }
+          failure:^(NSURLSessionDataTask *task, NSError *error){
+              [ProgressHUD showError:@"获取关注列表失败" Interaction:YES];
+              dispatch_async(dispatch_get_main_queue(), ^(){
+                  [self dismissViewControllerAnimated:YES completion:nil];
+              });
+              NSLog(@"获取失败: %@", error);
+          }];
+}
+
+- (void)fetchFansListWith:(eyemoreUser *)user
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[Config myAccessToken]] forHTTPHeaderField:@"Authorization"];
+    [manager POST:[NSString stringWithFormat:@"%@%@", eyemoreAPI_HTTP_PREFIX, eyemoreAPI_ACCOUNT_FANSLIST]
+       parameters:@{ @"uid": [NSString stringWithFormat:@"%ld", (long)user.userID]}
+         progress:nil
+          success:^(NSURLSessionDataTask *task, id responseObject){
+              
+              NSDictionary *result = (NSDictionary *)responseObject;
+              NSInteger status = [[result objectForKey:@"status"] integerValue];
+              NSArray *fansList = [result valueForKey:@"results"];
+              NSLog(@"%@", result);
+              if (status == 1) {
+                  if (fansList != nil && fansList.count > 0) {
+                      user.fansList = fansList;
+                      [Config saveProfile:user];
+                  }
                   dispatch_async(dispatch_get_main_queue(), ^(){
                       [self dismissViewControllerAnimated:YES completion:nil];
-                  });
+                      [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
+                  });                  
               }
               else {
                   [ProgressHUD showError:[NSString stringWithFormat:@"%@",[result objectForKey:@"error"]] Interaction:YES];

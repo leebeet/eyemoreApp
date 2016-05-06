@@ -14,11 +14,13 @@
 #import "WIFIDetector.h"
 #import "JTWavePulser.h"
 #import "SettingCamTableViewController.h"
+#import "PulseWaveController.h"
 
 
 @interface DeviceViewController ()<TCPSocketManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 {
     NSString *_camVer;
+    BOOL _firstTimeload;
 }
 @property (nonatomic, strong) TCPSocketManager *socketManager;
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -39,12 +41,24 @@
     [self refeshCameraState];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //self.edgesForExtendedLayout = UIRectEdgeNone;
     [self setUpDeviceImageView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cameraConnected) name:@"cameraConnected" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cameraDisconnected) name:@"cameradDisconnected" object:nil];
+    _firstTimeload = YES;
+    [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(cancelFirstTimeLoad) userInfo:nil repeats:NO];
+}
+
+- (void)cancelFirstTimeLoad
+{
+    _firstTimeload = NO;
 }
 
 - (void)refeshCameraState
@@ -413,7 +427,16 @@
 
 - (void)didFinishConnectToHost
 {
-    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetPhotoToSDCard];
+    if (_firstTimeload) {
+        _firstTimeload = NO;
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            PulseWaveController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"PulseWaveController"];
+            [self presentViewController:controller animated:YES completion:nil];
+        });
+    }
+    else {
+        [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetPhotoToSDCard];
+    }
 }
 
 - (void)didDisconnectSocket

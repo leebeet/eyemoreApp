@@ -21,6 +21,7 @@
 @property (nonatomic, strong)     NSDate   *joinTime;
 @property (nonatomic, strong)     NSDate   *latestOnlineTime;
 @property (nonatomic, strong)     NSArray  *followerList;
+@property (nonatomic, strong)     NSArray  *fansList;
 
 - (instancetype)initWithProfileDict:(NSDictionary *)dict;
 

@@ -51,11 +51,6 @@
     self.tabBar.barStyle = UIBarStyleBlack;
     [self wipeNaviBarBottomBaseLine];
     
-    //self.tabBarItem.
-//    UIImage *image = [UIImage imageNamed:@"tab1_active"];
-//    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    self.tabBar.selectedItem.selectedImage = image;
-    
     [self addCenterButtonWithImage:[UIImage imageNamed:@"11-photos_meitu_9"] highlightImage:nil];
     
     
@@ -63,13 +58,8 @@
     [self.socketManager UdpSocketConnet];
     [self.socketManager initLongConnectionToUdpSocket];
     
-
-//    self.socketManager.socketHost = @"192.168.1.134";
-//    [self.socketManager tcpLingSocketConnectToHost];
-//    [self.socketManager openDataChannel];
-    
-    //取消屏幕锁屏
-    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    //取消屏幕锁屏 --> 恢复屏幕锁屏
+    //[[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(hideCenterButton) name:@"MeTableViewControllerWillAppear" object:nil];
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showCenterButton) name:@"MeTableViewControllerWillDisappear" object:nil];

@@ -209,6 +209,7 @@
     
     self.socketManager = [TCPSocketManager sharedTCPSocketManager];
     self.socketManager.delegate = self;
+    NSLog(@"change delegate");
     [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetPhotoToDDR];
     
     //初始化PAImageView

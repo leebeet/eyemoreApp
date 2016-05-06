@@ -21,6 +21,7 @@
         self.gender               = [dictProfile objectForKey:@"gender"];
         self.avatorURL            = [NSURL URLWithString:[dictProfile objectForKey:@"avator"]];
         self.followerList         = [NSArray new];
+        self.fansList             = [NSArray new];
     }
     
     return self;

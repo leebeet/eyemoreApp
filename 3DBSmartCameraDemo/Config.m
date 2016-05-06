@@ -18,6 +18,7 @@ NSString * const kPortraitURL = @"portraitURL";
 NSString * const kGender = @"gender";
 NSString * const kAccessToken = @"access_token";
 NSString * const kFollowerList = @"followerList";
+NSString * const kFansList = @"fansList";
 
 @implementation Config
 
@@ -41,6 +42,7 @@ NSString * const kFollowerList = @"followerList";
     [userDefaults setURL:user.avatorURL forKey:kPortraitURL];
     [userDefaults setObject:user.gender forKey:kGender];
     [userDefaults setObject:user.followerList forKey:kFollowerList];
+    [userDefaults setObject:user.fansList forKey:kFansList];
     
     [userDefaults synchronize];
 }
@@ -60,6 +62,7 @@ NSString * const kFollowerList = @"followerList";
     [userDefaults setURL:user.avatorURL forKey:kPortraitURL];
     [userDefaults setObject:user.gender forKey:kGender];
     [userDefaults setObject:user.followerList forKey:kFollowerList];
+    [userDefaults setObject:user.fansList forKey:kFansList];
     
     [userDefaults synchronize];
 }
@@ -84,12 +87,16 @@ NSString * const kFollowerList = @"followerList";
     user.gender = [userDefaults objectForKey:kGender];
     user.avatorURL = [userDefaults URLForKey:kPortraitURL];
     user.followerList = [userDefaults arrayForKey:kFollowerList];
+    user.fansList = [userDefaults arrayForKey:kFansList];
     
     if (!user.nickName) {
         user.nickName = @"点击头像登录";
     }
     if (user.followerList == nil || user.followerList.count == 0) {
         user.followerList = [NSArray new];
+    }
+    if (user.fansList == nil || user.fansList.count == 0) {
+        user.fansList = [NSArray new];
     }
     
     return user;

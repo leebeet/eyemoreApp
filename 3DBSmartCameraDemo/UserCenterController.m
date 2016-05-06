@@ -36,6 +36,7 @@ static CGFloat   kfixedPartHeight = 123.0;
 @property (strong, nonatomic) JGActionSheet *actionSheet;
 @property (strong, nonatomic) NSMutableArray *followList;
 @property (strong, nonatomic) NSMutableArray *ownerFollowList;
+@property (strong, nonatomic) NSMutableArray *ownerFansList;
 @property (strong, nonatomic) NSMutableArray *fanList;
 
 @end
@@ -63,6 +64,7 @@ static CGFloat   kfixedPartHeight = 123.0;
     self.navigationController.navigationBar.subviews.firstObject.alpha = 0;
     
     self.ownerFollowList = [[Config myProfile].followerList mutableCopy];
+    self.ownerFansList = [[Config myProfile].fansList mutableCopy];
     NSLog(@"my followlist: %@", self.ownerFollowList);
     
 }
@@ -194,7 +196,7 @@ static CGFloat   kfixedPartHeight = 123.0;
                  if (followList != nil && followList.count > 0) {
                      self.followList = [followList mutableCopy];
                  }
-                 //本地更新自己的已关注列表
+                 //更新自己的本地已关注列表
                  if (self.myProfile.userID == [Config myProfile].userID) {
                      eyemoreUser *owner = [Config myProfile];
                      owner.followerList = self.followList;
@@ -230,6 +232,12 @@ static CGFloat   kfixedPartHeight = 123.0;
              if (status == 1) {
                  if (fansList != nil && fansList.count > 0) {
                      self.fanList = [fansList mutableCopy];
+                 }
+                 //更新自己的本地粉丝列表
+                 if (self.myProfile.userID == [Config myProfile].userID) {
+                     eyemoreUser *owner = [Config myProfile];
+                     owner.fansList = self.fanList;
+                     [Config saveProfile:owner];
                  }
                  dispatch_async(dispatch_get_main_queue(), ^(){
                      [self.tableView reloadData];

@@ -220,20 +220,25 @@
     if (![TCPSocketManager sharedTCPSocketManager].isLost) {
         //保证只提醒更新一次
         [[NSNotificationCenter defaultCenter] removeObserver:self];
+        
         dispatch_async(dispatch_get_main_queue(), ^(){
             FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
-            UpdateViewController *controller = [[UpdateViewController alloc] init];
-            controller.currentVersion = [[manager.camVerison substringFromIndex:1] floatValue];
-            controller.message = [NSString stringWithFormat:@"您的设备:%@有新固件:%@更新, 是否立即更新？ \n更新说明: \n%@",[[WIFIDetector sharedWIFIDetector] getDeviceSSID], manager.latestUpdate, manager.latestUpdateInfo];
-                    
-            UIViewController *rootVC = [self appRootViewController];
-            if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-                controller.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-                controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-            }else{
-                rootVC.modalPresentationStyle = UIModalPresentationCurrentContext;
+            //由于在下载固件时不能确定相机和app发生什么操作，所以下载完成后，对比固件版本，确认升级
+            if ([manager checkingCameraShouldUpdateWithCamVer:manager.camVerison]) {
+                UpdateViewController *controller = [[UpdateViewController alloc] init];
+                controller.currentVersion = [[manager.camVerison substringFromIndex:1] floatValue];
+                controller.message = [NSString stringWithFormat:@"您的设备:%@有新固件:%@更新, 是否立即更新？ \n更新说明: \n%@",[[WIFIDetector sharedWIFIDetector] getDeviceSSID], manager.latestUpdate, manager.latestUpdateInfo];
+                
+                //让controller以模态视图展现
+                UIViewController *rootVC = [self appRootViewController];
+                if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+                    controller.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+                    controller.modalTransitionStyle   = UIModalTransitionStyleCrossDissolve;
+                }else{
+                    rootVC.modalPresentationStyle     = UIModalPresentationCurrentContext;
+                }
+                [rootVC presentViewController:controller animated:YES completion:nil];
             }
-            [rootVC presentViewController:controller animated:YES completion:nil];
         });
     }
 }

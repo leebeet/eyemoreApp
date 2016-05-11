@@ -14,6 +14,8 @@
 #import "ProgressHUD.h"
 #import "TCPSocketManager.h"
 #import "CMDManager.h"
+#import "PolicyViewController.h"
+#import "ResetPasswordController.h"
 
 @interface LoginViewController ()<TCPSocketManagerDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate>
 
@@ -31,6 +33,7 @@
 @property (nonatomic, copy) NSString *password;
 @property (nonatomic, copy) NSString *codeString;
 
+@property (weak, nonatomic) IBOutlet UIView *policyHintView;
 @property (nonatomic, strong) TCPSocketManager *socketManager;
 
 @end
@@ -41,6 +44,19 @@
 {
     [super viewWillAppear:animated];
     
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UITextFieldTextDidChanged:) name:@"UITextFieldTextDidChangeNotification" object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UITextFieldTextDidChangeNotification" object:nil];
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
     [self setUpLoginButton];
     [self setUpRegisterNewUserButton];
     [self setUpforgetPasswordButton];
@@ -52,18 +68,6 @@
     self.nicknameField.alpha = 0;
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UITextFieldTextDidChanged:) name:@"UITextFieldTextDidChangeNotification" object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-}
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -134,23 +138,17 @@
         else if (sender == self.codeField) {
             [self hidenKeyboard];
         }
-
     }
-
 }
-
 
 - (IBAction)loginButtonTapped{
     
     if ([self.loginButton.titleLabel.text isEqualToString:@"登录"]) {
         
         [self login];
-        
     }
     else {
-        
         [self registerAccount];
-    
     }
     
 }
@@ -161,7 +159,6 @@
     else {
         [self updateUIToLogin];
     }
-
 }
 
 - (IBAction)getCodeButtonTapped:(id)sender {
@@ -174,6 +171,28 @@
 - (IBAction)dismissButtonTapped:(id)sender {
     
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)policyButtonTapped:(id)sender {
+    
+    PolicyViewController *controller = [[PolicyViewController alloc] init];
+    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:controller];
+    UIButton *btn = (UIButton *)sender;
+    if (btn.tag == 100) {
+        controller.policyStyle = USER_SERVICE_POLICY;
+    }
+    else {
+        controller.policyStyle = USER_PRIVACY_POLICY;
+    }
+    [self presentViewController:navi animated:YES completion:nil];
+}
+
+- (void)forgetPasswordButtonTapped
+{
+    UIStoryboard *board = [UIStoryboard storyboardWithName:@"ResetPasswordController" bundle:nil];
+    ResetPasswordController *controller = [board instantiateViewControllerWithIdentifier:@"ResetPasswordController"];
+    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:navi animated:controller completion:nil];
 }
 
 #pragma mark - Set Up Instance
@@ -200,8 +219,8 @@
     self.registerNewUserButton = [[UIButton alloc] initWithFrame:CGRectMake(18, self.loginButton.center.y + 25, 75, 30)];
     self.registerNewUserButton.titleLabel.font = [UIFont systemFontOfSize:14];
     self.registerNewUserButton.titleLabel.textAlignment = NSTextAlignmentLeft;
-    [self.registerNewUserButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    [self.registerNewUserButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateHighlighted];
+    [self.registerNewUserButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [self.registerNewUserButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [self.registerNewUserButton setTitle:@"注册新用户" forState:UIControlStateNormal];
     [self.registerNewUserButton addTarget:self action:@selector(registerNewUserButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.registerNewUserButton];
@@ -212,9 +231,10 @@
     self.forgetPasswordButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 18 - 75, self.loginButton.center.y + 25, 75, 30)];
     self.forgetPasswordButton.titleLabel.font = [UIFont systemFontOfSize:14];
     self.forgetPasswordButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [self.forgetPasswordButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    [self.forgetPasswordButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateHighlighted];
+    [self.forgetPasswordButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [self.forgetPasswordButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [self.forgetPasswordButton setTitle:@"忘记密码?" forState:UIControlStateNormal];
+    [self.forgetPasswordButton addTarget:self action:@selector(forgetPasswordButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.forgetPasswordButton];
 }
 
@@ -225,18 +245,20 @@
     self.codeField.alpha     = 0;
     self.getCodeButton.alpha = 0;
     self.nicknameField.alpha = 0;
-    [UIView animateWithDuration:0.3f delay:0.2f options:UIViewAnimationOptionAllowUserInteraction animations:^(){
+    self.policyHintView.alpha = 0;
+    [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionAllowUserInteraction animations:^(){
         self.registerNewUserButton.center = CGPointMake(self.registerNewUserButton.center.x, self.registerNewUserButton.center.y + 100);
         self.forgetPasswordButton.center  = CGPointMake(self.forgetPasswordButton.center.x, self.forgetPasswordButton.center.y + 100);
         self.loginButton.center           = CGPointMake(self.loginButton.center.x, self.loginButton.center.y + 100);
         
     } completion:^(BOOL finished){
-        [UIView animateWithDuration:0.5f delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^(){
+        [UIView animateWithDuration:0.2f delay:0.0f options:UIViewAnimationOptionAllowUserInteraction animations:^(){
             [self.registerNewUserButton setTitle:@"登录" forState:UIControlStateNormal];
             [self.loginButton setTitle:@"注册新用户" forState:UIControlStateNormal];
             self.codeField.alpha = 1;
             self.getCodeButton.alpha = 1;
             self.nicknameField.alpha = 1;
+            self.policyHintView.alpha = 1;
             
         } completion:^(BOOL finished){}];
     }];
@@ -247,21 +269,26 @@
     self.codeField.alpha     = 1;
     self.getCodeButton.alpha = 1;
     self.nicknameField.alpha = 1;
-    [UIView animateWithDuration:0.3f delay:0.2f options:UIViewAnimationOptionAllowUserInteraction animations:^(){
-        self.registerNewUserButton.center = CGPointMake(self.registerNewUserButton.center.x, self.registerNewUserButton.center.y - 100);
-        self.forgetPasswordButton.center  = CGPointMake(self.forgetPasswordButton.center.x, self.forgetPasswordButton.center.y - 100);
-        self.loginButton.center           = CGPointMake(self.loginButton.center.x, self.loginButton.center.y - 100);
+    self.policyHintView.alpha = 1;
+    [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionAllowUserInteraction animations:^(){
+
         self.codeField.alpha = 0;
         self.getCodeButton.alpha = 0;
         self.nicknameField.alpha = 0;
         
     } completion:^(BOOL finished){
         
-        [UIView animateWithDuration:0.5f delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^(){
+        [UIView animateWithDuration:0.3f delay:0.2f options:UIViewAnimationOptionAllowUserInteraction animations:^(){
             [self.registerNewUserButton setTitle:@"注册新用户" forState:UIControlStateNormal];
             [self.loginButton setTitle:@"登录" forState:UIControlStateNormal];
+            
+            self.registerNewUserButton.center = CGPointMake(self.registerNewUserButton.center.x, self.registerNewUserButton.center.y - 100);
+            self.forgetPasswordButton.center  = CGPointMake(self.forgetPasswordButton.center.x, self.forgetPasswordButton.center.y - 100);
+            self.loginButton.center           = CGPointMake(self.loginButton.center.x, self.loginButton.center.y - 100);
+            
             self.codeField.alpha = 0;
             self.getCodeButton.alpha = 0;
+            self.policyHintView.alpha = 0;
             
         } completion:^(BOOL finished){}];
     }];
@@ -557,43 +584,19 @@
 }
 
 - (void)didReceiveACKWithState:(CTL_MESSAGE_PACKET)ACK
-{
-    if (ACK.cmd == SDB_SET_DEV_WORK_MODE_ACK && ACK.param0 == DWM_NORMAL) {
-    }
-    
-    if (ACK.cmd == SDB_SET_STANDBY_EN_ACK && ACK.param0 == STADNDBY_DISABLE) {
-        
-    }
-    
-    if (ACK.cmd == SDB_GET_NORMAL_PHOTO_COUNT_ACK) {
-        
-    }
-    
-    if (ACK.cmd == SDB_GET_BLOCK_NORMAL_PHOTOS_ACK) {
-        
-    }
-    if (ACK.cmd == SDB_SET_RECV_OK_ACK) {
-        
-    }
-}
+{}
 
 - (void)didFinishConnectToHost
-{
-}
+{}
 
 - (void)didDisconnectSocket
-{
-}
+{}
 
 - (void)didReceiveDevInfo:(DEV_INFO)decInfo
-{
-}
+{}
 
 - (void)didReceiveLensStatus:(LENS_PARAMS)lensStatus
-{
-
-    
-}
+{}
 
 - (void)didFinishSingleFileDownloadingWithImageData:(NSData *)imageData
 {}

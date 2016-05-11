@@ -141,6 +141,9 @@
 		4C6F631B1C8EA9B80024C57D /* menu1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F631A1C8EA9B80024C57D /* menu1@3x.png */; };
 		4C6F631D1C8EAF180024C57D /* menu1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F631C1C8EAF180024C57D /* menu1@2x.png */; };
 		4C6F63201C8ED5880024C57D /* CameraConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F631F1C8ED5880024C57D /* CameraConfiguration.m */; };
+		4C6FA6CA1CE18C64005F753E /* HowToConnectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FA6C91CE18C64005F753E /* HowToConnectController.m */; };
+		4C6FA6CE1CE19774005F753E /* howToConnect.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C6FA6CD1CE19774005F753E /* howToConnect.jpg */; };
+		4C6FA6D21CE1D289005F753E /* PolicyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FA6D11CE1D289005F753E /* PolicyViewController.m */; };
 		4C70B4751CB6061B00A3DA53 /* RootSyncPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C70B4741CB6061B00A3DA53 /* RootSyncPageController.m */; };
 		4C70B47C1CB6380E00A3DA53 /* Wifiicon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C70B47B1CB6380E00A3DA53 /* Wifiicon.m */; };
 		4C70B47F1CB640F900A3DA53 /* VideoBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C70B47E1CB640F900A3DA53 /* VideoBrowserController.m */; };
@@ -179,6 +182,11 @@
 		4C7833E91C882AAB00EAD2F7 /* me_active@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7833E81C882AAB00EAD2F7 /* me_active@3x.png */; };
 		4C7833EF1C882AE800EAD2F7 /* me@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7833EE1C882AE800EAD2F7 /* me@2x.png */; };
 		4C7833F11C882B7900EAD2F7 /* me@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7833F01C882B7900EAD2F7 /* me@3x.png */; };
+		4C78E48E1CE30AD2004D9D3E /* UserServicePolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C78E48D1CE30AD2004D9D3E /* UserServicePolicy.html */; };
+		4C78E4901CE3228B004D9D3E /* UserPrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C78E48F1CE3228B004D9D3E /* UserPrivacyPolicy.html */; };
+		4C78E4931CE3290A004D9D3E /* ResetPasswordController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C78E4921CE3290A004D9D3E /* ResetPasswordController.storyboard */; };
+		4C78E4961CE32927004D9D3E /* ResetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C78E4951CE32927004D9D3E /* ResetPasswordController.m */; };
+		4C78E49A1CE344E3004D9D3E /* BLUIkitTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C78E4991CE344E3004D9D3E /* BLUIkitTool.m */; };
 		4C78F2861BDDD2870089D086 /* TTRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C78F2841BDDD2870089D086 /* TTRangeSlider.m */; };
 		4C791FB01CC481B600086E4D /* DetailBlogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C791FAF1CC481B600086E4D /* DetailBlogController.m */; };
 		4C7A35381CB36BDE00871A74 /* CommentTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A35371CB36BDE00871A74 /* CommentTableCell.m */; };
@@ -303,7 +311,6 @@
 		4CD5EEAC1ACBB72300418216 /* RootScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD5EEAB1ACBB72300418216 /* RootScrollViewController.m */; };
 		4CE1E4641AC3A08A002B4990 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE1E4631AC3A08A002B4990 /* AssetsLibrary.framework */; };
 		4CE1E4671AC3A386002B4990 /* ImageAlbumManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE1E4661AC3A386002B4990 /* ImageAlbumManager.m */; };
-		4CE1E46A1AC40D2A002B4990 /* ObserveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE1E4691AC40D2A002B4990 /* ObserveViewController.m */; };
 		4CEB44141ACCF63500F186F7 /* BLSeeImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB44131ACCF63500F186F7 /* BLSeeImageView.m */; };
 		4CEB696C1AD3D08300CDEB1F /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB696B1AD3D08300CDEB1F /* MZTimerLabel.m */; };
 		4CEB69701AD3E0A200CDEB1F /* BLFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB696F1AD3E0A200CDEB1F /* BLFileManager.m */; };
@@ -555,6 +562,11 @@
 		4C6F631C1C8EAF180024C57D /* menu1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu1@2x.png"; sourceTree = "<group>"; };
 		4C6F631E1C8ED5880024C57D /* CameraConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraConfiguration.h; sourceTree = "<group>"; };
 		4C6F631F1C8ED5880024C57D /* CameraConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraConfiguration.m; sourceTree = "<group>"; };
+		4C6FA6C81CE18C64005F753E /* HowToConnectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToConnectController.h; sourceTree = "<group>"; };
+		4C6FA6C91CE18C64005F753E /* HowToConnectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HowToConnectController.m; sourceTree = "<group>"; };
+		4C6FA6CD1CE19774005F753E /* howToConnect.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = howToConnect.jpg; sourceTree = "<group>"; };
+		4C6FA6D01CE1D289005F753E /* PolicyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolicyViewController.h; sourceTree = "<group>"; };
+		4C6FA6D11CE1D289005F753E /* PolicyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolicyViewController.m; sourceTree = "<group>"; };
 		4C70B4731CB6061B00A3DA53 /* RootSyncPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootSyncPageController.h; sourceTree = "<group>"; };
 		4C70B4741CB6061B00A3DA53 /* RootSyncPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootSyncPageController.m; sourceTree = "<group>"; };
 		4C70B47A1CB6380E00A3DA53 /* Wifiicon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wifiicon.h; sourceTree = "<group>"; };
@@ -611,6 +623,13 @@
 		4C7833E81C882AAB00EAD2F7 /* me_active@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me_active@3x.png"; sourceTree = "<group>"; };
 		4C7833EE1C882AE800EAD2F7 /* me@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me@2x.png"; sourceTree = "<group>"; };
 		4C7833F01C882B7900EAD2F7 /* me@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me@3x.png"; sourceTree = "<group>"; };
+		4C78E48D1CE30AD2004D9D3E /* UserServicePolicy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = UserServicePolicy.html; sourceTree = "<group>"; };
+		4C78E48F1CE3228B004D9D3E /* UserPrivacyPolicy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = UserPrivacyPolicy.html; sourceTree = "<group>"; };
+		4C78E4921CE3290A004D9D3E /* ResetPasswordController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ResetPasswordController.storyboard; sourceTree = "<group>"; };
+		4C78E4941CE32927004D9D3E /* ResetPasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordController.h; sourceTree = "<group>"; };
+		4C78E4951CE32927004D9D3E /* ResetPasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordController.m; sourceTree = "<group>"; };
+		4C78E4981CE344E3004D9D3E /* BLUIkitTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLUIkitTool.h; sourceTree = "<group>"; };
+		4C78E4991CE344E3004D9D3E /* BLUIkitTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLUIkitTool.m; sourceTree = "<group>"; };
 		4C78F2831BDDD2870089D086 /* TTRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRangeSlider.h; sourceTree = "<group>"; };
 		4C78F2841BDDD2870089D086 /* TTRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRangeSlider.m; sourceTree = "<group>"; };
 		4C78F2851BDDD2870089D086 /* TTRangeSliderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRangeSliderDelegate.h; sourceTree = "<group>"; };
@@ -798,8 +817,6 @@
 		4CE1E4631AC3A08A002B4990 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		4CE1E4651AC3A386002B4990 /* ImageAlbumManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageAlbumManager.h; sourceTree = "<group>"; };
 		4CE1E4661AC3A386002B4990 /* ImageAlbumManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageAlbumManager.m; sourceTree = "<group>"; };
-		4CE1E4681AC40D2A002B4990 /* ObserveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObserveViewController.h; sourceTree = "<group>"; };
-		4CE1E4691AC40D2A002B4990 /* ObserveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObserveViewController.m; sourceTree = "<group>"; };
 		4CEB44121ACCF63500F186F7 /* BLSeeImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLSeeImageView.h; sourceTree = "<group>"; };
 		4CEB44131ACCF63500F186F7 /* BLSeeImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLSeeImageView.m; sourceTree = "<group>"; };
 		4CEB696A1AD3D08300CDEB1F /* MZTimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZTimerLabel.h; sourceTree = "<group>"; };
@@ -923,6 +940,9 @@
 		4C05B3381ADE47C500B6F36F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4C6FA6CD1CE19774005F753E /* howToConnect.jpg */,
+				4C78E48F1CE3228B004D9D3E /* UserPrivacyPolicy.html */,
+				4C78E48D1CE30AD2004D9D3E /* UserServicePolicy.html */,
 				4C6A048F1CCF4188002C068C /* myUser@2x.png */,
 				4C6A048D1CCF417E002C068C /* myUser@3x.png */,
 				4C8D21B01CC8E0740086A798 /* media_active@2x.png */,
@@ -1177,17 +1197,17 @@
 		4C1B70551ABFE95B00267E49 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4C8D21A01CC876110086A798 /* Social */,
 				4CD5EEA91ACBB6FA00418216 /* Root */,
+				4C8D21A01CC876110086A798 /* Socials */,
 				4CBFF8511CA3994800CB783F /* VideoBrowser(deperated) */,
 				4CBFF84A1CA3985F00CB783F /* DetailPhotoBrowser */,
-				4CBFF8501CA3992000CB783F /* UpdateViewController */,
+				4CBFF8501CA3992000CB783F /* FirmwareUpdateController */,
 				4C693A271C9AC77D006F9188 /* Device */,
 				4CFFF55F1AC11A0300123AEE /* Download */,
 				040FBD621AC06F9400181A25 /* Polaroid */,
 				4C693A281C9AC7A7006F9188 /* Discover */,
 				4CD5EEA21ACBA24600418216 /* Me */,
-				4CE1E46B1AC40D30002B4990 /* Observing */,
+				4CE1E46B1AC40D30002B4990 /* ConnectionHelp */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1558,6 +1578,15 @@
 			name = "Media Utilities";
 			sourceTree = "<group>";
 		};
+		4C6FA6CF1CE1D159005F753E /* Policy */ = {
+			isa = PBXGroup;
+			children = (
+				4C6FA6D01CE1D289005F753E /* PolicyViewController.h */,
+				4C6FA6D11CE1D289005F753E /* PolicyViewController.m */,
+			);
+			name = Policy;
+			sourceTree = "<group>";
+		};
 		4C70B4721CB605A800A3DA53 /* RootPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -1696,6 +1725,25 @@
 			name = CustomedToolBar;
 			sourceTree = "<group>";
 		};
+		4C78E4911CE32816004D9D3E /* ResetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				4C78E4941CE32927004D9D3E /* ResetPasswordController.h */,
+				4C78E4951CE32927004D9D3E /* ResetPasswordController.m */,
+				4C78E4921CE3290A004D9D3E /* ResetPasswordController.storyboard */,
+			);
+			name = ResetPassword;
+			sourceTree = "<group>";
+		};
+		4C78E4971CE344AB004D9D3E /* BLUlKitTool */ = {
+			isa = PBXGroup;
+			children = (
+				4C78E4981CE344E3004D9D3E /* BLUIkitTool.h */,
+				4C78E4991CE344E3004D9D3E /* BLUIkitTool.m */,
+			);
+			name = BLUlKitTool;
+			sourceTree = "<group>";
+		};
 		4C78F2821BDDD2640089D086 /* TTRangeSlider */ = {
 			isa = PBXGroup;
 			children = (
@@ -1796,6 +1844,7 @@
 		4C7B77C21CAA2FBF008A0398 /* My Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4C78E4971CE344AB004D9D3E /* BLUlKitTool */,
 				4CEB44111ACCF63500F186F7 /* BLSeeImageView */,
 				4CFB98901BB28EBA004356A9 /* BL32BitCheckSumValidator */,
 				4C56C4481ACA59A50056D122 /* BLAnimation */,
@@ -1927,14 +1976,16 @@
 			path = Header;
 			sourceTree = "<group>";
 		};
-		4C8D21A01CC876110086A798 /* Social */ = {
+		4C8D21A01CC876110086A798 /* Socials */ = {
 			isa = PBXGroup;
 			children = (
+				4C6FA6CF1CE1D159005F753E /* Policy */,
 				4C8D21A11CC876770086A798 /* UserCenter */,
 				4C3722271C7C0F2000382214 /* Login */,
+				4C78E4911CE32816004D9D3E /* ResetPassword */,
 				4CBFF8601CA3EF7200CB783F /* Share */,
 			);
-			name = Social;
+			name = Socials;
 			sourceTree = "<group>";
 		};
 		4C8D21A11CC876770086A798 /* UserCenter */ = {
@@ -2136,13 +2187,13 @@
 			name = RootStaticTable;
 			sourceTree = "<group>";
 		};
-		4CBFF8501CA3992000CB783F /* UpdateViewController */ = {
+		4CBFF8501CA3992000CB783F /* FirmwareUpdateController */ = {
 			isa = PBXGroup;
 			children = (
 				4C4F109D1BECA6390029EBF6 /* UpdateViewController.h */,
 				4C4F109E1BECA6390029EBF6 /* UpdateViewController.m */,
 			);
-			name = UpdateViewController;
+			name = FirmwareUpdateController;
 			sourceTree = "<group>";
 		};
 		4CBFF8511CA3994800CB783F /* VideoBrowser(deperated) */ = {
@@ -2206,13 +2257,13 @@
 			name = Root;
 			sourceTree = "<group>";
 		};
-		4CE1E46B1AC40D30002B4990 /* Observing */ = {
+		4CE1E46B1AC40D30002B4990 /* ConnectionHelp */ = {
 			isa = PBXGroup;
 			children = (
-				4CE1E4681AC40D2A002B4990 /* ObserveViewController.h */,
-				4CE1E4691AC40D2A002B4990 /* ObserveViewController.m */,
+				4C6FA6C81CE18C64005F753E /* HowToConnectController.h */,
+				4C6FA6C91CE18C64005F753E /* HowToConnectController.m */,
 			);
-			name = Observing;
+			name = ConnectionHelp;
 			sourceTree = "<group>";
 		};
 		4CEB44111ACCF63500F186F7 /* BLSeeImageView */ = {
@@ -2549,6 +2600,7 @@
 				4C693A241C9AC528006F9188 /* device_active@3x.png in Resources */,
 				4C915B931B316EF30002E19C /* SavingInfoList.plist in Resources */,
 				4C7FB8501CD0635B0005B552 /* focus_classic.wav in Resources */,
+				4C78E4931CE3290A004D9D3E /* ResetPasswordController.storyboard in Resources */,
 				4C6272B31C2923C2007DC815 /* originalScreen@3x.png in Resources */,
 				4C6F631D1C8EAF180024C57D /* menu1@2x.png in Resources */,
 				4C7833D91C88236B00EAD2F7 /* error@3x.png in Resources */,
@@ -2623,6 +2675,7 @@
 				4C1B70101ABFB84900267E49 /* Images.xcassets in Resources */,
 				4C0A7C731BABFE7D00418C7A /* 69-timer@2x.png in Resources */,
 				4C939D3E1CAD0AFD00A9EB5B /* toolBox@2x.png in Resources */,
+				4C78E48E1CE30AD2004D9D3E /* UserServicePolicy.html in Resources */,
 				4C6485A61C23F5DA005423E1 /* shot_fastGun.wav in Resources */,
 				4C67F8251C915181004B96DD /* download@3x.png in Resources */,
 				4C6ED4061C5A1AC100DD506A /* noFilter@3x.png in Resources */,
@@ -2631,6 +2684,7 @@
 				4C693A201C9AC505006F9188 /* device@3x.png in Resources */,
 				4C7B77D11CAA57D5008A0398 /* focusMode@3x.png in Resources */,
 				4C9143271BFDE65B0026BDC9 /* LTHPasscodeViewController.bundle in Resources */,
+				4C6FA6CE1CE19774005F753E /* howToConnect.jpg in Resources */,
 				4C6F630E1C8E72380024C57D /* icon-success.png in Resources */,
 				4C0A7C741BABFE7D00418C7A /* 69-timer@3x.png in Resources */,
 				4C0A17AE1B0C332D00D73A0A /* tab1@2x.png in Resources */,
@@ -2640,6 +2694,7 @@
 				4C75862B1C5F62C500FC46AD /* invisibleView@3x.png in Resources */,
 				4C9B9C0D1B0F13A40000A7FA /* info-symbolic@3x.png in Resources */,
 				4C6485AA1C23FB38005423E1 /* shot_whistle.wav in Resources */,
+				4C78E4901CE3228B004D9D3E /* UserPrivacyPolicy.html in Resources */,
 				4C693A261C9AC536006F9188 /* device_active@2x.png in Resources */,
 				4C7B77C71CAA3876008A0398 /* irisicon@2x.png in Resources */,
 				4C6F630D1C8E72380024C57D /* icon-info@2x.png in Resources */,
@@ -2766,7 +2821,6 @@
 				4CA50F6C1B0D8C7D00A71AAF /* UIImage+Rotating.m in Sources */,
 				4C70B47F1CB640F900A3DA53 /* VideoBrowserController.m in Sources */,
 				4C85FDAF1C55C6BD008134A4 /* BLFocusingIndicator.m in Sources */,
-				4CE1E46A1AC40D2A002B4990 /* ObserveViewController.m in Sources */,
 				4CF9543F1B43D0900076A27D /* JTMaterialTransition.m in Sources */,
 				4CFA440C1C7EAF5800995205 /* AFURLSessionManager.m in Sources */,
 				4C56C4801ACA59A50056D122 /* BLAnimation.m in Sources */,
@@ -2778,6 +2832,8 @@
 				4C1B70051ABFB84900267E49 /* main.m in Sources */,
 				4C56C4901ACA59A50056D122 /* UIView+WebCacheOperation.m in Sources */,
 				4C719F531CD1FD430021C217 /* JTSAnimatedGIFUtility.m in Sources */,
+				4C78E49A1CE344E3004D9D3E /* BLUIkitTool.m in Sources */,
+				4C6FA6D21CE1D289005F753E /* PolicyViewController.m in Sources */,
 				4C89917C1C045ABC00F6116F /* LiveViewController.m in Sources */,
 				4CF61DE21B7C3E8A004E7304 /* MMPickerView.m in Sources */,
 				4C56C4841ACA59A50056D122 /* SDWebImageCompat.m in Sources */,
@@ -2794,6 +2850,7 @@
 				4C93B79A1C9BE29200D34F63 /* UserCenterView.m in Sources */,
 				4C8AA7381CA91A650054D582 /* MJRefreshNormalHeader.m in Sources */,
 				4C56C4891ACA59A50056D122 /* SDWebImagePrefetcher.m in Sources */,
+				4C6FA6CA1CE18C64005F753E /* HowToConnectController.m in Sources */,
 				4CEECDC31AD508020062EE82 /* BLImageRotation.m in Sources */,
 				4C8D72BF1CBBADF100621479 /* VideoListController.m in Sources */,
 				4C7D0F6C1AF1CF6700A3C9D9 /* TCPSocketManager.m in Sources */,
@@ -2818,6 +2875,7 @@
 				4CFDA9D61B8424F700C6EA5D /* DebugInfoViewController.m in Sources */,
 				4C56C4881ACA59A50056D122 /* SDWebImageManager.m in Sources */,
 				4C05B3351ADE466600B6F36F /* RootTabBarViewController.m in Sources */,
+				4C78E4961CE32927004D9D3E /* ResetPasswordController.m in Sources */,
 				4C8AA7351CA91A650054D582 /* MJRefreshBackNormalFooter.m in Sources */,
 				4C8082E21B42811F00BF35A5 /* ImageClient.m in Sources */,
 				4C56C48D1ACA59A50056D122 /* UIImage+WebP.m in Sources */,

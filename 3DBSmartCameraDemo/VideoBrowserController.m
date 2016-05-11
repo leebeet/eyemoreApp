@@ -19,6 +19,7 @@
 #import "ProgressHUD.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "MJRefresh.h"
+#import "BLUIkitTool.h"
 
 @interface VideoBrowserController ()<UICollectionViewDelegate, UICollectionViewDataSource, TCPSocketManagerDelegate, VideoRecorderDelegate>
 
@@ -161,7 +162,7 @@
         [sheet setOutsidePressBlock:^(JGActionSheet *sheet){
             [sheet dismissAnimated:YES];
         }];
-        [sheet showInView:self.tabBarController.view animated:YES];
+        [sheet showInView:[BLUIkitTool currentRootViewController].view animated:YES];
     }
     else if (indexPath.section == 1) {
         JGActionSheetSection *section1 = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"下载", @"删除"] buttonStyle:JGActionSheetButtonStyleCustomer];
@@ -181,7 +182,7 @@
         [sheet setOutsidePressBlock:^(JGActionSheet *sheet){
             [sheet dismissAnimated:YES];
         }];
-        [sheet showInView:self.tabBarController.view animated:YES];
+        [sheet showInView:[BLUIkitTool currentRootViewController].view animated:YES];
     }
 }
 
@@ -581,6 +582,7 @@
     NSLog(@"row=======%ld",(long)indexPath.row);
     NSLog(@"section===%ld",(long)indexPath.section);
     [self presentActionsForItem:indexPath];
+    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath;

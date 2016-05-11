@@ -24,9 +24,10 @@
     view.userAvarta.layer.borderWidth = 1.5;
     
     view.followButton.layer.masksToBounds = YES;
-    view.followButton.layer.cornerRadius = 2.5;
+    view.followButton.layer.cornerRadius = 5;
     view.followButton.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    view.followButton.layer.borderWidth = 1;
+    view.followButton.layer.borderWidth = 0;
+    view.followButton.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.15];
 
     return view;
 }
@@ -52,7 +53,8 @@
     view.followButton.layer.masksToBounds = YES;
     view.followButton.layer.cornerRadius = 5;
     view.followButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    view.followButton.layer.borderWidth = 1;
+    view.followButton.layer.borderWidth = 0;
+    view.followButton.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.15];
     
     return view;
 }
@@ -78,7 +80,8 @@
     view.followButton.layer.masksToBounds = YES;
     view.followButton.layer.cornerRadius = 5;
     view.followButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    view.followButton.layer.borderWidth = 1;
+    view.followButton.layer.borderWidth = 0;
+    view.followButton.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.15];
     
     return view;
 }

@@ -291,6 +291,7 @@ static CGFloat   kfixedPartHeight = 123.0;
                               if ([[obj objectForKey:@"uid"] integerValue] == self.myProfile.userID) {
                                   [self.ownerFollowList removeObject:obj];
                                   [self updateFollowingButton:NO];
+                                  break;
                               }
                           }
                       }

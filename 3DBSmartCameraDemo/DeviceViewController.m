@@ -15,7 +15,7 @@
 #import "JTWavePulser.h"
 #import "SettingCamTableViewController.h"
 #import "PulseWaveController.h"
-
+#import "HowToConnectController.h"
 
 @interface DeviceViewController ()<TCPSocketManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 {
@@ -150,12 +150,13 @@
         self.linkQuestButton.center = CGPointMake(self.view.center.x, self.linkQuestButton.center.y);
         [self.linkQuestButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [self.linkQuestButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateHighlighted];
-        [self.linkQuestButton setTitle:@"如何连接?" forState:UIControlStateNormal];
+        [self.linkQuestButton setTitle:@"连接／使用指南" forState:UIControlStateNormal];
         self.linkQuestButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.linkQuestButton.layer.masksToBounds = YES;
         self.linkQuestButton.layer.cornerRadius = 10;
         self.linkQuestButton.layer.borderWidth = 1.5;
         self.linkQuestButton.layer.borderColor = [UIColor darkGrayColor].CGColor;
+        [self.linkQuestButton addTarget:self action:@selector(linkQuestButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     }
     [self.view addSubview:self.linkQuestButton];
 
@@ -244,6 +245,14 @@
         [self.navigationController pushViewController:controller animated:YES];
     //}
 }
+
+- (void)linkQuestButtonTapped
+{
+    HowToConnectController *controller = [[HowToConnectController alloc] init];
+    controller.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 #pragma mark - Notification
 
 - (void)cameraDisconnected
@@ -444,8 +453,7 @@
 }
 
 - (void)didReceiveDevInfo:(DEV_INFO)decInfo
-{
-    
+{    
     _camVer = [NSString stringWithFormat:@"%s", decInfo.dev_version];
     FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
     manager.camVerison = [NSString stringWithString:_camVer];

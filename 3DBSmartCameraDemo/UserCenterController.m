@@ -413,13 +413,15 @@ static CGFloat   kfixedPartHeight = 123.0;
     if (self.scrollSegment.selectSeugment == 2) {
         selectedUid = [[self.fanList[indexPath.row] objectForKey:@"uid"] integerValue];
     }
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"UserCenterController" bundle:nil];
-    UserCenterController *controller = [storyboard instantiateViewControllerWithIdentifier:@"UserCenterController"];
-    controller.myProfile = [[eyemoreUser alloc] init];
-    controller.myProfile.userID = selectedUid;
-    UserListCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    controller.avatarImage = cell.avatar.image;
-    [self.navigationController pushViewController:controller animated:YES];
+    if (self.scrollSegment.selectSeugment) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"UserCenterController" bundle:nil];
+        UserCenterController *controller = [storyboard instantiateViewControllerWithIdentifier:@"UserCenterController"];
+        controller.myProfile = [[eyemoreUser alloc] init];
+        controller.myProfile.userID = selectedUid;
+        UserListCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        controller.avatarImage = cell.avatar.image;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -662,7 +664,7 @@ static CGFloat   kfixedPartHeight = 123.0;
 
 - (void)didActionAvatarViewOnCell:(DiscoverTableViewCell *)cell
 {
-
+    NSLog(@"tapped avatar");
 }
 
 - (void)didActionPostImageOnCell:(DiscoverTableViewCell *)cell

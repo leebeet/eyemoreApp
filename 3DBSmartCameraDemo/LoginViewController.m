@@ -189,10 +189,10 @@
 
 - (void)forgetPasswordButtonTapped
 {
-    UIStoryboard *board = [UIStoryboard storyboardWithName:@"ResetPasswordController" bundle:nil];
+    UIStoryboard *board = [UIStoryboard storyboardWithName:@"ResetPassword" bundle:nil];
     ResetPasswordController *controller = [board instantiateViewControllerWithIdentifier:@"ResetPasswordController"];
     UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:controller];
-    [self presentViewController:navi animated:controller completion:nil];
+    [self presentViewController:navi animated:YES completion:nil];
 }
 
 #pragma mark - Set Up Instance
@@ -202,7 +202,6 @@
     self.loginButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width -36, 40)];
     [self.loginButton setBackgroundColor:[UIColor grayColor]];
     self.loginButton.titleLabel.font = [UIFont systemFontOfSize:18 weight:3];
-    self.loginButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self.loginButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [self.loginButton setTitle:@"登录" forState:UIControlStateNormal];
     [self.loginButton addTarget:self action:@selector(loginButtonTapped) forControlEvents:UIControlEventTouchUpInside];
@@ -218,7 +217,7 @@
 {
     self.registerNewUserButton = [[UIButton alloc] initWithFrame:CGRectMake(18, self.loginButton.center.y + 25, 75, 30)];
     self.registerNewUserButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    self.registerNewUserButton.titleLabel.textAlignment = NSTextAlignmentLeft;
+    [self.registerNewUserButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [self.registerNewUserButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [self.registerNewUserButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [self.registerNewUserButton setTitle:@"注册新用户" forState:UIControlStateNormal];
@@ -230,7 +229,7 @@
 {
     self.forgetPasswordButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 18 - 75, self.loginButton.center.y + 25, 75, 30)];
     self.forgetPasswordButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    self.forgetPasswordButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.forgetPasswordButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
     [self.forgetPasswordButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [self.forgetPasswordButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [self.forgetPasswordButton setTitle:@"忘记密码?" forState:UIControlStateNormal];

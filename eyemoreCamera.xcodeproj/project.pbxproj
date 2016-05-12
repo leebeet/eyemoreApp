@@ -184,7 +184,7 @@
 		4C7833F11C882B7900EAD2F7 /* me@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7833F01C882B7900EAD2F7 /* me@3x.png */; };
 		4C78E48E1CE30AD2004D9D3E /* UserServicePolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C78E48D1CE30AD2004D9D3E /* UserServicePolicy.html */; };
 		4C78E4901CE3228B004D9D3E /* UserPrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = 4C78E48F1CE3228B004D9D3E /* UserPrivacyPolicy.html */; };
-		4C78E4931CE3290A004D9D3E /* ResetPasswordController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C78E4921CE3290A004D9D3E /* ResetPasswordController.storyboard */; };
+		4C78E4931CE3290A004D9D3E /* ResetPassword.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C78E4921CE3290A004D9D3E /* ResetPassword.storyboard */; };
 		4C78E4961CE32927004D9D3E /* ResetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C78E4951CE32927004D9D3E /* ResetPasswordController.m */; };
 		4C78E49A1CE344E3004D9D3E /* BLUIkitTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C78E4991CE344E3004D9D3E /* BLUIkitTool.m */; };
 		4C78F2861BDDD2870089D086 /* TTRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C78F2841BDDD2870089D086 /* TTRangeSlider.m */; };
@@ -625,7 +625,7 @@
 		4C7833F01C882B7900EAD2F7 /* me@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me@3x.png"; sourceTree = "<group>"; };
 		4C78E48D1CE30AD2004D9D3E /* UserServicePolicy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = UserServicePolicy.html; sourceTree = "<group>"; };
 		4C78E48F1CE3228B004D9D3E /* UserPrivacyPolicy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = UserPrivacyPolicy.html; sourceTree = "<group>"; };
-		4C78E4921CE3290A004D9D3E /* ResetPasswordController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ResetPasswordController.storyboard; sourceTree = "<group>"; };
+		4C78E4921CE3290A004D9D3E /* ResetPassword.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ResetPassword.storyboard; sourceTree = "<group>"; };
 		4C78E4941CE32927004D9D3E /* ResetPasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResetPasswordController.h; sourceTree = "<group>"; };
 		4C78E4951CE32927004D9D3E /* ResetPasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResetPasswordController.m; sourceTree = "<group>"; };
 		4C78E4981CE344E3004D9D3E /* BLUIkitTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLUIkitTool.h; sourceTree = "<group>"; };
@@ -1730,7 +1730,7 @@
 			children = (
 				4C78E4941CE32927004D9D3E /* ResetPasswordController.h */,
 				4C78E4951CE32927004D9D3E /* ResetPasswordController.m */,
-				4C78E4921CE3290A004D9D3E /* ResetPasswordController.storyboard */,
+				4C78E4921CE3290A004D9D3E /* ResetPassword.storyboard */,
 			);
 			name = ResetPassword;
 			sourceTree = "<group>";
@@ -2600,7 +2600,7 @@
 				4C693A241C9AC528006F9188 /* device_active@3x.png in Resources */,
 				4C915B931B316EF30002E19C /* SavingInfoList.plist in Resources */,
 				4C7FB8501CD0635B0005B552 /* focus_classic.wav in Resources */,
-				4C78E4931CE3290A004D9D3E /* ResetPasswordController.storyboard in Resources */,
+				4C78E4931CE3290A004D9D3E /* ResetPassword.storyboard in Resources */,
 				4C6272B31C2923C2007DC815 /* originalScreen@3x.png in Resources */,
 				4C6F631D1C8EAF180024C57D /* menu1@2x.png in Resources */,
 				4C7833D91C88236B00EAD2F7 /* error@3x.png in Resources */,

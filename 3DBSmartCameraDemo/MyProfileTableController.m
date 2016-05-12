@@ -14,6 +14,7 @@
 #import "FSMediaPicker.h"
 #import "eyemoreAPI.h"
 #import "ProgressHUD.h"
+#import "ResetPasswordController.h"
 
 @interface MyProfileTableController ()<FSMediaPickerDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -190,12 +191,10 @@
     NSLog(@"did selected row : %ld and section : %ld", (long)indexPath.row, (long)indexPath.section);
     
     if (indexPath.section == 0 && indexPath.row == 0) {
-
         self.imagePicker = [[FSMediaPicker alloc] initWithDelegate:self];
         [self.imagePicker showFromView:self.view];
     }
     if (indexPath.section == 1 &&indexPath.row == 0) {
-
 
     }
     if (indexPath.section == 1 &&indexPath.row == 1) {
@@ -209,10 +208,16 @@
             isPickering = NO;
         }
     }
+    if (indexPath.section == 1 &&indexPath.row == 2) {
+        UIStoryboard *board = [UIStoryboard storyboardWithName:@"ResetPassword" bundle:nil];
+        ResetPasswordController *controller = [board instantiateViewControllerWithIdentifier:@"ResetPasswordController"];
+        UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:controller];
+        [self presentViewController:navi animated:controller completion:nil];
+    }
     if (indexPath.section == 2 && indexPath.row == 0) {
         [self logOut];
     }
-       [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - UI PickerView delegate & data source

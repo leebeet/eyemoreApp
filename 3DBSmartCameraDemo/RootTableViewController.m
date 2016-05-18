@@ -27,22 +27,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.socketManager = [TCPSocketManager sharedTCPSocketManager];
-    
-    self.rightButton = [[Wifiicon alloc] init];
-    if (self.socketManager.isLost) {
-        [self.rightButton setIconConnected:NO];
-    }
-    else [self.rightButton setIconConnected:YES];
-    [self.rightButton addTarget:self action:@selector(rightButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightButton];
-    self.rightBarButtonItem.style = UIBarButtonItemStylePlain;
-    
-    self.navigationItem.rightBarButtonItem = self.rightBarButtonItem;
-    [self.navigationItem setRightBarButtonItem:self.rightBarButtonItem animated:YES];
-    
-    [self.socketManager addObserver:self forKeyPath:@"isLost" options:NSKeyValueObservingOptionNew context:nil];
+//    self.socketManager = [TCPSocketManager sharedTCPSocketManager];
+//    
+//    self.rightButton = [[Wifiicon alloc] init];
+//    if (self.socketManager.isLost) {
+//        [self.rightButton setIconConnected:NO];
+//    }
+//    else [self.rightButton setIconConnected:YES];
+//    [self.rightButton addTarget:self action:@selector(rightButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    self.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightButton];
+//    self.rightBarButtonItem.style = UIBarButtonItemStylePlain;
+//    
+//    self.navigationItem.rightBarButtonItem = self.rightBarButtonItem;
+//    [self.navigationItem setRightBarButtonItem:self.rightBarButtonItem animated:YES];
+//    
+//    [self.socketManager addObserver:self forKeyPath:@"isLost" options:NSKeyValueObservingOptionNew context:nil];
     
     // setup background color
     self.view.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];

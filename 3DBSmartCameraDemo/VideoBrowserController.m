@@ -42,11 +42,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    NSLog(@"VideoBrowserController will appear...");
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     [self setCameraWorkingState];
-//    for (int i = 0; i < [VideoConfig sharedVideoConfig].videoList.count; i ++) {
-//        NSLog(@"my eyemore video %d: %@", i, [[VideoConfig sharedVideoConfig] myEyemoreVideoAtIndex:i].videoMaterial);
-//    }
-    //[self.collectionView reloadData];
 }
 
 - (void)viewDidLoad {

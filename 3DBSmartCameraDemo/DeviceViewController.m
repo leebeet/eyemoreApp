@@ -240,10 +240,9 @@
 
 - (void)DeviceImageViewTapped
 {
-    //if (!self.socketManager.isLost) {
-        SettingCamTableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingCamTableViewController"];
-        [self.navigationController pushViewController:controller animated:YES];
-    //}
+    SettingCamTableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingCamTableViewController"];
+    controller.isPresentingStyle = NO;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)linkQuestButtonTapped

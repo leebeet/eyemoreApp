@@ -28,7 +28,7 @@
 
 - (void)setUpNaviBar
 {
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1];
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     UIBarButtonItem *btn1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(DismissVideoBrowser)];
     btn1.tintColor = [UIColor whiteColor];
     NSArray *arr1=[[NSArray alloc]initWithObjects:btn1, nil];

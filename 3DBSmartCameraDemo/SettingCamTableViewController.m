@@ -110,6 +110,22 @@
     // setup background color
     self.view.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
     
+    if (self.isPresentingStyle) {
+        [self setUpNaviBar];
+    }
+}
+
+- (void)setUpNaviBar
+{
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    UIBarButtonItem *btn1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(DismissVideoBrowser)];
+    btn1.tintColor = [UIColor whiteColor];
+    NSArray *arr1=[[NSArray alloc]initWithObjects:btn1, nil];
+    self.navigationItem.leftBarButtonItems = arr1;
+}
+- (void)DismissVideoBrowser
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

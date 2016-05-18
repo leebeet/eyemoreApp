@@ -127,7 +127,7 @@ static CGFloat   kfixedPartHeight = 123.0;
                                                        buttonDownColor:[UIColor redColor]
                                                               Delegate:self];
     }
-    //[self.view addSubview:self.scrollSegment];
+    [self.view addSubview:self.scrollSegment];
 }
 
 - (BOOL)checkingFollowingButtonState

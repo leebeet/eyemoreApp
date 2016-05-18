@@ -35,7 +35,7 @@ typedef void (^DeleteRecordHandler)(BOOL isDeleted);
 
 @interface VideoRecorder : NSObject <TCPSocketManagerDelegate>
 @property (strong, nonatomic) TCPSocketManager        *socketManager;
-@property (assign, nonatomic) id <VideoRecorderDelegate>  delegate;
+@property (weak  , nonatomic) id <VideoRecorderDelegate>  delegate;
 @property (strong, nonatomic) EyemoreVideo            *sampleVideo;
 @property (strong, nonatomic) FinishFirstFrameBlock   firstFrameBlock;
 @property (strong, nonatomic) DownloadProcessingBlock downloadProcessBlock;

@@ -115,7 +115,6 @@
 
     }
     
-    //self.imageView = [[BLSeeImageView alloc] init];
     CGPoint center;
     center = self.view.center;
     if (center.x > center.y) {
@@ -123,7 +122,6 @@
     }
     else self.imageView = [[BLSeeImageView alloc] initWithDirection:UIDeviceOrientationPortrait];
     self.imageView.center = center;
-    //self.imageView.currentImage = [[UIImage alloc] init];
     NSLog(@"root view controller did load with last image index:%lu", (unsigned long)self.imgClient.lastImageIndex);
     [self.imageView scanImagesMode:self.scrollArray WithImageIndex:self.imgClient.lastImageIndex];
     [self.view addSubview:self.imageView];
@@ -194,7 +192,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modeDetectingFore)     name:@"EnterForeground" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modeDetectingBack)     name:@"EnterBackground" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncingStateChangged:) name:@"SyncState" object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncingStateChangged:) name:@"SyncState" object:nil];
     [self.takeButton setHidden:YES];
     
     dispatch_async(dispatch_get_main_queue(), ^(){
@@ -212,7 +210,6 @@
     self.topToolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 52)];
     [self.topToolBar setTranslucent:YES];
     self.topToolBar.barStyle = UIBarStyleBlack;
-    //self.topToolBar.barTintColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1];
     self.topToolBar.tintColor = [UIColor whiteColor];
     [self.view addSubview:self.topToolBar];
     UIBarButtonItem *btn1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(dismissController)];
@@ -221,7 +218,6 @@
     UIBarButtonItem *btn4 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     NSArray *arr1=[[NSArray alloc]initWithObjects:btn1, btn2, btn3, btn4, nil];
     [self.topToolBar setItems:arr1 animated:YES];
-
 }
 
 - (void)setUpBottomToolBar
@@ -271,77 +267,77 @@
     [self.view addSubview:self.detailView];
 }
 
-- (void)initAllButton
-{
-
-    CGFloat buttonSize = 80;
-    CGRect buttonRect1 = CGRectMake(self.view.bounds.size.width/10.0 * 1,
-                                   self.view.bounds.size.height/10.0 * 8.5,
-                                   buttonSize,
-                                   buttonSize);
-    self.roundSaveButton = [[MRoundedButton alloc] initWithFrame:buttonRect1
-                                                       buttonStyle:MRoundedButtonDefault
-                                              appearanceIdentifier:[NSString stringWithFormat:@"%d", 1]];
-    self.roundSaveButton.backgroundColor = [UIColor clearColor];
-    self.roundSaveButton.textLabel.text = @"保存";
-    self.roundSaveButton.textLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:25];
-    self.roundSaveButton.imageView.image = [UIImage imageNamed:@"download2"];
-    [self.roundSaveButton addTarget:self action:@selector(saveButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.roundSaveButton];
-    
-    
-    
-    
-    CGRect buttonRect2 = CGRectMake(self.view.bounds.size.width/10.0 * 7,
-                                    self.view.bounds.size.height/10.0 * 8.5,
-                                    buttonSize,
-                                    buttonSize);
-    self.roundDelButton = [[MRoundedButton alloc] initWithFrame:buttonRect2
-                                                     buttonStyle:MRoundedButtonDefault
-                                            appearanceIdentifier:[NSString stringWithFormat:@"%d", 1]];
-    self.roundDelButton.backgroundColor = [UIColor clearColor];
-    self.roundDelButton.textLabel.text = @"删除";
-    self.roundDelButton.textLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:25];
-    self.roundDelButton.imageView.image = [UIImage imageNamed:@"12-delete"];
-    [self.roundDelButton addTarget:self action:@selector(removeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.roundDelButton];
-    
-    
-    
-    
-    CGFloat buttonSize2 = 40;
-    CGRect buttonRect3 = CGRectMake(self.view.bounds.size.width/10.0 * 1.0,
-                                    self.view.bounds.size.height/10.0 * 0.5,
-                                    buttonSize2,
-                                    buttonSize2);
-    self.backButton = [[MRoundedButton alloc] initWithFrame:buttonRect3
-                                                buttonStyle:MRoundedButtonCentralImage
-                                       appearanceIdentifier:[NSString stringWithFormat:@"%d", 3]];
-    self.backButton.center = CGPointMake(self.view.bounds.size.width/10.0 * 1.0,
-                                         self.view.bounds.size.height/10.0 * 0.5);
-    //self.roundDelButton.textLabel.text = @"返回";
-    //self.roundDelButton.textLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:25];
-    self.backButton.imageView.image = [UIImage imageNamed:@"104-Back"];
-    [self.backButton addTarget:self action:@selector(returnButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view insertSubview:self.backButton aboveSubview:self.imageView];
-    
-    
-    if (self.imgClient.isShownJpgInfo) {
-        self.jpgIndexLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width/10.0 * 1,
-                                                                       self.view.bounds.size.height/10.0 * 1,
-                                                                       200,
-                                                                       30)];
-        
-        self.jpgIndexLabel.center = CGPointMake(self.view.frame.size.width / 2, self.view.bounds.size.height/10.0 * 0.5);
-        self.jpgIndexLabel.text = [NSString stringWithFormat:@"当前图片索引: %@",[self.imgClient extractImageIndexWithData:
-                                                                            [self.imgClient getImageDataForKey:[self.imageView returnCurrentImagePath]]]];
-        self.jpgIndexLabel.textAlignment = NSTextAlignmentCenter;
-        self.jpgIndexLabel.font = [UIFont systemFontOfSize:15];
-        self.jpgIndexLabel.textColor = [UIColor whiteColor];
-        [self setUpShadowWithView:self.jpgIndexLabel];
-        [self.view addSubview:self.jpgIndexLabel];
-    }
-}
+//- (void)initAllButton
+//{
+//
+//    CGFloat buttonSize = 80;
+//    CGRect buttonRect1 = CGRectMake(self.view.bounds.size.width/10.0 * 1,
+//                                   self.view.bounds.size.height/10.0 * 8.5,
+//                                   buttonSize,
+//                                   buttonSize);
+//    self.roundSaveButton = [[MRoundedButton alloc] initWithFrame:buttonRect1
+//                                                       buttonStyle:MRoundedButtonDefault
+//                                              appearanceIdentifier:[NSString stringWithFormat:@"%d", 1]];
+//    self.roundSaveButton.backgroundColor = [UIColor clearColor];
+//    self.roundSaveButton.textLabel.text = @"保存";
+//    self.roundSaveButton.textLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:25];
+//    self.roundSaveButton.imageView.image = [UIImage imageNamed:@"download2"];
+//    [self.roundSaveButton addTarget:self action:@selector(saveButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:self.roundSaveButton];
+//    
+//    
+//    
+//    
+//    CGRect buttonRect2 = CGRectMake(self.view.bounds.size.width/10.0 * 7,
+//                                    self.view.bounds.size.height/10.0 * 8.5,
+//                                    buttonSize,
+//                                    buttonSize);
+//    self.roundDelButton = [[MRoundedButton alloc] initWithFrame:buttonRect2
+//                                                     buttonStyle:MRoundedButtonDefault
+//                                            appearanceIdentifier:[NSString stringWithFormat:@"%d", 1]];
+//    self.roundDelButton.backgroundColor = [UIColor clearColor];
+//    self.roundDelButton.textLabel.text = @"删除";
+//    self.roundDelButton.textLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:25];
+//    self.roundDelButton.imageView.image = [UIImage imageNamed:@"12-delete"];
+//    [self.roundDelButton addTarget:self action:@selector(removeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:self.roundDelButton];
+//    
+//    
+//    
+//    
+//    CGFloat buttonSize2 = 40;
+//    CGRect buttonRect3 = CGRectMake(self.view.bounds.size.width/10.0 * 1.0,
+//                                    self.view.bounds.size.height/10.0 * 0.5,
+//                                    buttonSize2,
+//                                    buttonSize2);
+//    self.backButton = [[MRoundedButton alloc] initWithFrame:buttonRect3
+//                                                buttonStyle:MRoundedButtonCentralImage
+//                                       appearanceIdentifier:[NSString stringWithFormat:@"%d", 3]];
+//    self.backButton.center = CGPointMake(self.view.bounds.size.width/10.0 * 1.0,
+//                                         self.view.bounds.size.height/10.0 * 0.5);
+//    //self.roundDelButton.textLabel.text = @"返回";
+//    //self.roundDelButton.textLabel.font = [UIFont fontWithName:@"STHeitiJ-Light" size:25];
+//    self.backButton.imageView.image = [UIImage imageNamed:@"104-Back"];
+//    [self.backButton addTarget:self action:@selector(returnButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view insertSubview:self.backButton aboveSubview:self.imageView];
+//    
+//    
+//    if (self.imgClient.isShownJpgInfo) {
+//        self.jpgIndexLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width/10.0 * 1,
+//                                                                       self.view.bounds.size.height/10.0 * 1,
+//                                                                       200,
+//                                                                       30)];
+//        
+//        self.jpgIndexLabel.center = CGPointMake(self.view.frame.size.width / 2, self.view.bounds.size.height/10.0 * 0.5);
+//        self.jpgIndexLabel.text = [NSString stringWithFormat:@"当前图片索引: %@",[self.imgClient extractImageIndexWithData:
+//                                                                            [self.imgClient getImageDataForKey:[self.imageView returnCurrentImagePath]]]];
+//        self.jpgIndexLabel.textAlignment = NSTextAlignmentCenter;
+//        self.jpgIndexLabel.font = [UIFont systemFontOfSize:15];
+//        self.jpgIndexLabel.textColor = [UIColor whiteColor];
+//        [self setUpShadowWithView:self.jpgIndexLabel];
+//        [self.view addSubview:self.jpgIndexLabel];
+//    }
+//}
 
 - (void)shouldAutorotateTimer
 {
@@ -589,7 +585,10 @@
         [albumManager saveToAlbumWithMetadata:nil
                                     imageData:imageData
                               customAlbumName:@"eyemore Album"
-                              completionBlock:^{ [(UIButton *)sender setEnabled:YES]; }
+                              completionBlock:^{
+                                  [(UIButton *)sender setEnabled:YES];
+                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"AlbumUpdation" object:nil];
+                              }
                                  failureBlock:^(NSError *error)
          {
              //处理添加失败的方法显示alert让它回到主线程执行，不然那个框框死活不肯弹出来
@@ -635,6 +634,7 @@
     if (self.imgClient.imgPath.count == 0) {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"AlbumUpdation" object:nil];
     [self.imageView reMonitoringSleeping];
 
 }
@@ -974,21 +974,20 @@
 
     }
 }
-
-- (void)syncingStateChangged:(NSNotification *)noti
-{
-    NSString *notiString = [noti object];
-    if ([notiString isEqualToString:@"已同步所有照片"]) {
-        dispatch_async(dispatch_get_main_queue(), ^(){
-            [ProgressHUD showSuccess:notiString];
-        });
-    }
-    else
-        dispatch_async(dispatch_get_main_queue(), ^(){
-            [ProgressHUD showError:notiString Interaction:NO];
-            [self dismissController];
-        });
-}
+//- (void)syncingStateChangged:(NSNotification *)noti
+//{
+//    NSString *notiString = [noti object];
+//    if ([notiString isEqualToString:@"已同步所有照片"]) {
+//        dispatch_async(dispatch_get_main_queue(), ^(){
+//            [ProgressHUD showSuccess:notiString];
+//        });
+//    }
+//    else
+//        dispatch_async(dispatch_get_main_queue(), ^(){
+//            [ProgressHUD showError:notiString Interaction:NO];
+//            [self dismissController];
+//        });
+//}
 
 #pragma mark - Rotation Setting
 

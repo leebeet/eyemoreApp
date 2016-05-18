@@ -51,7 +51,7 @@ typedef enum _erroCode{
 
 @interface TCPSocketManager : NSObject<GCDAsyncSocketDelegate, GCDAsyncUdpSocketDelegate>
 
-@property (nonatomic, assign) id   <TCPSocketManagerDelegate>  delegate;
+@property (nonatomic, weak  ) id   <TCPSocketManagerDelegate>  delegate;
 @property (nonatomic, strong)      GCDAsyncSocket             *lingSocket;   // 信令socket
 @property (nonatomic, strong)      GCDAsyncSocket             *dataSocket;   // 数据socket
 @property (nonatomic, strong)      GCDAsyncUdpSocket          *HBSocket;     // 心跳包socket

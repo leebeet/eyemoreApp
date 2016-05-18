@@ -23,6 +23,7 @@
 #import "WIFIDetector.h"
 #import "DeformationButton.h"
 #import "FirmwareManager.h"
+#import "BLUIkitTool.h"
 
 #define kMaxNumber 20
 
@@ -40,7 +41,9 @@ typedef enum _downloadButtonStatus{
     NSData *_imageData;
     NSDate *_finishDate;
     NSDate *_startDate;
-    
+    UIProgressView *_savingProgress;
+    BOOL _firstTimeload;
+    float _progressValueUnit;
 }
 
 @property (weak,   nonatomic) IBOutlet ASProgressPopUpView *progressView;
@@ -71,6 +74,9 @@ typedef enum _downloadButtonStatus{
 @property (strong, nonatomic)          UICollectionView    *collectionView;
 @property (strong, nonatomic)          DeformationButton   *syncingButton;
 
+@property (strong, nonatomic)          UIToolbar           *menuBar;
+
+
 
 @end
 
@@ -80,7 +86,7 @@ typedef enum _downloadButtonStatus{
 {
     [super viewWillAppear:animated];
     [self setCameraWorkingState];    
-    NSLog(@"view will appear...");
+    NSLog(@"DownloadViewController will appear...");
     if (self.imgClient.imgPath.count == 0) {
         //[self.imageButton setImage:nil forState:UIControlStateNormal];
         [self.hintLabel setHidden:NO];
@@ -90,7 +96,7 @@ typedef enum _downloadButtonStatus{
         [self.hintLabel setHidden:YES];
     }
     //更新collection view
-        [self updateUIWithReloadCollectionView];
+        //[self updateUIWithReloadCollectionView];
     
     //更新syncingButton动画
     if (self.socketMode == DOWNLOADMODE) {
@@ -159,9 +165,10 @@ typedef enum _downloadButtonStatus{
     self.albumManager = [ImageAlbumManager sharedImageAlbumManager];
     self.savePhotoToAlbumQueue = dispatch_queue_create("com.dispatch.serial", DISPATCH_QUEUE_SERIAL);
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modeDetecting) name:@"EnterForeground" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncingStateChangged:) name:@"SyncState" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(PhotoCountUpdate:) name:@"PhotoCountUpdate" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modeDetecting)         name:@"EnterForeground"  object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncingStateChangged:) name:@"SyncState"        object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(PhotoCountUpdate:)     name:@"PhotoCountUpdate" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(albumRefresh:)         name:@"AlbumUpdation"    object:nil];
     
     //[self initPoPLinkLabel];
     self.timeOutInfo = nil;
@@ -175,13 +182,21 @@ typedef enum _downloadButtonStatus{
     //self.edgesForExtendedLayout = UIRectEdgeNone;
     
     //初始化同步buttonitem
-    [self setUpSyncButtonItem];
+    [self setUpMenuButtonItem];
     
     //初始化socket mode
     self.socketMode = NORMALMODE;
     
     // setup background color
     self.view.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
+    
+    _firstTimeload = YES;
+    [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(cancelFirstTimeLoad) userInfo:nil repeats:NO];
+}
+
+- (void)cancelFirstTimeLoad
+{
+    _firstTimeload = NO;
 }
 
 - (void)setUIInteractionEnable:(BOOL)isEnable
@@ -209,7 +224,7 @@ typedef enum _downloadButtonStatus{
 - (void)setUpHintLabel
 {
     self.hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 150)];
-    self.hintLabel.center = CGPointMake(self.view.center.x, self.view.center.y - 70);
+    self.hintLabel.center = CGPointMake(self.view.center.x, self.view.center.y);
     self.hintLabel.text = @"无照片";
     self.hintLabel.textAlignment = NSTextAlignmentCenter;
     self.hintLabel.textColor = [UIColor grayColor];
@@ -224,7 +239,7 @@ typedef enum _downloadButtonStatus{
     flowLayout.minimumLineSpacing = 2;
     flowLayout.minimumInteritemSpacing = 0;
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) collectionViewLayout:flowLayout];
-    //[self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 44, 0)];
+    [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 44, 0)];
     self.collectionView.dataSource = self;
     self.collectionView.delegate   = self;
     [self.collectionView setBackgroundColor:[UIColor clearColor]];
@@ -239,11 +254,53 @@ typedef enum _downloadButtonStatus{
 
 }
 
-- (void)setUpSyncButtonItem
+- (void)setUpMenuButtonItem
 {
-//    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"138-Download.png"] style:UIBarButtonItemStyleDone target:self action:@selector(downloadButtonTapped)];
-//    [self.navigationItem setLeftBarButtonItem:btn];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(downloadButtonTapped) name:@"syncButtonTapped" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuButtonTapped) name:@"menuButtonTapped" object:nil];
+}
+
+- (void)menuButtonTapped
+{
+    static BOOL shouldShow = YES;
+    if (shouldShow) {
+        [self setUpMenuBar];
+        shouldShow = NO;
+    }
+    else {
+        [self unSetUpMenuBar];
+        shouldShow = YES;
+    }
+}
+
+- (void)setUpMenuBar
+{
+    if (self.menuBar == nil) {
+        self.menuBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+        self.menuBar.barStyle = UIBarStyleBlack;
+        self.menuBar.tintColor = [UIColor redColor];
+        
+        //UIBarButtonItem *btn1 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"syncIcon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(downloadButtonTapped)];
+        UIBarButtonItem *btn1 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"syncIcon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(downloadButtonTapped)];
+        UIBarButtonItem *btn2 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"downloadBox_big.png"] style:UIBarButtonItemStylePlain target:self action:@selector(saveBarItemTapped)];
+        UIBarButtonItem *btn3 = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"trashBox.png"] style:UIBarButtonItemStylePlain target:self action:@selector(deleteBarItemTapped)];
+        UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
+        fixedSpace.width = 50;
+        
+        NSArray *arr1=[[NSArray alloc]initWithObjects:fixedSpace, btn1, flexibleSpace, btn2, flexibleSpace, btn3, fixedSpace, nil];
+        [self.menuBar setItems:arr1 animated:YES];
+    }
+    [self.navigationItem.leftBarButtonItem setEnabled:NO];
+    [self.view addSubview:self.menuBar];
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^(){
+                         self.menuBar.center = CGPointMake(self.menuBar.center.x, self.menuBar.center.y + 64);
+                     }
+                     completion:^(BOOL finished){
+                         [self.navigationItem.leftBarButtonItem setEnabled:YES];
+                     }];
 }
 
 - (void)setUpSyncingButton
@@ -273,7 +330,6 @@ typedef enum _downloadButtonStatus{
         center.y = center.y - heightDifference/2.0 - 8;
         self.syncingButton.center = center;
     }
-    [self.tabBarController.tabBar setUserInteractionEnabled:NO];
     [self.tabBarController.view addSubview:self.syncingButton];
 }
 
@@ -290,7 +346,6 @@ typedef enum _downloadButtonStatus{
     } completion:^(BOOL finished){
         [self.syncingButton removeFromSuperview];
         self.syncingButton = nil;
-        [self.tabBarController.tabBar setUserInteractionEnabled:YES];
     }];
 }
 
@@ -308,6 +363,22 @@ typedef enum _downloadButtonStatus{
 {
     UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:1];
     item.badgeValue= nil;
+}
+
+- (void)unSetUpMenuBar
+{
+    [self.navigationItem.leftBarButtonItem setEnabled:NO];
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^(){
+                         self.menuBar.center = CGPointMake(self.menuBar.center.x, self.menuBar.center.y - 64);
+                     }
+                     completion:^(BOOL finished){
+                         [self.navigationItem.leftBarButtonItem setEnabled:YES];
+                         [self.menuBar removeFromSuperview];
+                         self.menuBar = nil;
+                     }];
 }
 //- (void)initPoPLinkLabel
 //{
@@ -367,9 +438,17 @@ typedef enum _downloadButtonStatus{
 - (void)updateUIWithSyncMode:(CameraMode)mode
 {
     if (mode == DOWNLOADMODE) {
+        [self.navigationController.navigationBar setUserInteractionEnabled:NO];
+        [self.tabBarController.tabBar setUserInteractionEnabled:NO];
+        [self.collectionView setUserInteractionEnabled:NO];
+        
         [self setUpSyncingButton];
     }
     if (mode == NORMALMODE) {
+        [self.navigationController.navigationBar setUserInteractionEnabled:YES];
+        [self.tabBarController.tabBar setUserInteractionEnabled:YES];
+        [self.collectionView setUserInteractionEnabled:YES];
+
         [self unSetUpSyncingButton];
     }
 }
@@ -398,12 +477,13 @@ typedef enum _downloadButtonStatus{
 
 - (void)updateUIWithReloadCollectionView
 {
+    [self.collectionView reloadData];
     float offsetHeight = self.collectionView.contentSize.height - self.collectionView.bounds.size.height;
     if (offsetHeight > 0) {
-        [self.collectionView setContentOffset:CGPointMake(0, self.collectionView.contentSize.height - self.collectionView.bounds.size.height) animated:YES];
+        [self.collectionView setContentOffset:CGPointMake(0, self.collectionView.contentSize.height - self.collectionView.bounds.size.height + 44) animated:YES];
     }
     NSLog(@"self.collectionView.contentSize.height - self.collectionView.bounds.size.height = %f",self.collectionView.contentSize.height - self.collectionView.bounds.size.height);
-    [self.collectionView reloadData];
+    //[self.collectionView reloadData];
 }
 #pragma mark - Button Tapping Event Actions
 
@@ -420,6 +500,68 @@ typedef enum _downloadButtonStatus{
         [self.wifiMessageFail showMessageView];
     }
     [self.hintLabel setHidden:YES];
+    [self menuButtonTapped];
+}
+
+- (void)saveBarItemTapped
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"保存全部照片" message:@"确定保存所有照片至相册，同时清空app内的所有照片？" preferredStyle:UIAlertControllerStyleAlert];
+    // Create the actions.
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"The \"Okay/Cancel\" alert's cancel action occured.");
+    }];
+    
+    UIAlertAction *otherAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"The \"Okay/Cancel\" alert's other action occured.");
+        [self menuButtonTapped];
+        
+        _savingProgress = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
+        _savingProgress.progressViewStyle = UIProgressViewStyleBar;
+        _savingProgress.progressTintColor = [UIColor redColor];
+        _savingProgress.trackTintColor = [UIColor grayColor];
+        _savingProgress.progress = 0;
+        _savingProgress.transform = CGAffineTransformMakeScale(1, 3);
+        [ProgressHUD show:@"正在保存照片..." view:_savingProgress Interaction:NO];
+        
+        _progressValueUnit = (float)1.0 / self.imgClient.imgPath.count;
+        [self batchSaveAllPhotos];
+    }];
+    
+    // Add the actions.
+    [alertController addAction:cancelAction];
+    [alertController addAction:otherAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)deleteBarItemTapped
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"删除全部照片" message:@"确定清空app内的所有照片？" preferredStyle:UIAlertControllerStyleAlert];
+    // Create the actions.
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"The \"Okay/Cancel\" alert's cancel action occured.");
+    }];
+    
+    UIAlertAction *otherAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"The \"Okay/Cancel\" alert's other action occured.");
+        [self menuButtonTapped];
+        [self.imgClient.dataCache removeAllWithBlock:^(BOOL success){
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                [self.imgClient.imgPath removeAllObjects];
+                [SaveLoadInfoManager saveAppInfoWithClient:self.imgClient];
+                
+                //删除完成后ui刷新
+                [ProgressHUD showSuccess:@"删除成功"];
+                [self setUpHintLabel];
+                [self updateUIWithReloadCollectionView];
+            });
+        }];
+    }];
+    
+    // Add the actions.
+    [alertController addAction:cancelAction];
+    [alertController addAction:otherAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+
 }
 
 - (void)syncingButtonTapped
@@ -465,13 +607,81 @@ typedef enum _downloadButtonStatus{
     }
 }
 
-//- (void)detect3dbNetWork
-//{
-//    if (![[WIFIDetector sharedWIFIDetector] isConnecting3dbCamera]) {
-//        
-//        [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(popingLinkLabel) userInfo:nil repeats:NO];
-//    }
-//}
+#pragma mark - Saving & Deleting Manage
+
+- (void)batchSaveAllPhotos
+{
+    static float progress = 0;
+    if (self.imgClient.imgPath.count) {
+        NSLog(@"self.imageClient.imagePath: %@", self.imgClient.imgPath[0] );
+        NSData *imageData = [self.imgClient getImageDataForKey:self.imgClient.imgPath[0]];
+        
+        //老设备无法创建相册，此处做兼容，直接保存到本地相册
+        if ([[BLUIkitTool deviceVersion] isEqualToString:@"iPad mini (WiFi)"]) {
+            UIImageWriteToSavedPhotosAlbum([UIImage imageWithData:imageData], self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+        }
+        else [self.albumManager saveToAlbumWithMetadata:nil
+                                              imageData:imageData
+                                        customAlbumName:@"eyemore Album"
+                                        completionBlock:^(){
+                                            
+                                            [self.imgClient removeImageDataWithPath:self.imgClient.imgPath[0] WithCameraMode:DOWNLOADMODE];
+                                            [self.imgClient.imgPath removeObjectAtIndex:0];
+                                            [SaveLoadInfoManager saveAppInfoWithClient:self.imgClient];
+                                            
+                                            [self batchSaveAllPhotos];
+                                            //dispatch_async(dispatch_get_main_queue(), ^(){
+                                            progress += _progressValueUnit;
+                                            [_savingProgress setProgress:progress animated:YES];
+                                            
+                                            // });
+                                        }
+                                           failureBlock:^(NSError *error){
+                                               //处理添加失败的方法显示alert让它回到主线程执行，不然那个框框死活不肯弹出来
+                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                   
+                                                   //添加失败一般是由用户不允许应用访问相册造成的，这边可以取出这种情况加以判断一下
+                                                   if([error.localizedDescription rangeOfString:@"User denied access"].location != NSNotFound ||[error.localizedDescription rangeOfString:@"用户拒绝访问"].location!=NSNotFound){
+                                                       
+                                                       UIAlertView *alert=[[UIAlertView alloc]initWithTitle:error.localizedDescription
+                                                                                                    message:error.localizedFailureReason
+                                                                                                   delegate:nil
+                                                                                          cancelButtonTitle:NSLocalizedString(@"ok", nil)
+                                                                                          otherButtonTitles:nil];
+                                                       
+                                                       [alert show];
+                                                   }
+                                               });
+                                           }];
+    }
+    else {
+        [ProgressHUD showSuccess:@"保存成功" Interaction: NO];
+        [self setUpHintLabel];
+        [self updateUIWithReloadCollectionView];
+        progress = 0;
+    }
+}
+
+//有些型号的设备无法创建自定义相册，所以只能保存到胶卷，此时每存完一张都会掉用一下通知回调
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
+{
+    static float progress = 0;
+    
+    [self.imgClient removeImageDataWithPath:self.imgClient.imgPath[0] WithCameraMode:DOWNLOADMODE];
+    [self.imgClient.imgPath removeObjectAtIndex:0];
+    [SaveLoadInfoManager saveAppInfoWithClient:self.imgClient];
+    
+    [self batchSaveAllPhotos];
+    progress += _progressValueUnit;
+    [_savingProgress setProgress:progress animated:YES];
+    
+    if (self.imgClient.imgPath.count == 0) {
+        progress = 0;
+        [self setUpHintLabel];
+        [self updateUIWithReloadCollectionView];
+    }
+}
+
 
 #pragma mark - Downloading & Progress Manage Methods
 
@@ -521,6 +731,11 @@ typedef enum _downloadButtonStatus{
     dispatch_async(dispatch_get_main_queue(), ^(){
         [self setUpItemBadgeValueWithNumber:count];
     });
+}
+
+- (void)albumRefresh:(NSNotification *)noti
+{
+    [self updateUIWithReloadCollectionView];
 }
 
 #pragma mark - UICollectionView Data Source
@@ -686,15 +901,6 @@ typedef enum _downloadButtonStatus{
 //{
 //    [self loadImagesForOnscreenRows];
 //}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    static int i  = 0;
-    if (i == 0) {
-        [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 44, 0)];
-        i = 1;
-    }
-}
 #pragma mark - UICollectionView Delegate FlowLayout
 
 //定义每个Item 的大小
@@ -938,8 +1144,16 @@ typedef enum _downloadButtonStatus{
             [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetPhotoToSDCard];
         }
         dispatch_async(dispatch_get_main_queue(), ^(){
-            //[ProgressHUD showSuccess:@"连接成功" Interaction:NO];
-            [self.popLinkLabel dismiss];
+            if (_firstTimeload) {
+                _firstTimeload = NO;
+                dispatch_async(dispatch_get_main_queue(), ^(){
+                    PulseWaveController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"PulseWaveController"];
+                    [self presentViewController:controller animated:YES completion:nil];
+                });
+            }
+            else {
+                [self downloadButtonTapped];
+            }
         });
     }
 }
@@ -955,19 +1169,10 @@ typedef enum _downloadButtonStatus{
 {
     
     NSString *camVer = [NSString stringWithFormat:@"%s", decInfo.dev_version];
-    //float i = [[camVer substringFromIndex:1] floatValue];
-    
     FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
     manager.camVerison = [NSString stringWithString:camVer];
     [manager saveFirmware];
     
-//    if ([manager checkingCameraShouldUpdateWithCamVer:manager.camVerison]) {
-//        UpdateViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"updateController"];
-//        controller.currentVersion = i;
-//        controller.message = [NSString stringWithFormat:@"检测到您的设备: %@ 有新固件: %@ 待升级, 为不影响您的体验, 建议您确定更新 \n更新说明: \n%@",[[WIFIDetector sharedWIFIDetector] getDeviceSSID], manager.latestUpdate, manager.latestUpdateInfo];
-//        [self presentViewController:controller animated:YES completion:nil];
-//        
-//    }
 }
 
 - (void)didReceiveMemoryWarning {

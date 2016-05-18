@@ -162,6 +162,10 @@
 {
     [self.getFrameTimer setFireDate:[NSDate distantFuture]];
     [self.getFrameTimer invalidate];
+    
+    [self.connectLiveViewTimer setFireDate:[NSDate distantFuture]];
+    [self.connectLiveViewTimer invalidate];
+    
     //[self.timaoutManager stopTimeOutExecution];
 }
 

@@ -73,11 +73,11 @@
 {
     [super viewWillAppear:animated];
     
-    self.socketManager = [TCPSocketManager sharedTCPSocketManager];
-    self.socketManager.delegate = self;
-    
-    //设置相机工作模式
-    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetPhotoToSDCard];
+//    self.socketManager = [TCPSocketManager sharedTCPSocketManager];
+//    self.socketManager.delegate = self;
+//    
+//    //设置相机工作模式
+//    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetPhotoToSDCard];
     
     //[[NSNotificationCenter defaultCenter] postNotificationName:@"MeTableViewControllerWillAppear" object:nil];
     UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:2];
@@ -100,10 +100,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.tableView.delegate = self;
-    self.imgClient =[ImageClient sharedImageClient];
-    
-    self.albumManager = [ImageAlbumManager sharedImageAlbumManager];
-    [self.albumManager createCustomAlbumWithName:@"eyemore Album"];
+//    self.imgClient =[ImageClient sharedImageClient];
+//    
+//    self.albumManager = [ImageAlbumManager sharedImageAlbumManager];
+//    [self.albumManager createCustomAlbumWithName:@"eyemore Album"];
     
     self.updateHintView.layer.cornerRadius = 5 ;
     self.isOldVersionHandle = NO;
@@ -348,15 +348,15 @@
 {
     NSLog(@"did selected row : %ld and section : %ld", (long)indexPath.row, (long)indexPath.section);
     
-    if (indexPath.section == 1 && indexPath.row == 3) {
-        self.removeAlert = [[UIAlertView alloc] initWithTitle:@"确定删除"
-                                                     message:@"确定删除app内所有已同步的照片吗"
-                                                    delegate:self
-                                           cancelButtonTitle:@"取消"
-                                           otherButtonTitles:@"确定",nil];
-        
-        [self.removeAlert show];
-    }
+//    if (indexPath.section == 1 && indexPath.row == 3) {
+//        self.removeAlert = [[UIAlertView alloc] initWithTitle:@"确定删除"
+//                                                     message:@"确定删除app内所有已同步的照片吗"
+//                                                    delegate:self
+//                                           cancelButtonTitle:@"取消"
+//                                           otherButtonTitles:@"确定",nil];
+//        
+//        [self.removeAlert show];
+//    }
 //    if (indexPath.section == 1 &&indexPath.row == 3) {
 //        self.formattingAlert = [[UIAlertView alloc] initWithTitle:@"格式化相机"
 //                                                         message:@"相机格式化后，相机内所有照片会被删除，确定格式化相机并重启相机吗？"
@@ -378,20 +378,20 @@
 //        }
 //        else [ProgressHUD showError:@"连接已断开, 请连接相机后再试一次！" Interaction:NO];
 //    }
-    if (indexPath.row == 2 && indexPath.section == 1) {
-    
-        if (self.imgClient.imgPath.count > 0) {
-            
-            self.saveAlert = [[UIAlertView alloc] initWithTitle:@"确定保存全部照片吗？"
-                                                          message:@"保存所有照片至本地相册同时清除app内的所有相片"
-                                                         delegate:self
-                                                cancelButtonTitle:@"取消"
-                                                otherButtonTitles:@"确定",nil];
-            
-            [self.saveAlert show];
-        }
-    }
-    if (indexPath.section == 1 && indexPath.row == 4) {
+//    if (indexPath.row == 2 && indexPath.section == 1) {
+//    
+//        if (self.imgClient.imgPath.count > 0) {
+//            
+//            self.saveAlert = [[UIAlertView alloc] initWithTitle:@"确定保存全部照片吗？"
+//                                                          message:@"保存所有照片至本地相册同时清除app内的所有相片"
+//                                                         delegate:self
+//                                                cancelButtonTitle:@"取消"
+//                                                otherButtonTitles:@"确定",nil];
+//            
+//            [self.saveAlert show];
+//        }
+//    }
+    if (indexPath.section == 1 && indexPath.row == 2) {
         self.isPassCodeCorrected = NO;
         [[LTHPasscodeViewController sharedUser] showLockScreenWithAnimation:YES
                                                                  withLogout:NO
@@ -599,6 +599,7 @@
         
         SettingCamTableViewController *controller = segue.destinationViewController;
         controller.isDevelopUse = NO;
+        controller.isPresentingStyle = NO;
     }
 }
 

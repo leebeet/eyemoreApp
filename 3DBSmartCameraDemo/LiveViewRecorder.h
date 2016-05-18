@@ -35,7 +35,7 @@ typedef enum _VIEWING_MODE
 @interface LiveViewRecorder : NSObject 
 
 @property (strong, nonatomic) GCDAsyncSocket *liveViewSocket;
-@property (assign, nonatomic) id <LiveViewRecorderDelegate> delegate;
+@property (weak, nonatomic) id <LiveViewRecorderDelegate> delegate;
 @property (assign, nonatomic) VIEWING_MODE mode;
 @property (assign, nonatomic) BOOL isConnected;
 

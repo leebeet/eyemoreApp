@@ -32,20 +32,23 @@
 #import "BLFocusingIndicator.h"
 #import "FirmwareManager.h"
 #import "CustomedToolBar.h"
-#import "BLRocker.h"
 #import "CameraConfiguration.h"
 #import "YAScrollSegmentControl.h"
 #import "BLCountDowner.h"
 #import "EyemoreVideo.h"
 #import "VideoConfig.h"
 #import "VideoListController.h"
+#import "ConnectionStatusView.h"
+#import "SettingCamTableViewController.h"
+#import "RootNavigationController.h"
 
 #define kscanShootTimeInterval 0.2
 #define kLanscapeDirection CGAffineTransformMakeRotation(- M_PI / 2);
 #define kPortraitDirection CGAffineTransformMakeRotation( M_PI * 2);
 #define kSelfieShootCount 30
+#define kLiveViewHeight (270 * self.view.frame.size.width / 480 - 4)
 
-@interface PulseWaveController ()<imageClientDelegate, TCPSocketManagerDelegate, TTRangeSliderDelegate, UIAlertViewDelegate, MMPopLabelDelegate, YJSegmentedControlDelegate, LiveViewRecorderDelegate, VideoRecorderDelegate, BLRockerDelegate, YAScrollSegmentControlDelegate, BLCountDownerDelegate>
+@interface PulseWaveController ()<imageClientDelegate, TCPSocketManagerDelegate, TTRangeSliderDelegate, UIAlertViewDelegate, MMPopLabelDelegate, YJSegmentedControlDelegate, LiveViewRecorderDelegate, VideoRecorderDelegate, YAScrollSegmentControlDelegate, BLCountDownerDelegate>
 {
     NSMutableDictionary *_HDVideoInfo;
     BOOL _isSocketManagerTransforing;
@@ -107,26 +110,23 @@
 @property (assign, nonatomic) NSInteger             selfieCount;
 @property (assign, nonatomic) BOOL                  isExecuteShootTimer;
 @property (strong, nonatomic) MMPopLabel           *popLinkLabel;
-//@property (assign, nonatomic) BOOL                  isTakeButtonTapped;
+
 @property (assign, nonatomic) BOOL                  isRecordButtonTapped;
 @property (assign, nonatomic) BOOL                  isFullScreen;
 @property (assign, nonatomic) BOOL                  isTakeButtonLongPressed;
 @property (assign, nonatomic) int                   downloadedFrameCount;
 
-//@property (strong, nonatomic) UIPickerView         *EVPickerView;
-//@property (strong, nonatomic) UIPickerView         *shutterPickerView;
-//@property (strong, nonatomic) UIPickerView         *irisPickerView;
-
 @property (strong, nonatomic) UILabel              *evLabelCurrent;
 @property (strong, nonatomic) UILabel              *shutterLabelCurrent;
 @property (strong, nonatomic) UILabel              *irisLabelCurrent;
 
-@property (strong, nonatomic) BLRocker             *evRocker;
-@property (strong, nonatomic) BLRocker             *shutterRocker;
-@property (strong, nonatomic) BLRocker             *irisRocker;
 @property (strong, nonatomic) BLFocusingIndicator  *focusingIndicator;
 @property (strong, nonatomic) UIButton             *resetButton;
+@property (strong, nonatomic) UIView               *scrollSegmentView;
 @property (strong, nonatomic) UIView               *extendToolView;
+@property (strong, nonatomic) UIView               *paramsToolView;
+@property (strong, nonatomic) UIView               *displayToolView;
+@property (strong, nonatomic) ConnectionStatusView *statusView;
 
 @end
 
@@ -145,13 +145,7 @@
 {
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES];
-    //解决由于第一次进入该界面下，音量键没有初始化是拍立得还是自拍模式而产生音量键无法使用的问题，以及第一次加载app时，该界面无法接收到来自appdelegate进入前台的消息而无法触发
-//    static BOOL firstLoad = YES;
-//    if (firstLoad) {
-//        [self setShootModeToSync];
-//        //[self detect3dbNetWork];
-//        firstLoad = NO;
-//    }
+
     if (self.shootMode == LIVEVIEW_MODE || self.shootMode == RECORDING_MOVIE_MODE || self.shootMode == SELFIE_MODE || self.shootMode == HD_RECORDING_MODE) {
         [self.liveViewRecorder startLiveViewing];
     }
@@ -164,19 +158,12 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if (_firstime) {
-        [self.scrollSegment setSelectedIndex:1];
-        _firstime = NO;
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     NSLog(@"view will disappear , stop timer, set camera mode to download mode");
-    //[self disappearingHandle];
-    [self stopBreathPulsing];
-    //[self.selfieTimer invalidate];
     self.imgClient.syncLeavingFlag = self.imgClient.lastImageIndex;
     //[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
     if (self.shootMode == LIVEVIEW_MODE || self.shootMode == RECORDING_MOVIE_MODE || self.shootMode == HD_RECORDING_MODE || self.shootMode == SELFIE_MODE) {
@@ -184,13 +171,10 @@
     }
 }
 
-//- (void)disappearingHandle
-//{
-//    [self stopBreathPulsing];
-//    [self.selfieTimer invalidate];
-//    //self.autoRotate = YES;
-//    self.imgClient.syncLeavingFlag = self.imgClient.lastImageIndex;
-//}
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [self stopBreathPulsing];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -211,28 +195,7 @@
     self.socketManager.delegate = self;
     NSLog(@"change delegate");
     [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetPhotoToDDR];
-    
-    //初始化PAImageView
-//    self.imageButtom =[[PAImageView alloc] initWithFrame:CGRectMake((self.view.bounds.size.width / 4 ) * 3, self.view.bounds.size.height - 57, 100, 100) backgroundProgressColor:[UIColor whiteColor] progressColor:[UIColor lightGrayColor]];
-//    self.imageButtom.center = CGPointMake(self.view.bounds.size.width / 2 , self.view.bounds.size.height / 2);
-//    [self.imageButtom setAlpha:1.0];
-//    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selfieReviewTapped:)];
-//    [self.imageButtom addGestureRecognizer:singleTap];
-    
-    //初始化wave动画效果
-    [self setUpWavePulser];
-
-    //初始化顶层uiview，添加点击事件
-    //[self setUpTopView];
-    
-    //初始化dismiss button
-    //[self setUpDismissButon];
-    
     [self.socketManager addObserver:self forKeyPath:@"isLost" options:NSKeyValueObservingOptionOld context:nil];
-
-    //初始化选择器
-    [self setUpSegmentControl];
-    [self setUpScrollSegmentControl];
     
     //初始化顶部工具条
     [self setUpToolBar];
@@ -240,24 +203,14 @@
     //初始化底部工具条
     [self setUpBottomBar];
     
-    //初始化提示窗
-    [self setUpPoPLinkLabel];
-    
     //初始化滤镜bar
-    [self setUpFilterBar];
+    [self setUpDisplayToolView];
     
     //初始化相机设置控件
-//    [self setUpEVPickerView];
-//    [self setUpShutterPickerView];
-//    [self setUpIrisPickerView];
-    
-    //初始化相机设置控件
-    [self setUpSettingFilters];
-    
-    //初始化扩展工具按钮
-    //[self setUpResetButton];
-    //初始化扩展工具窗
-    //[self setUpExtendToolView];
+    [self setUpParamsToolView];
+
+    //初始化连接状态控件
+    [self setUpStatusView];
 
     //初始化通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modeDetectingFore)    name:@"EnterForeground" object:nil];
@@ -311,14 +264,16 @@
 
 - (void)startBreathPulsing
 {
-    [self startPulsing];
+    //[self startPulsing];
+    [self.statusView setConnection:YES];
 }
 
 - (void)stopBreathPulsing
 {
-    [self.pulseTimer1 invalidate];
-    [self.pulseTimer2 invalidate];
-    [self.animation stopPulsing];
+//    [self.pulseTimer1 invalidate];
+//    [self.pulseTimer2 invalidate];
+//    [self.animation stopPulsing];
+    [self.statusView setConnection:NO];
 }
 - (void)stopPulsing
 {
@@ -338,11 +293,6 @@
     
     NSLog(@"selfie review button tapped");
 
-    [self showImage];
-}
-
-- (void)topViewTapped{
-    
     [self showImage];
 }
 
@@ -496,120 +446,34 @@
 
 - (void)menuToolButtonTapped
 {
-//    [CameraSoundPlayer playSwipeSoundWithVibrate:NO];
-//    [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(resetExposure) userInfo:nil repeats:NO];
-//    [NSTimer scheduledTimerWithTimeInterval:0.4f target:self selector:@selector(resetShutter) userInfo:nil repeats:NO];
-//    [NSTimer scheduledTimerWithTimeInterval:0.7f target:self selector:@selector(resetIRISParams) userInfo:nil repeats:NO];
-//    [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(getStatus) userInfo:nil repeats:NO];
-    static BOOL isShown = YES;
-    if (isShown) {
-        [self setUpExtendToolView];
-        [UIView animateWithDuration:0.2f delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^(){
-//            CGAffineTransform at = CGAffineTransformMakeRotation(M_PI / 4);
-//            [self.extendToolButton setTransform:at];
-            [self.resetButton setBackgroundColor:[UIColor redColor]];
-            self.resetButton.center = CGPointMake(self.resetButton.center.x, self.resetButton.center.y - 100);
-            self.extendToolView.center = CGPointMake(self.extendToolView.center.x, self.extendToolView.center.y - 100);
+    static BOOL shouldExtend = YES;
+    static float offsetY = 0;
+    if (shouldExtend) {
+        [UIView animateWithDuration:0.35f delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^(){
+            self.menuToolButton.enabled = NO;
+            offsetY = self.displayToolView.frame.origin.y;
+            self.toolBar.center = CGPointMake(self.toolBar.center.x, self.toolBar.center.y - offsetY);
+            self.statusView.center = CGPointMake(self.statusView.center.x, self.statusView.center.y - offsetY);
+            self.displayToolView.center = CGPointMake(self.displayToolView.center.x, self.displayToolView.center.y - offsetY);
+            self.paramsToolView.center = CGPointMake(self.paramsToolView.center.x, self.paramsToolView.center.y - offsetY);
         } completion:^(BOOL finished){
-            isShown = NO;
+            shouldExtend = NO;
+            self.menuToolButton.enabled = YES;
         }];
     }
     else {
-        [UIView animateWithDuration:0.2f delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^(){
-//            CGAffineTransform at = CGAffineTransformMakeRotation( 3 * M_PI / 4);
-//            [self.extendToolButton setTransform:at];
-            [self.resetButton setBackgroundColor:[UIColor whiteColor]];
-            self.resetButton.center = CGPointMake(self.resetButton.center.x, self.resetButton.center.y + 100);
-            self.extendToolView.center = CGPointMake(self.extendToolView.center.x, self.extendToolView.center.y + 100);
+        [UIView animateWithDuration:0.35f delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^(){
+            self.menuToolButton.enabled = NO;
+            self.toolBar.center = CGPointMake(self.toolBar.center.x, self.toolBar.center.y + offsetY);
+            self.statusView.center = CGPointMake(self.statusView.center.x, self.statusView.center.y + offsetY);
+            self.displayToolView.center = CGPointMake(self.displayToolView.center.x, self.displayToolView.center.y + offsetY);
+            self.paramsToolView.center = CGPointMake(self.paramsToolView.center.x, self.paramsToolView.center.y + offsetY);
         } completion:^(BOOL finished){
-            isShown = YES;
-            [self unSetUpExtendToolView];
+            shouldExtend = YES;
+            self.menuToolButton.enabled = YES;
         }];
     }
-    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetFilterMode];
-    [CameraSoundPlayer playSwipeSoundWithVibrate:NO];
-}
-
-
-- (void)resetButtonTapped:(id)sender
-{
-//    static BOOL isShown = YES;
-//    if (isShown) {
-//        [self setUpExtendToolView];
-//        [UIView animateWithDuration:0.2f delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^(){
-//            CGAffineTransform at = CGAffineTransformMakeRotation(M_PI / 4);
-//            [self.extendToolButton setTransform:at];
-//            [self.extendToolButton setBackgroundColor:[UIColor redColor]];
-//            self.extendToolButton.center = CGPointMake(self.extendToolButton.center.x, self.extendToolButton.center.y - 100);
-//            self.extendToolView.center = CGPointMake(self.extendToolView.center.x, self.extendToolView.center.y - 100);
-//        } completion:^(BOOL finished){
-//            isShown = NO;
-//        }];
-//    }
-//    else {
-//        [UIView animateWithDuration:0.2f delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^(){
-//            CGAffineTransform at = CGAffineTransformMakeRotation(- M_PI / 2);
-//            [self.extendToolButton setTransform:at];
-//            [self.extendToolButton setBackgroundColor:[UIColor whiteColor]];
-//            self.extendToolButton.center = CGPointMake(self.extendToolButton.center.x, self.extendToolButton.center.y + 100);
-//            self.extendToolView.center = CGPointMake(self.extendToolView.center.x, self.extendToolView.center.y + 100);
-//        } completion:^(BOOL finished){
-//            isShown = YES;
-//            [self unSetUpExtendToolView];
-//        }];
-//    }
-//    [CameraSoundPlayer playSwipeSoundWithVibrate:NO];
-    
-    [CameraSoundPlayer playSwipeSoundWithVibrate:NO];
-    [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(resetExposure) userInfo:nil repeats:NO];
-    [NSTimer scheduledTimerWithTimeInterval:0.4f target:self selector:@selector(resetShutter) userInfo:nil repeats:NO];
-    [NSTimer scheduledTimerWithTimeInterval:0.7f target:self selector:@selector(resetIRISParams) userInfo:nil repeats:NO];
-    [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(getStatus) userInfo:nil repeats:NO];
-    
-}
-
-- (void)extendBar1ItemTapped:(id)sender
-{
-    UIButton *btn = sender;
-
-    static BOOL isSelectedFullFrame = YES;
-    if (btn.tag == 3) {
-        if (isSelectedFullFrame) {
-            [btn setTitle:@"满帧视频" forState:UIControlStateNormal];
-            isSelectedFullFrame = NO;
-            [btn setTitleColor:[UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1] forState:UIControlStateNormal];
-            [btn setBackgroundColor:[UIColor redColor]];
-        }
-        else {
-            [btn setTitle:@"半帧视频" forState:UIControlStateNormal];
-            isSelectedFullFrame = YES;
-            [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            [btn setBackgroundColor:[UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1]];
-        }
-    }
-    
-    if (btn.tag == 2) {
-        if (remoteNumber == 3) {
-            remoteNumber = 1;
-            [CameraConfiguration saveSmartBurstConfig:NO];
-            [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            [btn setBackgroundColor:[UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1]];
-        }
-        else {
-            remoteNumber = 3;
-            [CameraConfiguration saveSmartBurstConfig:YES];
-            [btn setTitleColor:[UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1] forState:UIControlStateNormal];
-            [btn setBackgroundColor:[UIColor redColor]];
-
-        }
-    }
-    if (btn.tag == 1) {
-        
-        [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(resetExposure) userInfo:nil repeats:NO];
-        [NSTimer scheduledTimerWithTimeInterval:0.4f target:self selector:@selector(resetShutter) userInfo:nil repeats:NO];
-        [NSTimer scheduledTimerWithTimeInterval:0.7f target:self selector:@selector(resetIRISParams) userInfo:nil repeats:NO];
-        [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(getStatus) userInfo:nil repeats:NO];
-    }
+    //[self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetFilterMode];
     [CameraSoundPlayer playSwipeSoundWithVibrate:NO];
 }
 
@@ -649,20 +513,6 @@
     [CameraSoundPlayer playSwipeSoundWithVibrate:NO];
 }
 
-- (void)resetExposure
-{
-    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetExposureValueParam([self convertToExposureValueWithIndex:(signed int)0])];
-}
-
-- (void)resetShutter
-{
-    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetShutterParam([self convertToShutterValueWithIndex:(signed int)0])];
-}
-
-- (void)resetIRISParams
-{
-    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetIRISParams([self convertToIRISValueWithIndex:(signed int)0])];
-}
 
 - (void)evHandleSwipeFrom:(UISwipeGestureRecognizer *)regonizer
 {
@@ -857,13 +707,11 @@
     //设置工作模式
     self.imgClient = [ImageClient sharedImageClient];
     self.imgClient.delegate = self;
-    
-    
     self.imgClient.cameraMode = SYNCMODE;
     
     self.socketManager = [TCPSocketManager sharedTCPSocketManager];
     self.socketManager.delegate = self;
-    if (self.shootMode == LIVEVIEW_MODE) {
+    if (self.shootMode == LIVEVIEW_MODE || self.shootMode == SYNC_MODE) {
         [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetPhotoToDDR];
     }
     if (self.shootMode == RECORDING_MOVIE_MODE) {
@@ -906,16 +754,6 @@
     //observing volume buttons event
     //[self setUpVolumeButtonHandler];
     
-    //若有固件更新，提示
-//    static int oneTimeUpdateNoti = 0;
-//    FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
-//    if (!self.socketManager.isLost && [manager checkingCameraShouldUpdateWithCamVer:manager.camVerison] && oneTimeUpdateNoti == 0) {
-//        oneTimeUpdateNoti = 1;
-//        UpdateViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"updateController"];
-//        controller.currentVersion = [[manager.camVerison substringFromIndex:1] floatValue];
-//        controller.message = [NSString stringWithFormat:@"检测到您的设备: %@ 有新固件: %@ 待升级, 为不影响您的体验, 建议您确定更新 \n更新说明: \n%@",[[WIFIDetector sharedWIFIDetector] getDeviceSSID], manager.latestUpdate, manager.latestUpdateInfo];
-//        [self presentViewController:controller animated:YES completion:nil];
-//    }
 }
 
 - (void)selfieCounter
@@ -1048,71 +886,71 @@
         self.shootMode = LIVEVIEW_MODE;
     }
     
-    else if (selection == 2) {
-        NSLog(@"自拍30张按下");
-        if (self.shootMode == SYNC_MODE) {
-            [self showLiveViewWindow];
-            [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
-            [self updateUIWithMode:SELFIE_MODE];
-        }
-        
-        if (self.shootMode == LIVEVIEW_MODE) {
-            
-        }
-        if (self.shootMode == RECORDING_MOVIE_MODE) {
-            [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
-            [self updateUIWithMode:SELFIE_MODE];
-        }
-        
-        if (self.shootMode == HD_RECORDING_MODE) {
-            [self hideCanvas];
-            [self showLiveViewWindow];
-            [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
-            [self updateUIWithMode:SELFIE_MODE];
-        }
-        self.shootMode = SELFIE_MODE;
-        
-        
-    }
-    else if (selection == 3){
-        NSLog(@"10s段视频按下");
-        if (self.shootMode == SYNC_MODE) {
-            [self showLiveViewWindow];
-            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
-            [self updateUIWithMode:RECORDING_MOVIE_MODE];
-        }
-        
-        if (self.shootMode == LIVEVIEW_MODE) {
-            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
-            [self updateUIWithMode:RECORDING_MOVIE_MODE];
-            
-        }
-        
-        if (self.shootMode == SELFIE_MODE) {
-            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
-            [self updateUIWithMode:RECORDING_MOVIE_MODE];
-        }
-        
-        if (self.shootMode == HD_RECORDING_MODE) {
-            [self hideCanvas];
-            [self showLiveViewWindow];
-            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
-            [self updateUIWithMode:RECORDING_MOVIE_MODE];
-        }
-        //        if (self.shootMode == SYNC_MODE || self.shootMode == HD_RECORDING_MODE) {
-        //            [self showLiveViewWindow];
-        //            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
-        //            //[self hideCanvas];
-        //        }
-        //
-        //        if (self.shootMode == SYNC_MODE || self.shootMode == LIVEVIEW_MODE) {
-        //            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
-        //            [self updateUIWithMode:RECORDING_MOVIE_MODE];
-        //        }
-        self.shootMode = RECORDING_MOVIE_MODE;
-    }
+//    else if (selection == 2) {
+//        NSLog(@"自拍30张按下");
+//        if (self.shootMode == SYNC_MODE) {
+//            [self showLiveViewWindow];
+//            [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
+//            [self updateUIWithMode:SELFIE_MODE];
+//        }
+//        
+//        if (self.shootMode == LIVEVIEW_MODE) {
+//            
+//        }
+//        if (self.shootMode == RECORDING_MOVIE_MODE) {
+//            [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
+//            [self updateUIWithMode:SELFIE_MODE];
+//        }
+//        
+//        if (self.shootMode == HD_RECORDING_MODE) {
+//            [self hideCanvas];
+//            [self showLiveViewWindow];
+//            [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
+//            [self updateUIWithMode:SELFIE_MODE];
+//        }
+//        self.shootMode = SELFIE_MODE;
+//        
+//        
+//    }
+//    else if (selection == 3){
+//        NSLog(@"10s段视频按下");
+//        if (self.shootMode == SYNC_MODE) {
+//            [self showLiveViewWindow];
+//            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
+//            [self updateUIWithMode:RECORDING_MOVIE_MODE];
+//        }
+//        
+//        if (self.shootMode == LIVEVIEW_MODE) {
+//            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
+//            [self updateUIWithMode:RECORDING_MOVIE_MODE];
+//            
+//        }
+//        
+//        if (self.shootMode == SELFIE_MODE) {
+//            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
+//            [self updateUIWithMode:RECORDING_MOVIE_MODE];
+//        }
+//        
+//        if (self.shootMode == HD_RECORDING_MODE) {
+//            //[self hideCanvas];
+//            //[self showLiveViewWindow];
+//            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
+//            [self updateUIWithMode:RECORDING_MOVIE_MODE];
+//        }
+//        //        if (self.shootMode == SYNC_MODE || self.shootMode == HD_RECORDING_MODE) {
+//        //            [self showLiveViewWindow];
+//        //            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
+//        //            //[self hideCanvas];
+//        //        }
+//        //
+//        //        if (self.shootMode == SYNC_MODE || self.shootMode == LIVEVIEW_MODE) {
+//        //            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
+//        //            [self updateUIWithMode:RECORDING_MOVIE_MODE];
+//        //        }
+//        self.shootMode = RECORDING_MOVIE_MODE;
+//    }
     
-    else if (selection == 4){
+    else if (selection == 2){
         NSLog(@"高清录制按下");
         //[self showCanvas];
         if (self.shootMode == SYNC_MODE) {
@@ -1343,32 +1181,7 @@
         [self.liveViewRecorder startLiveViewing];
         self.recordLabel.text = @"正在封装视频...";
     });
-    
-//    if (self.shootMode == HD_RECORDING_MODE) {
-//        __block PulseWaveController *blockSelf = self;
-//        [self.videoManager encodeMovieFromImagesWithVideoInfo:self.sampleVideoInfo withCallBackBlock:^(BOOL success){
-//            [self.videoManager addAudioTrackIntoMovieWithDict:self.sampleVideoInfo withCallBackBlock:^(BOOL success){
-//                if (success) {
-//                    NSLog(@"HD封装视频成功");
-//                    [blockSelf finishedDownloadingHandler];
-//                }
-//            }];
-//        }];
-//    }
 }
-
-//- (void)finishedDownloadingHandler
-//{
-//    //[self.sampleVideoInfo removeAllObjects];
-//    dispatch_async(dispatch_get_main_queue(), ^(){
-//        //update ui state
-//        [self.detailButton setBackgroundImage:[self.videoManager getThumbnailImageWithEyemoeVideo:[[VideoConfig sharedVideoConfig] myLastEyemoreVideo]] forState:UIControlStateNormal];
-//        [self unSetUpMovieIndicator];
-//        [self unSetUpRecordProgressBar];
-//        [self.detailButton setImage:[UIImage imageNamed:@"Play"] forState:UIControlStateNormal];
-//        self.recordLabel.text = @"点击下方按钮开始录制";
-//    });
-//}
 
 - (void)videoRecorderDidDownloadProcessing:(float)progress
 {
@@ -1413,19 +1226,6 @@
         }];
     }
     else if (self.shootMode == HD_RECORDING_MODE) {
-        //只封装音频
-//        [self.videoManager generateVideoAudioWithVideoInfo:self.sampleVideoInfo];
-//        [self.videoManager removeVideoFrameIndexWithVideoInfo:self.sampleVideoInfo];
-//        //音频合成后开始下载960 540帧
-//        NSLog(@"已经封装音频，开始下载960_540帧");
-//        dispatch_async(dispatch_get_main_queue(), ^(){
-//            [self.liveViewRecorder stopLiveViewing];
-//            self.videoRecorder = [VideoRecorder sharedVideoRecorder];
-//            self.videoRecorder.delegate = self;
-//            self.socketManager.delegate = self.videoRecorder;
-//            [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(startToDownloadVideoFrames) userInfo:nil repeats:NO];
-//        });
-
     }
 }
 
@@ -1474,18 +1274,6 @@
             }];
         }
         else if (self.shootMode == HD_RECORDING_MODE) {
-////            //只封装音频
-//            [self.videoManager generateVideoAudioWithVideoInfo:self.sampleVideoInfo];
-//            [self.videoManager removeVideoFrameIndexWithVideoInfo:self.sampleVideoInfo];
-//            //音频合成后开始下载960 540帧
-//            NSLog(@"已经封装音频，开始下载960_540帧");
-//            dispatch_async(dispatch_get_main_queue(), ^(){
-//                [self.liveViewRecorder stopLiveViewing];
-//                self.videoRecorder = [VideoRecorder sharedVideoRecorder];
-//                self.videoRecorder.delegate = self;
-//                self.socketManager.delegate = self.videoRecorder;
-//                [NSTimer scheduledTimerWithTimeInterval:2.0f target:self selector:@selector(startToDownloadVideoFrames) userInfo:nil repeats:NO];
-//            });
         }
     }
 }
@@ -1518,44 +1306,13 @@
                                                withEyemoreVideo:self.sampleVideoInfo];
 
         }
-        //        static float progress = 0.004;
-//        dispatch_async(dispatch_get_main_queue(), ^(){
-//            [self.recordProgressBar setProgress:progress animated:YES];
-//        });
         
         if ([[[self.sampleVideoInfo.videoMaterial objectForKey:@"FrameIndexs"] objectAtIndex:0] intValue] + 250 <= [[[self.sampleVideoInfo.videoMaterial objectForKey:@"FrameIndexs"] lastObject] intValue]) {
             [self stopRecordingVideoFrames];
         }
-        if (self.downloadedFrameCount == 249) {
-            //[self.liveViewRecorder stopLiveViewing];
-            //progress = 0;
-//            dispatch_async(dispatch_get_main_queue(), ^(){
-//                self.isRecordButtonTapped = NO;
-//                [self.videoManager.videoList addObject:self.sampleVideoInfo];
-//                //update ui state
-//                [self updateUIButton:self.takeButton withTapped:NO];
-//                [self showCanvasAnimation];
-//                [self unSetUpRecordProgressBar];
-//                [self setUpMovieIndicator];
-//                [self.detailButton setImage:nil forState:UIControlStateNormal];
-//            });
-//            [self.videoManager composeCompleteMovieFileWithInfo:self.sampleVideoInfo withCallBackBlock:^(BOOL success){
-//                if (success) {
-//                    NSLog(@"封装视频成功");
-//                    //[self.sampleVideoInfo removeAllObjects];
-//                    dispatch_async(dispatch_get_main_queue(), ^(){
-//                        //update ui state
-//                        [self.detailButton setBackgroundImage:[self.videoManager getThumbnailImageWithVideoInfo:[self.videoManager.videoList lastObject]] forState:UIControlStateNormal];
-//                        [self unSetUpMovieIndicator];
-//                        [self.detailButton setImage:[UIImage imageNamed:@"Play"] forState:UIControlStateNormal];
-//                    });
-//                }
-//            }];
-        }
         
         NSLog(@"current frame....................................:%d",self.downloadedFrameCount);
         self.downloadedFrameCount ++;
-//        progress = progress + 0.004;
     }
     data = nil;
     
@@ -1765,8 +1522,6 @@
     //if (self.shootMode == SYNC_MODE) {
     [self.socketManager receiveMessageWithTimeOut:-1];
     [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetDeviceInfo];
-    [NSThread sleepForTimeInterval:0.1f];
-    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetFileList];
     //}
 }
 
@@ -1779,10 +1534,20 @@
     FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
     manager.camVerison = [NSString stringWithString:camVer];
     [manager saveFirmware];
+    [self.socketManager receiveMessageWithTimeOut:-1];
+    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetDebugInfo];
 }
 
 - (void)didReceiveDebugInfo:(DEBUG_INFO)info
-{}
+{
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [self.statusView.battIndicator setBatteryPowerProcessing:info.StateOfCharge / 100.0];
+    });
+    [self.socketManager receiveMessageWithTimeOut:-1];
+    [self.socketManager receiveMessageWithTimeOut:-1];
+    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetFilterMode];
+    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetFileList];
+}
 
 - (void)didSendData
 {}
@@ -1806,78 +1571,7 @@
     }
 }
 
-//#pragma mark - Picker view Delegate
-//
-//// pickerView 列数
-//- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-//    
-//    return 1;
-//}
-//
-//// pickerView 每列个数
-//- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-//    
-//    if (pickerView == self.EVPickerView) {
-//        return self.exposureArray.count;
-//    }
-//    if (pickerView == self.shutterPickerView) {
-//        return self.shutterArray.count;
-//    }
-//    if (pickerView == self.irisPickerView) {
-//        return self.irisArray.count;
-//    }
-//    else return 0;
-//}
-//
-//// 每列宽度
-//- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
-//    
-//    if (component == 0) {
-//        return 50;
-//    }
-//    return 180;
-//}
-//// 返回选中的行
-//- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-//{
-//    NSLog(@"did select row : %ld, value : %@", (long)row, self.exposureArray[row]);
-//    
-//}
-//
-////返回当前行的内容,此处是将数组中数值添加到滚动的那个显示栏上
-//-(NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-//{
-//    if (pickerView == self.EVPickerView) {
-//        return [self.exposureArray objectAtIndex:row];
-//    }
-//    if (pickerView == self.shutterPickerView) {
-//        return [self.shutterArray objectAtIndex:row];
-//    }
-//    if (pickerView == self.irisPickerView) {
-//        return [self.irisArray objectAtIndex:row];
-//    }
-//    else return @"";
-//    
-//}
-//
-////返回每行view，可以设置view的外观
-//- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
-//    UILabel* pickerLabel = (UILabel*)view;
-//    if (!pickerLabel){
-//        pickerLabel = [[UILabel alloc] init];
-//        // Setup label properties - frame, font, colors etc
-//        //adjustsFontSizeToFitWidth property to YES
-//        //pickerLabel.minimumFontSize = 8.;
-//        [pickerLabel setTextColor:[UIColor whiteColor]];
-//        pickerLabel.adjustsFontSizeToFitWidth = YES;
-//        [pickerLabel setTextAlignment:NSTextAlignmentCenter];
-//        [pickerLabel setBackgroundColor:[UIColor clearColor]];
-//        [pickerLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:25]];
-//    }
-//    // Fill the label text here
-//    pickerLabel.text=[self pickerView:pickerView titleForRow:row forComponent:component];
-//    return pickerLabel;
-//}
+
 
 #pragma mark -  UIViewController Transitioning Delegate
 //// Initialize the tansition
@@ -1902,91 +1596,6 @@
 //    return self.transition;
 //}
 
-#pragma mark - BLRocker Delegate
-
-- (void)rockerDidChangeDirection:(BLRocker *)rocker
-{
-    [self rockerDirectionChangedHandling:rocker];
-}
-
-- (void)rockerDidScanDirection:(BLRocker *)rocker
-{
-    [self rockerDirectionChangedHandling:rocker];
-}
-
-- (void)rockerDirectionChangedHandling:(BLRocker *)rocker
-{
-    if (rocker == self.evRocker) {
-        static int i = 0;
-        if (rocker.direction == RockDirectionUp) {
-            if (i < 20) {
-                i ++;
-                dispatch_async(dispatch_get_main_queue(), ^(){ [CameraSoundPlayer playSwipeSoundWithVibrate:NO]; });
-            }
-            else {
-                dispatch_async(dispatch_get_main_queue(), ^(){ [CameraSoundPlayer playSwipeSoundWithVibrate:NO]; });
-            }
-        }
-        if (rocker.direction == RockDirectionDown) {
-            if (i > 0) {
-                i --;
-                dispatch_async(dispatch_get_main_queue(), ^(){ [CameraSoundPlayer playSwipeSoundWithVibrate:NO]; });
-            }
-            else {
-                dispatch_async(dispatch_get_main_queue(), ^(){ [CameraSoundPlayer playSwipeSoundWithVibrate:NO]; });
-            }
-        }
-        [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetExposureValueParam([self convertToExposureValueWithIndex:[self.exposureArray[i] intValue]])];
-        self.evLabelCurrent.text = self.exposureArray[i];
-    }
-    if (rocker == self.shutterRocker) {
-        static int i = 0;
-        if (rocker.direction == RockDirectionUp) {
-            if (i < 6) {
-                i ++;
-                dispatch_async(dispatch_get_main_queue(), ^(){ [CameraSoundPlayer playSwipeSoundWithVibrate:NO]; });
-            }
-            else {
-                dispatch_async(dispatch_get_main_queue(), ^(){ [CameraSoundPlayer playSwipeSoundWithVibrate:NO]; });
-            }
-        }
-        if (rocker.direction == RockDirectionDown) {
-            if (i > 0) {
-                i --;
-                dispatch_async(dispatch_get_main_queue(), ^(){ [CameraSoundPlayer playSwipeSoundWithVibrate:NO]; });
-            }
-            else {
-                dispatch_async(dispatch_get_main_queue(), ^(){ [CameraSoundPlayer playSwipeSoundWithVibrate:NO]; });
-            }
-        }
-        [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetShutterParam([self convertToShutterValueWithIndex:[self.shutterArray[i] intValue]])];
-        self.shutterLabelCurrent.text = self.shutterArray[i];
-    }
-    if (rocker == self.irisRocker) {
-        static int i = 0;
-        if (rocker.direction == RockDirectionUp) {
-            if (i < 6) {
-                i ++;
-                dispatch_async(dispatch_get_main_queue(), ^(){ [CameraSoundPlayer playSwipeSoundWithVibrate:NO]; });
-            }
-            else {
-                dispatch_async(dispatch_get_main_queue(), ^(){ [CameraSoundPlayer playSwipeSoundWithVibrate:NO]; });
-            }
-        }
-        
-        if (rocker.direction == RockDirectionDown) {
-            if (i > 0) {
-                i --;
-                dispatch_async(dispatch_get_main_queue(), ^(){ [CameraSoundPlayer playSwipeSoundWithVibrate:NO]; });
-            }
-            else {
-                dispatch_async(dispatch_get_main_queue(), ^(){ [CameraSoundPlayer playSwipeSoundWithVibrate:NO]; });
-            }
-        }
-        [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetIRISParams([self convertToIRISValueWithIndex:[self.irisDisplayArray[i] intValue]])];
-        self.irisLabelCurrent.text = self.irisDisplayArray[i];
-    }
-}
 
 #pragma mark - UI initialization & presenting events
 
@@ -1994,12 +1603,18 @@
 {
     //初始化wave动画效果
     self.wavePulser = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-    self.wavePulser.backgroundColor = [UIColor redColor];
-    CGPoint viewCenter = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 4.9 * 1);
+    self.wavePulser.backgroundColor = [UIColor clearColor];
+    //CGPoint viewCenter = CGPointMake(self.displayToolView.frame.size.width / 2, (self.scrollSegmentView.frame.origin.y) / 2);
+    CGPoint viewCenter = CGPointMake(self.displayToolView.frame.size.width / 2, (self.segment.frame.origin.y) / 2);
     self.wavePulser.center = viewCenter;
     self.wavePulser.layer.cornerRadius = 50;//self.wavePulser.layer.bounds.size.width / 2;
     self.wavePulser.layer.borderColor = [[UIColor greenColor] CGColor];
-    [self.view addSubview:self.wavePulser];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [imageView setImage:[UIImage imageNamed:@"polaroid.png"]];
+    [self.wavePulser addSubview:imageView];
+    [self.displayToolView insertSubview:self.wavePulser belowSubview:self.filterBar];
     
     self.animation = [JTWavePulser animationWithView:self.wavePulser];
     self.animation.pulseAnimationDuration = 1.0f;
@@ -2008,26 +1623,10 @@
     self.animation.pulseRingScale = 3.0;
 }
 
-- (void)setUpTopView
-{
-    self.topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.height, self.view.bounds.size.height)];
-    self.topView.backgroundColor = [UIColor clearColor];
-    UITapGestureRecognizer *ViewSingleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(topViewTapped)];
-    [self.topView addGestureRecognizer:ViewSingleTap];
-    [self.view insertSubview:self.topView aboveSubview:self.wavePulser];
-}
-
-- (void)setUpDismissButon
-{
-    self.dimissButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 30, 40, 40)];
-    [self.dimissButton addTarget:self action:@selector(dimissButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.dimissButton setImage:[UIImage imageNamed:@"137-button-error"] forState:UIControlStateNormal];
-    [self.topView addSubview:self.dimissButton];
-}
 
 - (void)setUpSegmentControl
 {
-    NSArray * btnDataSource = @[@"拍立得", @"抓拍", @"连拍", @"小视频" , @"高清录制"];
+    NSArray * btnDataSource = @[@"拍立得", @"抓拍" , @"高清录制"];
     UIFont *titleFont ;//= [UIFont fontWithName:@".Helvetica Neue Interface" size:18.0f];
     //6p,6sp界面优化
     if ([[UIScreen mainScreen] bounds].size.width == 414) {
@@ -2050,15 +1649,15 @@
                                              buttonDownColor:[UIColor clearColor]
                                                     Delegate:self];
     
-    //[self.view addSubview:self.segment];
+    [self.view addSubview:self.segment];
 }
 
 - (void)setUpScrollSegmentControl
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height / 3 * 1 + 33, self.view.bounds.size.width, 50)];
-    view.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
+    self.scrollSegmentView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height / 3 * 1 + 33, self.view.bounds.size.width, 50)];
+    self.scrollSegmentView.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
     
-    NSArray * btnDataSource = @[@"拍立得 ", @" 抓拍 ", @" 连拍 ", @" 小视频 " , @" 高清录制"];
+    NSArray * btnDataSource = @[@"拍立得 ", @" 抓拍 ", @" 高清录制"];
     UIFont *titleFont ;//= [UIFont fontWithName:@".Helvetica Neue Interface" size:18.0f];
     //6p,6sp界面优化
     if ([[UIScreen mainScreen] bounds].size.width == 414) {
@@ -2082,24 +1681,31 @@
     [self.scrollSegment setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [self.scrollSegment setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
     [self.scrollSegment.scrollView setScrollEnabled:NO];
-    [view addSubview:self.scrollSegment];
-    [self.view addSubview:view];
-
+    [self.scrollSegmentView addSubview:self.scrollSegment];
 }
 
-- (void)setUpSettingFilters
+- (void)setUpStatusView
 {
-    UIView *frame = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                             self.segment.frame.origin.y + self.segment.frame.size.height + (self.bottomBar.frame.origin.y - (self.segment.frame.origin.y + self.segment.frame.size.height)) / 4 - self.view.frame.size.height / 26,
-                                                             self.view.frame.size.width / 10 * 9 + 5,
-                                                             self.view.frame.size.height / 13)];
+    float statusViewHeight = self.view.frame.size.height - self.toolBar.frame.size.height - self.displayToolView.frame.size.height - self.bottomBar.frame.size.height;
+    self.statusView = [[ConnectionStatusView alloc] initWithFrame:CGRectMake(0, self.toolBar.frame.size.height, self.view.frame.size.width, statusViewHeight)];
+    __weak PulseWaveController *weakSelf = self;
+    self.statusView.settingButtonTappedHandler = ^(BOOL isTapped){
+        SettingCamTableViewController *controller = [weakSelf.storyboard instantiateViewControllerWithIdentifier:@"SettingCamTableViewController"];
+        controller.isPresentingStyle = YES;
+        RootNavigationController *navi = [[RootNavigationController alloc] initWithRootViewController:controller];
+        [weakSelf presentViewController:navi animated:YES completion:nil];
+    };
+    [self.view addSubview:self.statusView];
+}
+
+- (void)setUpParamsToolView
+{
+    UIView *frame = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 10 * 9 + 5, self.view.frame.size.height / 13)];
     frame.center = CGPointMake(self.view.frame.size.width / 2, frame.center.y - 10);
     frame.layer.masksToBounds = YES;
     frame.layer.cornerRadius = 5;
-//    frame.layer.borderColor = [[UIColor grayColor] colorWithAlphaComponent:0.45].CGColor;
-//    frame.layer.borderWidth = 1.5;
     frame.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
-    [self.view addSubview:frame];
+    //[self.view addSubview:frame];
     
     UILabel *exposureLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
     exposureLabel.center = CGPointMake(35, frame.frame.size.height / 2 );
@@ -2111,17 +1717,12 @@
     
     
     
-    UIView *frame1 = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                              self.segment.frame.origin.y + self.segment.frame.size.height + 2 * ((self.bottomBar.frame.origin.y - (self.segment.frame.origin.y + self.segment.frame.size.height)) / 4) - self.view.frame.size.height / 26 + 5,
-                                                              self.view.frame.size.width / 10 * 9 + 5,
-                                                              self.view.frame.size.height / 13)];
+    UIView *frame1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 10 * 9 + 5, self.view.frame.size.height / 13)];
     frame1.center = CGPointMake(self.view.frame.size.width / 2, frame1.center.y - 10);
     frame1.layer.masksToBounds = YES;
     frame1.layer.cornerRadius = 5;
-//    frame1.layer.borderColor = [[UIColor grayColor] colorWithAlphaComponent:0.45].CGColor;
-//    frame1.layer.borderWidth = 1.5;
     frame1.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
-    [self.view addSubview:frame1];
+    //[self.view addSubview:frame1];
     
     UILabel *shutterLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, self.view.bounds.size.height / 10 * 6.5, 40, 20)];
     shutterLabel.center = CGPointMake(35, frame.frame.size.height / 2 );
@@ -2133,17 +1734,12 @@
     
     
     
-    UIView *frame2 = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                              self.segment.frame.origin.y + self.segment.frame.size.height + 3 * ((self.bottomBar.frame.origin.y - (self.segment.frame.origin.y + self.segment.frame.size.height)) / 4) - self.view.frame.size.height / 26 + 10,
-                                                              self.view.frame.size.width / 10 * 9 + 5,
-                                                              self.view.frame.size.height / 13)];
+    UIView *frame2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 10 * 9 + 5, self.view.frame.size.height / 13)];
     frame2.center = CGPointMake(self.view.frame.size.width / 2, frame2.center.y - 10);
     frame2.layer.masksToBounds = YES;
     frame2.layer.cornerRadius = 5;
-//    frame2.layer.borderColor = [[UIColor grayColor] colorWithAlphaComponent:0.45].CGColor;
-//    frame2.layer.borderWidth = 1.5;
     frame2.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
-    [self.view addSubview:frame2];
+    //[self.view addSubview:frame2];
     
     UILabel *irisLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, self.view.bounds.size.height / 10 * 6.5, 40, 20)];
     irisLabel.center = CGPointMake(35, frame.frame.size.height / 2);
@@ -2213,31 +1809,18 @@
         [shutterLabel  setFont:[UIFont fontWithName:@"Trebuchet MS" size:17]];
         [irisLabel     setFont:[UIFont fontWithName:@"Trebuchet MS" size:17]];
     }
-}
-
-- (void)setUpPoPLinkLabel
-{
-    [[MMPopLabel appearance] setLabelColor:[UIColor colorWithRed: 0.89 green: 0.8 blue: 0 alpha: 1]];
-    [[MMPopLabel appearance] setLabelTextColor:[UIColor whiteColor]];
-    [[MMPopLabel appearance] setLabelTextHighlightColor:[UIColor greenColor]];
-    [[MMPopLabel appearance] setLabelFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f]];
-    [[MMPopLabel appearance] setButtonFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
     
-    self.popLinkLabel = [MMPopLabel popLabelWithText:
-                         @"iPhone未连接相机无线热点"];
+    float paramsToolHeight = self.view.frame.size.height -  self.displayToolView.frame.size.height - self.bottomBar.frame.size.height;
+    float paramsToolWidth  = self.view.frame.size.width;
     
-    self.popLinkLabel.delegate = self;
-    
-    UIButton *skipButton = [[UIButton alloc] initWithFrame:CGRectZero];
-    [skipButton setTitle:NSLocalizedString(@"忽略", @"Skip") forState:UIControlStateNormal];
-    [self.popLinkLabel addButton:skipButton];
-    
-    UIButton *okButton = [[UIButton alloc] initWithFrame:CGRectZero];
-    [okButton setTitle:NSLocalizedString(@"设置", @"Dismiss") forState:UIControlStateNormal];
-    [self.popLinkLabel addButton:okButton];
-    
-    [self.view addSubview:self.popLinkLabel];
-    //[self.popLinkLabel popAtView:self.downloadButton];
+    self.paramsToolView = [[UIView alloc] initWithFrame:CGRectMake(0, self.bottomBar.frame.origin.y , paramsToolWidth, paramsToolHeight)];
+    [self.paramsToolView addSubview:frame];
+    frame.center  = CGPointMake(paramsToolWidth / 2, paramsToolHeight / 4 - 10);
+    [self.paramsToolView addSubview:frame1];
+    frame1.center = CGPointMake(paramsToolWidth / 2, paramsToolHeight / 4 * 2);
+    [self.paramsToolView addSubview:frame2];
+    frame2.center = CGPointMake(paramsToolWidth / 2, paramsToolHeight / 4 * 3 + 10);
+    [self.view insertSubview:self.paramsToolView belowSubview:self.bottomBar];
     
 }
 
@@ -2375,13 +1958,7 @@
         self.menuToolButton.alpha = 1;
         self.menuToolButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.menuToolButton setImage:[UIImage imageNamed:@"menu1"] forState:UIControlStateNormal];
-        //    [self.resetButton setTitle:@"默认值" forState:UIControlStateNormal];
-        //    self.resetButton.titleLabel.font = [UIFont systemFontOfSize:12.0];
-        //    self.resetButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-        //    self.resetButton.imageEdgeInsets = UIEdgeInsetsMake(-10,0 ,0,0);
-        //    self.resetButton.titleEdgeInsets = UIEdgeInsetsMake(50,-42 ,0,0);
         [self.menuToolButton addTarget:self action:@selector(menuToolButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-        //[self.view addSubview:self.resetButton];
     }
 
 
@@ -2482,16 +2059,16 @@
 {
     if (self.focusingCoordinateView == nil) {
         
-        self.focusingCoordinateView = [[UIView alloc] initWithFrame:CGRectMake(0, 42, self.view.bounds.size.width, self.view.frame.size.height / 3 * 1 )];
+        self.focusingCoordinateView = [[UIView alloc] initWithFrame:CGRectMake(self.liveView.frame.origin.x, self.liveView.frame.origin.y, self.view.bounds.size.width, kLiveViewHeight)];
         [self.focusingCoordinateView setUserInteractionEnabled:YES];
         self.focusingCoordinateView.alpha = 1;
-        [self.view addSubview:self.focusingCoordinateView];
+        [self.displayToolView addSubview:self.focusingCoordinateView];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(coordinateViewTapped:)];
         tap.numberOfTapsRequired = 1;
         [self.focusingCoordinateView addGestureRecognizer:tap];
         NSLog(@"gesturer : %@", tap);
     }
-    [self.view bringSubviewToFront:self.focusingCoordinateView];
+    [self.displayToolView bringSubviewToFront:self.focusingCoordinateView];
 }
 
 - (void)setUpFocusingIndicator
@@ -2503,109 +2080,109 @@
 
 - (void)setUpFilterBar
 {
-    if (self.filterBar == nil) {
-        
-        self.filterBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height / 10 * 1.0 + 20)];
-        [self.filterBar setTranslucent:NO];
-        self.filterBar.barTintColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
-        //self.filterBar.layer.masksToBounds = YES;
-        self.filterBar.tintColor = [UIColor whiteColor];
-        //[self.view addSubview:self.filterBar];
-        
-        //    UIImageView *defaultFilterView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.height / 10 * 1.0 * 2 - 20, self.view.frame.size.height / 10 * 1.0) ];
-        //    defaultFilterView.layer.cornerRadius = 3;
-        //    defaultFilterView.layer.masksToBounds = YES;
-        //    defaultFilterView.contentMode = UIViewContentModeScaleToFill;
-        //    [defaultFilterView setImage:[UIImage imageNamed:@"filterColorful"]];
-        
-        UIButton *defaultFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
-        defaultFilter.layer.cornerRadius = 3;
-        defaultFilter.layer.masksToBounds = YES;
-        defaultFilter.imageView.contentMode = UIViewContentModeScaleToFill;
-        [defaultFilter setImage:[UIImage imageNamed:@"filterColorful"] forState:UIControlStateNormal];
-        defaultFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
-        defaultFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
-        //[self setUpShadowWithView: defaultFilter.titleLabel];
-        [defaultFilter setTitle:@"标准" forState:UIControlStateNormal];
-        defaultFilter.titleEdgeInsets = UIEdgeInsetsMake(30, -480, 0, 0);
-        [defaultFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
-        
-        //    UIImageView *BWFilterView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.height / 10 * 1.0 * 2 - 20, self.view.frame.size.height / 10 * 1.0)];
-        //    BWFilterView.layer.cornerRadius = 3;
-        //    BWFilterView.layer.masksToBounds = YES;
-        //    BWFilterView.contentMode = UIViewContentModeScaleToFill;
-        //    [BWFilterView setImage:[UIImage imageNamed:@"filterBW"]];
-        
-        UIButton *BWFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
-        BWFilter.layer.cornerRadius = 3;
-        BWFilter.layer.masksToBounds = YES;
-        BWFilter.imageView.contentMode = UIViewContentModeScaleToFill;
-        [BWFilter setImage:[UIImage imageNamed:@"filterBW"] forState:UIControlStateNormal];
-        BWFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
-        BWFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
-        //[self setUpShadowWithView: BWFilter.titleLabel];
-        [BWFilter setTitle:@"黑白" forState:UIControlStateNormal];
-        BWFilter.titleEdgeInsets = UIEdgeInsetsMake(30, -480, 0, 0);
-        [BWFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
-        
-        //    UIImageView *presetFilterView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.height / 10 * 1.0 * 2 - 20, self.view.frame.size.height / 10 * 1.0)];
-        //    presetFilterView.layer.cornerRadius = 3;
-        //    presetFilterView.layer.masksToBounds = YES;
-        //    presetFilterView.contentMode = UIViewContentModeScaleToFill;
-        //    [presetFilterView setImage:[UIImage imageNamed:@"presetFilterOne"]];
-        
-        UIButton *presetFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
-        presetFilter.layer.cornerRadius = 3;
-        presetFilter.layer.masksToBounds = YES;
-        presetFilter.imageView.contentMode = UIViewContentModeScaleToFill;
-        [presetFilter setImage:[UIImage imageNamed:@"filterLight"] forState:UIControlStateNormal];
-        [presetFilter setBackgroundColor:[UIColor darkGrayColor]];
-        presetFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
-        presetFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
-        //[presetFilter setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        //[self setUpShadowWithView: presetFilter.titleLabel];
-        [presetFilter setTitle:@"质感" forState:UIControlStateNormal];
-        presetFilter.titleEdgeInsets = UIEdgeInsetsMake(30, -480, 0, 0);
-        [presetFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIButton *presetsSecondFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
-        presetsSecondFilter.layer.cornerRadius = 3;
-        presetsSecondFilter.layer.masksToBounds = YES;
-        presetsSecondFilter.imageView.contentMode = UIViewContentModeScaleToFill;
-        [presetsSecondFilter setImage:[UIImage imageNamed:@"noFilter"] forState:UIControlStateNormal];
-        [presetsSecondFilter setBackgroundColor:[UIColor darkGrayColor]];
-        presetsSecondFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
-        presetsSecondFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
-        [presetsSecondFilter setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self setUpShadowWithView: presetsSecondFilter];
-        [presetsSecondFilter setTitle:@"星空" forState:UIControlStateNormal];
-        presetsSecondFilter.titleEdgeInsets = UIEdgeInsetsMake(30, -30, 0, 0);
-        [presetsSecondFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIBarButtonItem *fixedCenter = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-        //6p,6sp界面优化
-        if ([[UIScreen mainScreen] bounds].size.width == 414) {
-            fixedCenter.width = - 20;
-        }
-        //5,5s界面优化
-        if ([[UIScreen mainScreen] bounds].size.width == 320) {
-            fixedCenter.width = - 15.0;
-        }
-        //6,6s界面优化
-        if ([[UIScreen mainScreen] bounds].size.width == 375) {
-            fixedCenter.width = - 18.0;
-        }
-        UIBarButtonItem *FlexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        UIBarButtonItem *btn1 = [[UIBarButtonItem alloc] initWithCustomView:defaultFilter];
-        UIBarButtonItem *btn2 = [[UIBarButtonItem alloc] initWithCustomView:BWFilter];
-        UIBarButtonItem *btn3 = [[UIBarButtonItem alloc] initWithCustomView:presetFilter];
-        UIBarButtonItem *btn4 = [[UIBarButtonItem alloc] initWithCustomView:presetsSecondFilter];
-        
-        NSArray *arr1=[[NSArray alloc]initWithObjects:fixedCenter, btn1, FlexibleSpace, btn3, FlexibleSpace, btn2, FlexibleSpace, btn4, fixedCenter, nil];
-        [self.filterBar setItems:arr1 animated:YES];
+    
+    self.filterBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height / 10 * 1.0 + 14)];
+    [self.filterBar setTranslucent:NO];
+    self.filterBar.barTintColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
+    //self.filterBar.layer.masksToBounds = YES;
+    self.filterBar.tintColor = [UIColor whiteColor];
+    
+    UIButton *defaultFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
+    defaultFilter.layer.cornerRadius = 3;
+    defaultFilter.layer.masksToBounds = YES;
+    defaultFilter.imageView.contentMode = UIViewContentModeScaleToFill;
+    [defaultFilter setImage:[UIImage imageNamed:@"filterColorful"] forState:UIControlStateNormal];
+    defaultFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
+    defaultFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
+    //[self setUpShadowWithView: defaultFilter.titleLabel];
+    [defaultFilter setTitle:@"标准" forState:UIControlStateNormal];
+    defaultFilter.titleEdgeInsets = UIEdgeInsetsMake(30, -480, 0, 0);
+    [defaultFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *BWFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
+    BWFilter.layer.cornerRadius = 3;
+    BWFilter.layer.masksToBounds = YES;
+    BWFilter.imageView.contentMode = UIViewContentModeScaleToFill;
+    [BWFilter setImage:[UIImage imageNamed:@"filterBW"] forState:UIControlStateNormal];
+    BWFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
+    BWFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
+    //[self setUpShadowWithView: BWFilter.titleLabel];
+    [BWFilter setTitle:@"黑白" forState:UIControlStateNormal];
+    BWFilter.titleEdgeInsets = UIEdgeInsetsMake(30, -480, 0, 0);
+    [BWFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *presetFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
+    presetFilter.layer.cornerRadius = 3;
+    presetFilter.layer.masksToBounds = YES;
+    presetFilter.imageView.contentMode = UIViewContentModeScaleToFill;
+    [presetFilter setImage:[UIImage imageNamed:@"filterLight"] forState:UIControlStateNormal];
+    [presetFilter setBackgroundColor:[UIColor darkGrayColor]];
+    presetFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
+    presetFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
+    //[presetFilter setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    //[self setUpShadowWithView: presetFilter.titleLabel];
+    [presetFilter setTitle:@"质感" forState:UIControlStateNormal];
+    presetFilter.titleEdgeInsets = UIEdgeInsetsMake(30, -480, 0, 0);
+    [presetFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *presetsSecondFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
+    presetsSecondFilter.layer.cornerRadius = 3;
+    presetsSecondFilter.layer.masksToBounds = YES;
+    presetsSecondFilter.imageView.contentMode = UIViewContentModeScaleToFill;
+    [presetsSecondFilter setImage:[UIImage imageNamed:@"noFilter"] forState:UIControlStateNormal];
+    [presetsSecondFilter setBackgroundColor:[UIColor darkGrayColor]];
+    presetsSecondFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
+    presetsSecondFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
+    [presetsSecondFilter setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [self setUpShadowWithView: presetsSecondFilter];
+    [presetsSecondFilter setTitle:@"星空" forState:UIControlStateNormal];
+    presetsSecondFilter.titleEdgeInsets = UIEdgeInsetsMake(30, -30, 0, 0);
+    [presetsSecondFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *fixedCenter = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    //6p,6sp界面优化
+    if ([[UIScreen mainScreen] bounds].size.width == 414) {
+        fixedCenter.width = - 20;
     }
+    //5,5s界面优化
+    if ([[UIScreen mainScreen] bounds].size.width == 320) {
+        fixedCenter.width = - 15.0;
+    }
+    //6,6s界面优化
+    if ([[UIScreen mainScreen] bounds].size.width == 375) {
+        fixedCenter.width = - 18.0;
+    }
+    UIBarButtonItem *FlexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *btn1 = [[UIBarButtonItem alloc] initWithCustomView:defaultFilter];
+    UIBarButtonItem *btn2 = [[UIBarButtonItem alloc] initWithCustomView:BWFilter];
+    UIBarButtonItem *btn3 = [[UIBarButtonItem alloc] initWithCustomView:presetFilter];
+    UIBarButtonItem *btn4 = [[UIBarButtonItem alloc] initWithCustomView:presetsSecondFilter];
+    
+    NSArray *arr1=[[NSArray alloc]initWithObjects:fixedCenter, btn1, FlexibleSpace, btn3, FlexibleSpace, btn2, FlexibleSpace, btn4, fixedCenter, nil];
+    [self.filterBar setItems:arr1 animated:YES];
+}
 
-    //[self.view addSubview:self.filterBar];
+- (void)setUpDisplayToolView
+{
+    //[self setUpScrollSegmentControl];
+    [self setUpSegmentControl];
+    [self setUpFilterBar];
+    
+    //float paramsToolHeight = self.filterBar.frame.size.height + kLiveViewHeight + self.scrollSegmentView.frame.size.height;
+    float paramsToolHeight = self.filterBar.frame.size.height + kLiveViewHeight + self.segment.frame.size.height;
+    float paramsToolWidth  = self.view.frame.size.width;
+    
+    self.displayToolView = [[UIView alloc] initWithFrame:CGRectMake(0, self.bottomBar.frame.origin.y - paramsToolHeight , paramsToolWidth, paramsToolHeight)];
+    self.displayToolView.backgroundColor = [UIColor colorWithRed:22/255. green:22/255. blue:26/255. alpha:1.0];
+    //self.scrollSegmentView.center = CGPointMake(paramsToolWidth / 2, kLiveViewHeight + self.scrollSegmentView.frame.size.height / 2);
+    self.segment.center = CGPointMake(paramsToolWidth / 2, kLiveViewHeight + self.segment.frame.size.height / 2);
+    //[self.displayToolView addSubview:self.scrollSegmentView];
+    [self.displayToolView addSubview:self.segment];
+    self.filterBar.center = CGPointMake(paramsToolWidth / 2, paramsToolHeight - self.filterBar.frame.size.height / 2);
+    [self.displayToolView addSubview:self.filterBar];
+    
+    [self setUpWavePulser];
+    [self.view addSubview:self.displayToolView];
 
 }
 
@@ -2706,10 +2283,10 @@
         self.canvas.frame = self.view.frame;
         
     }
-    else self.canvas.frame = CGRectMake(0, 50, self.view.bounds.size.width, self.view.frame.size.height / 3 * 1 - 15 );
+    else self.canvas.frame = CGRectMake(self.liveView.frame.origin.x, self.liveView.frame.origin.y, self.view.bounds.size.width, kLiveViewHeight);
     
     self.canvas.alpha = 0.0;
-    [self.view addSubview:self.canvas];
+    [self.displayToolView addSubview:self.canvas];
     [BLAnimation revealView:self.canvas WithBLAnimation:BLEffectFadeIn completion:^(BOOL finish){
         [BLAnimation revealView:self.canvas WithBLAnimation:BLEffectFadeOut completion:^(BOOL finish){
             [self.canvas removeFromSuperview];
@@ -2748,348 +2325,9 @@
     }
 }
 
-- (void)setUpEVPickerView
-{
-    self.exposureArray = [NSArray arrayWithObjects:@"-10", @"-9", @"-8", @"-7", @"-6", @"-5", @"-4", @"-3", @"-2", @"-1", @"0", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", nil];
-    
-    UIView *frame = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 7 * 1 - 5 - 10, self.segment.frame.origin.y + self.segment.frame.size.height + (self.bottomBar.frame.origin.y - (self.segment.frame.origin.y + self.segment.frame.size.height)) / 2 - self.view.frame.size.height / 10, self.view.frame.size.width / 7 + 10, self.view.frame.size.height / 5)];
-    frame.layer.masksToBounds = YES;
-    frame.layer.cornerRadius = (self.view.frame.size.width / 7 + 10) / 4;
-    frame.layer.borderColor = [[UIColor grayColor] colorWithAlphaComponent:0.45].CGColor;
-    frame.layer.borderWidth = 1.5;
-    [self.view addSubview:frame];
-    
-    self.evLabelCurrent = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    [self.evLabelCurrent setTextColor:[UIColor redColor]];
-    self.evLabelCurrent.adjustsFontSizeToFitWidth = YES;
-    [self.evLabelCurrent setTextAlignment:NSTextAlignmentCenter];
-    [self.evLabelCurrent setBackgroundColor:[UIColor clearColor]];
-    [self.evLabelCurrent setFont:[UIFont fontWithName:@"Trebuchet MS" size:35]];
-    [self.evLabelCurrent setText:self.exposureArray[0]];
-    //[self.evLabelCurrent setTextColor:[UIColor lightGrayColor]];
-    self.evLabelCurrent.center = CGPointMake(frame.frame.size.width / 2 , 35 );
-    [frame addSubview:self.evLabelCurrent];
-    
-    UILabel *pickerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    [pickerLabel setTextColor:[UIColor whiteColor]];
-    pickerLabel.adjustsFontSizeToFitWidth = YES;
-    [pickerLabel setTextAlignment:NSTextAlignmentCenter];
-    [pickerLabel setBackgroundColor:[UIColor clearColor]];
-    [pickerLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:25]];
-    [pickerLabel setText:@"EV"];
-    [pickerLabel setTextColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.5]];
-    pickerLabel.center = CGPointMake(frame.frame.size.width / 2 , frame.frame.size.height - 35 );
-    [frame addSubview:pickerLabel];
-
-    self.evRocker = [[BLRocker alloc] initWithFrame:frame.frame handleView:frame];
-    self.evRocker.delegate = self;
-    [self.view addSubview:self.evRocker];
-    
-    UIImage *upShapeImage = [UIImage imageNamed:@"shapes_gray-up"];
-    UIImageView *upShape = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    upShape.image = upShapeImage;
-    upShape.center = CGPointMake(self.evRocker.center.x, self.evRocker.frame.origin.y - 30);
-    [self.view addSubview:upShape];
-    
-    UIImage *downShapeImage = [UIImage imageNamed:@"shapes_gray-down"];
-    UIImageView *downShape = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    downShape.image = downShapeImage;
-    downShape.center = CGPointMake(self.evRocker.center.x, self.evRocker.frame.origin.y + self.evRocker.frame.size.height + 30);
-    [self.view addSubview:downShape];
-    
-    //6p,6sp界面优化
-    if ([[UIScreen mainScreen] bounds].size.width == 414) {
-        [self.evLabelCurrent setFont:[UIFont fontWithName:@"Trebuchet MS" size:35]];
-        [pickerLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:25]];
-        upShape.center = CGPointMake(self.evRocker.center.x, self.evRocker.frame.origin.y - 15);
-        downShape.center = CGPointMake(self.evRocker.center.x, self.evRocker.frame.origin.y + self.evRocker.frame.size.height + 20);
-        
-    }
-    //5,5s界面优化
-    if ([[UIScreen mainScreen] bounds].size.width == 320) {
-        [self.evLabelCurrent setFont:[UIFont fontWithName:@"Trebuchet MS" size:25]];
-        [pickerLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:20]];
-        upShape.center = CGPointMake(self.evRocker.center.x, self.evRocker.frame.origin.y - 10);
-        downShape.center = CGPointMake(self.evRocker.center.x, self.evRocker.frame.origin.y + self.evRocker.frame.size.height + 10);
-    }
-    //6,6s界面优化
-    if ([[UIScreen mainScreen] bounds].size.width == 375) {
-        [self.evLabelCurrent setFont:[UIFont fontWithName:@"Trebuchet MS" size:30]];
-        [pickerLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:25]];
-        upShape.center = CGPointMake(self.evRocker.center.x, self.evRocker.frame.origin.y - 15);
-        downShape.center = CGPointMake(self.evRocker.center.x, self.evRocker.frame.origin.y + self.evRocker.frame.size.height + 20);
-        
-    }
-    
-}
-
-- (void)setUpShutterPickerView
-{
-    self.shutterArray =[NSArray arrayWithObjects:@"0", @"1", @"2", @"3", @"4", @"5", @"6", nil];
-    
-    UIView *frame = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 7 * 3 - 5, self.segment.frame.origin.y + self.segment.frame.size.height + (self.bottomBar.frame.origin.y - (self.segment.frame.origin.y + self.segment.frame.size.height)) / 2 - self.view.frame.size.height / 10 - 5 , self.view.frame.size.width / 7 + 10, self.view.frame.size.height / 5)];
-    frame.layer.masksToBounds = YES;
-    frame.layer.cornerRadius = (self.view.frame.size.width / 7 + 10) / 4;
-    frame.layer.borderColor = [[UIColor grayColor] colorWithAlphaComponent:0.45].CGColor;
-    frame.layer.borderWidth = 1.5;
-    [self.view addSubview:frame];
-    
-    self.shutterLabelCurrent = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    [self.shutterLabelCurrent setTextColor:[UIColor redColor]];
-    self.shutterLabelCurrent.adjustsFontSizeToFitWidth = YES;
-    [self.shutterLabelCurrent setTextAlignment:NSTextAlignmentCenter];
-    [self.shutterLabelCurrent setBackgroundColor:[UIColor clearColor]];
-    [self.shutterLabelCurrent setFont:[UIFont fontWithName:@"Trebuchet MS" size:35]];
-    [self.shutterLabelCurrent setText:self.shutterArray[0]];
-    //[self.shutterLabelCurrent setTextColor:[UIColor lightGrayColor]];
-    self.shutterLabelCurrent.center = CGPointMake(frame.frame.size.width / 2 , 35 );
-    [frame addSubview:self.shutterLabelCurrent];
-
-    
-    UILabel *pickerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    [pickerLabel setTextColor:[UIColor whiteColor]];
-    pickerLabel.adjustsFontSizeToFitWidth = YES;
-    [pickerLabel setTextAlignment:NSTextAlignmentCenter];
-    [pickerLabel setBackgroundColor:[UIColor clearColor]];
-    [pickerLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:25]];
-    [pickerLabel setText:@"S"];
-    [pickerLabel setTextColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.5]];
-    pickerLabel.center = CGPointMake(frame.frame.size.width / 2 , frame.frame.size.height - 30 );
-    [frame addSubview:pickerLabel];
-
-    self.shutterRocker = [[BLRocker alloc] initWithFrame:frame.frame handleView:frame];
-    self.shutterRocker.delegate = self;
-    [self.view addSubview:self.shutterRocker];
-    
-    UIImage *upShapeImage = [UIImage imageNamed:@"shapes_gray-up"];
-    UIImageView *upShape = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    upShape.image = upShapeImage;
-    upShape.center = CGPointMake(self.shutterRocker.center.x, self.shutterRocker.frame.origin.y - 30);
-    [self.view addSubview:upShape];
-    
-    UIImage *downShapeImage = [UIImage imageNamed:@"shapes_gray-down"];
-    UIImageView *downShape = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    downShape.image = downShapeImage;
-    downShape.center = CGPointMake(self.shutterRocker.center.x, self.shutterRocker.frame.origin.y + self.shutterRocker.frame.size.height + 30);
-    [self.view addSubview:downShape];
-    
-    //6p,6sp界面优化
-    if ([[UIScreen mainScreen] bounds].size.width == 414) {
-        [self.shutterLabelCurrent setFont:[UIFont fontWithName:@"Trebuchet MS" size:35]];
-        [pickerLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:25]];
-        upShape.center = CGPointMake(self.shutterRocker.center.x, self.shutterRocker.frame.origin.y - 15);
-        downShape.center = CGPointMake(self.shutterRocker.center.x, self.shutterRocker.frame.origin.y + self.shutterRocker.frame.size.height + 20);
-        
-    }
-    //5,5s界面优化
-    if ([[UIScreen mainScreen] bounds].size.width == 320) {
-        [self.shutterLabelCurrent setFont:[UIFont fontWithName:@"Trebuchet MS" size:25]];
-        [pickerLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:20]];
-        upShape.center = CGPointMake(self.shutterRocker.center.x, self.shutterRocker.frame.origin.y - 10);
-        downShape.center = CGPointMake(self.shutterRocker.center.x, self.shutterRocker.frame.origin.y + self.shutterRocker.frame.size.height + 10);
-    }
-    //6,6s界面优化
-    if ([[UIScreen mainScreen] bounds].size.width == 375) {
-        [self.shutterLabelCurrent setFont:[UIFont fontWithName:@"Trebuchet MS" size:30]];
-        [pickerLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:25]];
-        upShape.center = CGPointMake(self.shutterRocker.center.x, self.shutterRocker.frame.origin.y - 15);
-        downShape.center = CGPointMake(self.shutterRocker.center.x, self.shutterRocker.frame.origin.y + self.shutterRocker.frame.size.height + 20);
-        
-    }
-}
-
-- (void)setUpIrisPickerView
-{
-    self.irisDisplayArray =[NSArray arrayWithObjects:@"-6", @"-5", @"-4", @"-3", @"-2", @"-1", @"0", nil];
-    
-    UIView *frame = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 7 * 5 - 5 + 10, self.segment.frame.origin.y + self.segment.frame.size.height + (self.bottomBar.frame.origin.y - (self.segment.frame.origin.y + self.segment.frame.size.height)) / 2 - self.view.frame.size.height / 10 , self.view.frame.size.width / 7 + 10, self.view.frame.size.height / 5)];
-    frame.layer.masksToBounds = YES;
-    frame.layer.cornerRadius = (self.view.frame.size.width / 7 + 10) / 4;
-    frame.layer.borderColor = [[UIColor grayColor] colorWithAlphaComponent:0.45].CGColor;
-    frame.layer.borderWidth = 1.5;
-    [self.view addSubview:frame];
-    
-    self.irisLabelCurrent = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    [self.irisLabelCurrent setTextColor:[UIColor redColor]];
-    self.irisLabelCurrent.adjustsFontSizeToFitWidth = YES;
-    [self.irisLabelCurrent setTextAlignment:NSTextAlignmentCenter];
-    [self.irisLabelCurrent setBackgroundColor:[UIColor clearColor]];
-    [self.irisLabelCurrent setFont:[UIFont fontWithName:@"Trebuchet MS" size:35]];
-    [self.irisLabelCurrent setText:self.irisDisplayArray[0]];
-    //[self.irisLabelCurrent setTextColor:[UIColor lightGrayColor]];
-    self.irisLabelCurrent.center = CGPointMake(frame.frame.size.width / 2 , 35 );
-    [frame addSubview:self.irisLabelCurrent];
-    
-    UILabel *pickerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    [pickerLabel setTextColor:[UIColor whiteColor]];
-    pickerLabel.adjustsFontSizeToFitWidth = YES;
-    [pickerLabel setTextAlignment:NSTextAlignmentCenter];
-    [pickerLabel setBackgroundColor:[UIColor clearColor]];
-    [pickerLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:25]];
-    [pickerLabel setText:@"A"];
-    [pickerLabel setTextColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.5]];
-    pickerLabel.center = CGPointMake(frame.frame.size.width / 2 , frame.frame.size.height - 30 );
-    [frame addSubview:pickerLabel];
-    
-    self.irisRocker = [[BLRocker alloc] initWithFrame:frame.frame handleView:frame];
-    self.irisRocker.delegate = self;
-    [self.view addSubview:self.irisRocker];
-    
-    UIImage *upShapeImage = [UIImage imageNamed:@"shapes_gray-up"];
-    UIImageView *upShape = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    upShape.image = upShapeImage;
-    [self.view addSubview:upShape];
-    
-    UIImage *downShapeImage = [UIImage imageNamed:@"shapes_gray-down"];
-    UIImageView *downShape = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    downShape.image = downShapeImage;
-    [self.view addSubview:downShape];
-    
-    //6p,6sp界面优化
-    if ([[UIScreen mainScreen] bounds].size.width == 414) {
-        [self.irisLabelCurrent setFont:[UIFont fontWithName:@"Trebuchet MS" size:35]];
-        [pickerLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:25]];
-        upShape.center = CGPointMake(self.irisRocker.center.x, self.irisRocker.frame.origin.y - 15);
-        downShape.center = CGPointMake(self.irisRocker.center.x, self.irisRocker.frame.origin.y + self.irisRocker.frame.size.height + 20);
-
-    }
-    //5,5s界面优化
-    if ([[UIScreen mainScreen] bounds].size.width == 320) {
-        [self.irisLabelCurrent setFont:[UIFont fontWithName:@"Trebuchet MS" size:25]];
-        [pickerLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:20]];
-        upShape.center = CGPointMake(self.irisRocker.center.x, self.irisRocker.frame.origin.y - 10);
-        downShape.center = CGPointMake(self.irisRocker.center.x, self.irisRocker.frame.origin.y + self.irisRocker.frame.size.height + 10);
-    }
-    //6,6s界面优化
-    if ([[UIScreen mainScreen] bounds].size.width == 375) {
-        [self.irisLabelCurrent setFont:[UIFont fontWithName:@"Trebuchet MS" size:30]];
-        [pickerLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:25]];
-        upShape.center = CGPointMake(self.irisRocker.center.x, self.irisRocker.frame.origin.y - 15);
-        downShape.center = CGPointMake(self.irisRocker.center.x, self.irisRocker.frame.origin.y + self.irisRocker.frame.size.height + 20);
-
-    }
-}
-
-- (void)setUpExtendToolView
-{
-    if (self.extendToolView == nil) {
-        
-        self.extendToolView = [[UIView alloc] initWithFrame:CGRectMake(0, self.bottomBar.frame.origin.y, self.view.frame.size.width, 360)];
-        self.extendToolView.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
-        [self setUpFilterBar];
-        //[self setUpExtendToolBar1];
-        [self.extendToolView addSubview:self.filterBar];
-        //[self.extendToolView addSubview:self.extendBar1];
-       
-    }
-    [self.view bringSubviewToFront:self.bottomBar];
-    [self.view insertSubview:self.extendToolView belowSubview:self.bottomBar];
-}
-
-
-- (void)setUpResetButton
-{
-    self.resetButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 10, self.bottomBar.frame.origin.y - 25, 20, 20)];
-    self.resetButton.layer.masksToBounds = YES;
-    self.resetButton.layer.cornerRadius = 10;
-    self.resetButton.backgroundColor = [UIColor whiteColor];
-    [self.resetButton setTintColor:[UIColor redColor]];
-    [self.resetButton setTitleColor:[UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1] forState:UIControlStateNormal];
-    [self.resetButton setTitle:@"R" forState:UIControlStateNormal];
-    [self.resetButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-    [self.resetButton addTarget:self action:@selector(resetButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.resetButton];
-}
-
-- (void)setUpExtendToolBar1
-{
-    if (self.extendBar1 == nil) {
-        
-        self.extendBar1 = [[CustomedToolBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
-        [self.extendBar1 setTranslucent:NO];
-        self.extendBar1.barTintColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
-        self.extendBar1.tintColor = [UIColor whiteColor];
-        
-        UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 65, 35)];
-        button1.layer.masksToBounds = YES;
-        button1.layer.cornerRadius = 8;
-        //button1.layer.borderColor = [UIColor grayColor].CGColor;
-        //button1.layer.borderWidth = 1.5;
-        button1.backgroundColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1];;
-        [button1 setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-        [button1 setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        [button1 setTitle:@"重置EVSA" forState:UIControlStateNormal];
-        [button1.titleLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:12]];
-        [button1 setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-        button1.tag = 1;
-        [button1 addTarget:self action:@selector(extendBar1ItemTapped:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIButton *button2 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 40)];
-        button2.layer.masksToBounds = YES;
-        button2.layer.cornerRadius = 8;
-//        button2.layer.borderColor = [UIColor grayColor].CGColor;
-//        button2.layer.borderWidth = 1.5;
-        
-        if ([CameraConfiguration loadSmartBurstConfig]) {
-            [button2 setTitleColor:[UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1] forState:UIControlStateNormal];
-            [button2 setBackgroundColor:[UIColor redColor]];
-            remoteNumber = 3;
-        }
-        else {
-            button2.backgroundColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1];;
-            [button2 setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            remoteNumber = 1;
-        }
-        [button2 setTintColor:[UIColor redColor]];
-        [button2 setTitle:@"智拍3张" forState:UIControlStateNormal];
-        [button2.titleLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:15]];
-        [button2 setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-        button2.tag = 2;
-        [button2 addTarget:self action:@selector(extendBar1ItemTapped:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIButton *button3 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 40)];
-        button3.layer.masksToBounds = YES;
-        button3.layer.cornerRadius = 8;
-        //        button2.layer.borderColor = [UIColor grayColor].CGColor;
-        //        button2.layer.borderWidth = 1.5;
-        button3.backgroundColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1];;
-        [button3 setTintColor:[UIColor redColor]];
-        [button3 setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        [button3 setTitle:@"半帧视频" forState:UIControlStateNormal];
-        [button3.titleLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:15]];
-        [button3 setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-        button3.tag = 3;
-        [button3 addTarget:self action:@selector(extendBar1ItemTapped:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIBarButtonItem *fixedCenter = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-        //6p,6sp界面优化
-        if ([[UIScreen mainScreen] bounds].size.width == 414) {
-            fixedCenter.width = - 20;
-        }
-        //5,5s界面优化
-        if ([[UIScreen mainScreen] bounds].size.width == 320) {
-            fixedCenter.width = - 15.0;
-        }
-        //6,6s界面优化
-        if ([[UIScreen mainScreen] bounds].size.width == 375) {
-            fixedCenter.width = - 18.0;
-        }
-        UIBarButtonItem *FlexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        UIBarButtonItem *btn1 = [[UIBarButtonItem alloc] initWithCustomView:button1];
-        UIBarButtonItem *btn2 = [[UIBarButtonItem alloc] initWithCustomView:button2];
-        UIBarButtonItem *btn3 = [[UIBarButtonItem alloc] initWithCustomView:button3];
-        
-        NSArray *arr1=[[NSArray alloc]initWithObjects:FlexibleSpace, btn1, FlexibleSpace, btn2, FlexibleSpace, btn3, FlexibleSpace, nil];
-        [self.extendBar1 setItems:arr1 animated:YES];
-    }
-    
-    //[self.view addSubview:self.filterBar];
-
-}
 
 - (void)showCanvas
 {
-    
     self.canvas.contentMode = UIViewContentModeScaleAspectFit;
     self.canvas = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"default.jpg"]];
     if (self.isFullScreen) {
@@ -3098,10 +2336,9 @@
         self.canvas.frame = self.view.frame;
         
     }
-    else self.canvas.frame = CGRectMake(0, 50, self.view.bounds.size.width, self.view.frame.size.height / 3 * 1 - 17 );
-    
+    else self.canvas.frame = CGRectMake(self.liveView.frame.origin.x, self.liveView.frame.origin.y, self.view.bounds.size.width, kLiveViewHeight);
     self.canvas.alpha = 0.0;
-    [self.view addSubview:self.canvas];
+    [self.displayToolView addSubview:self.canvas];
     [BLAnimation revealView:self.canvas WithBLAnimation:BLEffectFadeIn completion:^(BOOL finish){
         [self setUpRecordLabel];
     }];
@@ -3126,7 +2363,8 @@
     if (self.liveView == nil) {
         self.liveViewRecorder = [LiveViewRecorder sharedLiveViewRecorder];
         self.liveViewRecorder.delegate = self;
-        self.liveView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 42, self.view.bounds.size.width, self.view.frame.size.height / 3 * 1 )];
+        
+        self.liveView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, kLiveViewHeight)];
         self.liveView.contentMode = UIViewContentModeScaleAspectFit;
         [self.liveView setImage:[UIImage imageNamed:@"default.jpg"]];
         self.liveView.alpha = 0.0;
@@ -3137,7 +2375,7 @@
         [self.liveView addGestureRecognizer:tapped];
         [self.liveView setUserInteractionEnabled:NO];
     }
-    [self.view addSubview:self.liveView];
+    [self.displayToolView addSubview:self.liveView];
     [BLAnimation revealView:self.liveView WithBLAnimation:BLEffectFadeIn completion:^(BOOL finish){
         [self.liveViewRecorder startLiveViewing];
     }];
@@ -3229,15 +2467,15 @@
     }];
 }
 
-- (void)unSetUpExtendToolView
-{
-    [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^(){
-        self.extendToolView.alpha = 0.0;
-    } completion:^(BOOL finished){
-        [self.extendToolView removeFromSuperview];
-        self.extendToolView = nil;
-    }];
-}
+//- (void)unSetUpExtendToolView
+//{
+//    [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^(){
+//        self.extendToolView.alpha = 0.0;
+//    } completion:^(BOOL finished){
+//        [self.extendToolView removeFromSuperview];
+//        self.extendToolView = nil;
+//    }];
+//}
 
 //- (void)unSetUpReloadButton
 //{

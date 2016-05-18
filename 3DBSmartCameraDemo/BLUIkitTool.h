@@ -12,6 +12,6 @@
 @interface BLUIkitTool : NSObject
 
 + (UIViewController *)currentRootViewController;
-
++ (NSString*)deviceVersion;
 
 @end

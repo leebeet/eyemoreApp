@@ -10,4 +10,5 @@
 
 @interface SettingCamTableViewController : UITableViewController
 @property (assign, nonatomic) BOOL  isDevelopUse;
+@property (assign, nonatomic) BOOL  isPresentingStyle;
 @end

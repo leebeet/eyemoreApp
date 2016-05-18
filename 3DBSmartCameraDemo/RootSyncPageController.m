@@ -55,7 +55,7 @@
 - (void)setUpSyncButtonItem
 {
     if (self.navigationItem.leftBarButtonItem == nil) {
-        UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"138-Download.png"] style:UIBarButtonItemStyleDone target:self action:@selector(downloadButtonTapped)];
+        UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu1_small.png"] style:UIBarButtonItemStyleDone target:self action:@selector(menuButtonTapped)];
         [self.navigationItem setLeftBarButtonItem:btn];
     }
 }
@@ -71,9 +71,9 @@
     [self showWifiMessage];
 }
 
-- (void)downloadButtonTapped
+- (void)menuButtonTapped
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"syncButtonTapped" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"menuButtonTapped" object:nil];
 }
 
 - (UIViewController *)appRootViewController

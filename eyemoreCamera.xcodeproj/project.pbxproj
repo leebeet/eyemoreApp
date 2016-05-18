@@ -74,6 +74,10 @@
 		4C56C48E1ACA59A50056D122 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C56C4681ACA59A50056D122 /* UIImageView+HighlightedWebCache.m */; };
 		4C56C48F1ACA59A50056D122 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C56C46A1ACA59A50056D122 /* UIImageView+WebCache.m */; };
 		4C56C4901ACA59A50056D122 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C56C46C1ACA59A50056D122 /* UIView+WebCacheOperation.m */; };
+		4C5795771CEB133E0081D3E1 /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C5795761CEB133E0081D3E1 /* settings@2x.png */; };
+		4C5795791CEB13410081D3E1 /* settings@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C5795781CEB13410081D3E1 /* settings@3x.png */; };
+		4C5795801CEB2BAD0081D3E1 /* downloadBox_big@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57957E1CEB2BAD0081D3E1 /* downloadBox_big@3x.png */; };
+		4C5795811CEB2BAD0081D3E1 /* downloadBox_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C57957F1CEB2BAD0081D3E1 /* downloadBox_big@2x.png */; };
 		4C5867CC1BE6FCC6001D6E09 /* VideoClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5867CB1BE6FCC6001D6E09 /* VideoClient.m */; };
 		4C589AB51BE9E2F1008E1701 /* ApiTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C589AB41BE9E2F1008E1701 /* ApiTestViewController.m */; };
 		4C5A664A1BF19662005856C7 /* WIFIDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A66491BF19662005856C7 /* WIFIDetector.m */; };
@@ -153,6 +157,12 @@
 		4C70B48A1CB6660C00A3DA53 /* Play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C70B4891CB6660C00A3DA53 /* Play@3x.png */; };
 		4C70B48E1CB66C2A00A3DA53 /* VideoDownloadedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C70B48D1CB66C2A00A3DA53 /* VideoDownloadedCell.m */; };
 		4C70B4901CB66C4000A3DA53 /* VideoDownloadedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C70B48F1CB66C4000A3DA53 /* VideoDownloadedCell.xib */; };
+		4C70BD491CE4645500450BCD /* menu1_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C70BD471CE4645500450BCD /* menu1_small@2x.png */; };
+		4C70BD4A1CE4645500450BCD /* menu1_small@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C70BD481CE4645500450BCD /* menu1_small@3x.png */; };
+		4C70BD541CE474BE00450BCD /* syncIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C70BD531CE474BE00450BCD /* syncIcon@3x.png */; };
+		4C70BD561CE474CC00450BCD /* syncIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C70BD551CE474CC00450BCD /* syncIcon@2x.png */; };
+		4C70BD661CE47E1600450BCD /* trashBox@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C70BD651CE47E1600450BCD /* trashBox@3x.png */; };
+		4C70BD681CE47E1C00450BCD /* trashBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C70BD671CE47E1C00450BCD /* trashBox@2x.png */; };
 		4C719F531CD1FD430021C217 /* JTSAnimatedGIFUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C719F481CD1FD430021C217 /* JTSAnimatedGIFUtility.m */; };
 		4C719F541CD1FD430021C217 /* JTSImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C719F4A1CD1FD430021C217 /* JTSImageInfo.m */; };
 		4C719F551CD1FD430021C217 /* JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C719F4C1CD1FD430021C217 /* JTSImageViewController.m */; };
@@ -257,6 +267,16 @@
 		4C8D72B31CBB4F6700621479 /* VideoUndownloadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C8D72B11CBB4F6700621479 /* VideoUndownloadCell.xib */; };
 		4C8D72B71CBB85BB00621479 /* JGActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8D72B61CBB85BB00621479 /* JGActionSheet.m */; };
 		4C8D72BF1CBBADF100621479 /* VideoListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8D72BE1CBBADF100621479 /* VideoListController.m */; };
+		4C8F16101CE977DC00412A33 /* ConnectionStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F160F1CE977DC00412A33 /* ConnectionStatusView.m */; };
+		4C8F161D1CE9A29200412A33 /* eyemore_v1_540.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C8F161B1CE9A29200412A33 /* eyemore_v1_540.png */; };
+		4C8F161E1CE9A29200412A33 /* iphone6.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C8F161C1CE9A29200412A33 /* iphone6.png */; };
+		4C8F16211CE9AEE700412A33 /* ConnectionProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F16201CE9AEE700412A33 /* ConnectionProgressView.m */; };
+		4C8F16231CE9CFF600412A33 /* polaroid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C8F16221CE9CFF600412A33 /* polaroid@2x.png */; };
+		4C8F16251CE9CFFB00412A33 /* polaroid@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C8F16241CE9CFFB00412A33 /* polaroid@3x.png */; };
+		4C8F162C1CE9D9E600412A33 /* connected_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C8F162A1CE9D9E600412A33 /* connected_error@2x.png */; };
+		4C8F162D1CE9D9E600412A33 /* connected_error@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C8F162B1CE9D9E600412A33 /* connected_error@3x.png */; };
+		4C8F16301CE9DBF300412A33 /* connected_check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C8F162E1CE9DBF300412A33 /* connected_check@2x.png */; };
+		4C8F16311CE9DBF300412A33 /* connected_check@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C8F162F1CE9DBF300412A33 /* connected_check@3x.png */; };
 		4C9143271BFDE65B0026BDC9 /* LTHPasscodeViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4C9143211BFDE65B0026BDC9 /* LTHPasscodeViewController.bundle */; };
 		4C9143281BFDE65B0026BDC9 /* LTHKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9143241BFDE65B0026BDC9 /* LTHKeychainUtils.m */; };
 		4C9143291BFDE65B0026BDC9 /* LTHPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9143261BFDE65B0026BDC9 /* LTHPasscodeViewController.m */; };
@@ -266,8 +286,6 @@
 		4C939D2A1CACFF3500A9EB5B /* firmwareiconWhite@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C939D281CACFF3500A9EB5B /* firmwareiconWhite@3x.png */; };
 		4C939D2C1CAD08F100A9EB5B /* formatting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C939D2B1CAD08F100A9EB5B /* formatting@2x.png */; };
 		4C939D2E1CAD08F600A9EB5B /* formatting@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C939D2D1CAD08F600A9EB5B /* formatting@3x.png */; };
-		4C939D301CAD098900A9EB5B /* trashBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C939D2F1CAD098900A9EB5B /* trashBox@2x.png */; };
-		4C939D341CAD0A2200A9EB5B /* trashBox@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C939D331CAD0A2200A9EB5B /* trashBox@3x.png */; };
 		4C939D361CAD0A3A00A9EB5B /* downloadBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C939D351CAD0A3A00A9EB5B /* downloadBox@2x.png */; };
 		4C939D381CAD0A3E00A9EB5B /* downloadBox@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C939D371CAD0A3E00A9EB5B /* downloadBox@3x.png */; };
 		4C939D3E1CAD0AFD00A9EB5B /* toolBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C939D3D1CAD0AFD00A9EB5B /* toolBox@2x.png */; };
@@ -470,6 +488,10 @@
 		4C56C46A1ACA59A50056D122 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		4C56C46B1ACA59A50056D122 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		4C56C46C1ACA59A50056D122 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		4C5795761CEB133E0081D3E1 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
+		4C5795781CEB13410081D3E1 /* settings@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@3x.png"; sourceTree = "<group>"; };
+		4C57957E1CEB2BAD0081D3E1 /* downloadBox_big@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downloadBox_big@3x.png"; sourceTree = "<group>"; };
+		4C57957F1CEB2BAD0081D3E1 /* downloadBox_big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downloadBox_big@2x.png"; sourceTree = "<group>"; };
 		4C5867CA1BE6FCC6001D6E09 /* VideoClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoClient.h; sourceTree = "<group>"; };
 		4C5867CB1BE6FCC6001D6E09 /* VideoClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoClient.m; sourceTree = "<group>"; };
 		4C589AB31BE9E2F1008E1701 /* ApiTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiTestViewController.h; sourceTree = "<group>"; };
@@ -581,6 +603,12 @@
 		4C70B48C1CB66C2A00A3DA53 /* VideoDownloadedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoDownloadedCell.h; sourceTree = "<group>"; };
 		4C70B48D1CB66C2A00A3DA53 /* VideoDownloadedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoDownloadedCell.m; sourceTree = "<group>"; };
 		4C70B48F1CB66C4000A3DA53 /* VideoDownloadedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoDownloadedCell.xib; sourceTree = "<group>"; };
+		4C70BD471CE4645500450BCD /* menu1_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu1_small@2x.png"; sourceTree = "<group>"; };
+		4C70BD481CE4645500450BCD /* menu1_small@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu1_small@3x.png"; sourceTree = "<group>"; };
+		4C70BD531CE474BE00450BCD /* syncIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "syncIcon@3x.png"; sourceTree = "<group>"; };
+		4C70BD551CE474CC00450BCD /* syncIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "syncIcon@2x.png"; sourceTree = "<group>"; };
+		4C70BD651CE47E1600450BCD /* trashBox@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trashBox@3x.png"; sourceTree = "<group>"; };
+		4C70BD671CE47E1C00450BCD /* trashBox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trashBox@2x.png"; sourceTree = "<group>"; };
 		4C719F471CD1FD430021C217 /* JTSAnimatedGIFUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSAnimatedGIFUtility.h; sourceTree = "<group>"; };
 		4C719F481CD1FD430021C217 /* JTSAnimatedGIFUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSAnimatedGIFUtility.m; sourceTree = "<group>"; };
 		4C719F491CD1FD430021C217 /* JTSImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageInfo.h; sourceTree = "<group>"; };
@@ -742,6 +770,18 @@
 		4C8D72B61CBB85BB00621479 /* JGActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGActionSheet.m; sourceTree = "<group>"; };
 		4C8D72BD1CBBADF100621479 /* VideoListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoListController.h; sourceTree = "<group>"; };
 		4C8D72BE1CBBADF100621479 /* VideoListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoListController.m; sourceTree = "<group>"; };
+		4C8F160E1CE977DC00412A33 /* ConnectionStatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionStatusView.h; sourceTree = "<group>"; };
+		4C8F160F1CE977DC00412A33 /* ConnectionStatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionStatusView.m; sourceTree = "<group>"; };
+		4C8F161B1CE9A29200412A33 /* eyemore_v1_540.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eyemore_v1_540.png; sourceTree = "<group>"; };
+		4C8F161C1CE9A29200412A33 /* iphone6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone6.png; sourceTree = "<group>"; };
+		4C8F161F1CE9AEE700412A33 /* ConnectionProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionProgressView.h; sourceTree = "<group>"; };
+		4C8F16201CE9AEE700412A33 /* ConnectionProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionProgressView.m; sourceTree = "<group>"; };
+		4C8F16221CE9CFF600412A33 /* polaroid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "polaroid@2x.png"; sourceTree = "<group>"; };
+		4C8F16241CE9CFFB00412A33 /* polaroid@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "polaroid@3x.png"; sourceTree = "<group>"; };
+		4C8F162A1CE9D9E600412A33 /* connected_error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connected_error@2x.png"; sourceTree = "<group>"; };
+		4C8F162B1CE9D9E600412A33 /* connected_error@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connected_error@3x.png"; sourceTree = "<group>"; };
+		4C8F162E1CE9DBF300412A33 /* connected_check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connected_check@2x.png"; sourceTree = "<group>"; };
+		4C8F162F1CE9DBF300412A33 /* connected_check@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connected_check@3x.png"; sourceTree = "<group>"; };
 		4C9143211BFDE65B0026BDC9 /* LTHPasscodeViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LTHPasscodeViewController.bundle; sourceTree = "<group>"; };
 		4C9143231BFDE65B0026BDC9 /* LTHKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTHKeychainUtils.h; sourceTree = "<group>"; };
 		4C9143241BFDE65B0026BDC9 /* LTHKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTHKeychainUtils.m; sourceTree = "<group>"; };
@@ -754,8 +794,6 @@
 		4C939D281CACFF3500A9EB5B /* firmwareiconWhite@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "firmwareiconWhite@3x.png"; sourceTree = "<group>"; };
 		4C939D2B1CAD08F100A9EB5B /* formatting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "formatting@2x.png"; sourceTree = "<group>"; };
 		4C939D2D1CAD08F600A9EB5B /* formatting@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "formatting@3x.png"; sourceTree = "<group>"; };
-		4C939D2F1CAD098900A9EB5B /* trashBox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trashBox@2x.png"; sourceTree = "<group>"; };
-		4C939D331CAD0A2200A9EB5B /* trashBox@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trashBox@3x.png"; sourceTree = "<group>"; };
 		4C939D351CAD0A3A00A9EB5B /* downloadBox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downloadBox@2x.png"; sourceTree = "<group>"; };
 		4C939D371CAD0A3E00A9EB5B /* downloadBox@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "downloadBox@3x.png"; sourceTree = "<group>"; };
 		4C939D3D1CAD0AFD00A9EB5B /* toolBox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolBox@2x.png"; sourceTree = "<group>"; };
@@ -940,9 +978,23 @@
 		4C05B3381ADE47C500B6F36F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4C5795761CEB133E0081D3E1 /* settings@2x.png */,
+				4C5795781CEB13410081D3E1 /* settings@3x.png */,
+				4C8F162E1CE9DBF300412A33 /* connected_check@2x.png */,
+				4C8F162F1CE9DBF300412A33 /* connected_check@3x.png */,
+				4C8F162A1CE9D9E600412A33 /* connected_error@2x.png */,
+				4C8F162B1CE9D9E600412A33 /* connected_error@3x.png */,
+				4C8F16221CE9CFF600412A33 /* polaroid@2x.png */,
+				4C8F16241CE9CFFB00412A33 /* polaroid@3x.png */,
+				4C8F161B1CE9A29200412A33 /* eyemore_v1_540.png */,
+				4C8F161C1CE9A29200412A33 /* iphone6.png */,
 				4C6FA6CD1CE19774005F753E /* howToConnect.jpg */,
 				4C78E48F1CE3228B004D9D3E /* UserPrivacyPolicy.html */,
 				4C78E48D1CE30AD2004D9D3E /* UserServicePolicy.html */,
+				4C57957E1CEB2BAD0081D3E1 /* downloadBox_big@3x.png */,
+				4C57957F1CEB2BAD0081D3E1 /* downloadBox_big@2x.png */,
+				4C70BD531CE474BE00450BCD /* syncIcon@3x.png */,
+				4C70BD551CE474CC00450BCD /* syncIcon@2x.png */,
 				4C6A048F1CCF4188002C068C /* myUser@2x.png */,
 				4C6A048D1CCF417E002C068C /* myUser@3x.png */,
 				4C8D21B01CC8E0740086A798 /* media_active@2x.png */,
@@ -951,12 +1003,12 @@
 				4C8D21B31CC8E0740086A798 /* media@3x.png */,
 				4C65777A1CBCE20F00C2D4BA /* code@2x.png */,
 				4C6577781CBCE20A00C2D4BA /* code@3x.png */,
+				4C70BD651CE47E1600450BCD /* trashBox@3x.png */,
+				4C70BD671CE47E1C00450BCD /* trashBox@2x.png */,
 				4C939D3F1CAD0B0400A9EB5B /* toolBox@3x.png */,
 				4C939D3D1CAD0AFD00A9EB5B /* toolBox@2x.png */,
 				4C939D371CAD0A3E00A9EB5B /* downloadBox@3x.png */,
 				4C939D351CAD0A3A00A9EB5B /* downloadBox@2x.png */,
-				4C939D2F1CAD098900A9EB5B /* trashBox@2x.png */,
-				4C939D331CAD0A2200A9EB5B /* trashBox@3x.png */,
 				4C939D2B1CAD08F100A9EB5B /* formatting@2x.png */,
 				4C939D2D1CAD08F600A9EB5B /* formatting@3x.png */,
 				4C7B77DA1CAA851C008A0398 /* demoDevice.png */,
@@ -990,6 +1042,8 @@
 				4C7C4EC41C966160008B4E49 /* eyemore2.png */,
 				4C6F631A1C8EA9B80024C57D /* menu1@3x.png */,
 				4C6F631C1C8EAF180024C57D /* menu1@2x.png */,
+				4C70BD471CE4645500450BCD /* menu1_small@2x.png */,
+				4C70BD481CE4645500450BCD /* menu1_small@3x.png */,
 				4C7833D41C88203200EAD2F7 /* check@3x.png */,
 				4C7833D61C88203E00EAD2F7 /* check@2x.png */,
 				4C7833D81C88236B00EAD2F7 /* error@3x.png */,
@@ -1538,6 +1592,7 @@
 		4C6C05251C1574F700899F42 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4C8F160A1CE9774A00412A33 /* Polaroid */,
 				4C70B4801CB6580F00A3DA53 /* Download */,
 				4C7A35341CB36AC200871A74 /* Etc */,
 				4C7A35331CB36A7400871A74 /* User */,
@@ -2054,6 +2109,17 @@
 			name = PolaroidHome;
 			sourceTree = "<group>";
 		};
+		4C8F160A1CE9774A00412A33 /* Polaroid */ = {
+			isa = PBXGroup;
+			children = (
+				4C8F160E1CE977DC00412A33 /* ConnectionStatusView.h */,
+				4C8F160F1CE977DC00412A33 /* ConnectionStatusView.m */,
+				4C8F161F1CE9AEE700412A33 /* ConnectionProgressView.h */,
+				4C8F16201CE9AEE700412A33 /* ConnectionProgressView.m */,
+			);
+			name = Polaroid;
+			sourceTree = "<group>";
+		};
 		4C9143201BFDE65B0026BDC9 /* Localizations */ = {
 			isa = PBXGroup;
 			children = (
@@ -2568,20 +2634,22 @@
 				4C7833E71C882A9100EAD2F7 /* me_active@2x.png in Resources */,
 				4C75862D1C5F62E800FC46AD /* invisibleView@2x.png in Resources */,
 				4C0A7C771BABFF1100418C7A /* 426-file-upload@2x.png in Resources */,
-				4C939D301CAD098900A9EB5B /* trashBox@2x.png in Resources */,
 				4C6F630B1C8E72380024C57D /* icon-error@2x.png in Resources */,
+				4C5795811CEB2BAD0081D3E1 /* downloadBox_big@2x.png in Resources */,
 				4C93B79C1C9BE2AD00D34F63 /* UserCenterView.xib in Resources */,
 				4C62196F1C8FDA530094D553 /* eyemore Launch Screen.storyboard in Resources */,
 				4C0A7C781BABFF1100418C7A /* 426-file-upload@3x.png in Resources */,
 				4C7833EF1C882AE800EAD2F7 /* me@2x.png in Resources */,
-				4C939D341CAD0A2200A9EB5B /* trashBox@3x.png in Resources */,
 				4C314B931C06F8D50027F5BF /* default.jpg in Resources */,
+				4C8F162D1CE9D9E600412A33 /* connected_error@3x.png in Resources */,
 				4C8082E01B42386000BF35A5 /* Main.storyboard in Resources */,
+				4C5795771CEB133E0081D3E1 /* settings@2x.png in Resources */,
 				4C7B77D71CAA5A54008A0398 /* firmwareicon@2x.png in Resources */,
 				4CF050DB1AF8A140000A8C56 /* button_zipai_main@2x.png in Resources */,
 				4C9B9C0C1B0F13A40000A7FA /* info-symbolic@2x.png in Resources */,
 				4C34C0541CBDF55B00E41342 /* exper_front@3x.png in Resources */,
 				4C0A17CF1B0C337800D73A0A /* tab3_active@3x.png in Resources */,
+				4C8F161E1CE9A29200412A33 /* iphone6.png in Resources */,
 				4C0A17CB1B0C337800D73A0A /* tab1_active@3x.png in Resources */,
 				4C939D2C1CAD08F100A9EB5B /* formatting@2x.png in Resources */,
 				4C6485A31C23ED08005423E1 /* begin_startwin.wav in Resources */,
@@ -2590,11 +2658,13 @@
 				4C0A7C7B1BABFF6700418C7A /* 427-file-download@2x.png in Resources */,
 				4C939D2E1CAD08F600A9EB5B /* formatting@3x.png in Resources */,
 				4C6485A41C23ED08005423E1 /* shot_call.wav in Resources */,
+				4C70BD661CE47E1600450BCD /* trashBox@3x.png in Resources */,
 				4C939D291CACFF3500A9EB5B /* firmwareiconWhite@2x.png in Resources */,
 				4CBFF85B1CA3A80F00CB783F /* comment@2x.png in Resources */,
 				4C6F630F1C8E72380024C57D /* icon-success@2x.png in Resources */,
 				4C0A7C7F1BAC034C00418C7A /* 137-button-error@2x.png in Resources */,
 				4C9BF0491B467A3F004BC5C1 /* 11-photos_meitu_9@2x.png in Resources */,
+				4C5795791CEB13410081D3E1 /* settings@3x.png in Resources */,
 				4C6F630A1C8E72380024C57D /* icon-error.png in Resources */,
 				4C7833F11C882B7900EAD2F7 /* me@3x.png in Resources */,
 				4C693A241C9AC528006F9188 /* device_active@3x.png in Resources */,
@@ -2609,6 +2679,8 @@
 				4CFA8F071B16A468003DF781 /* view-refresh-symbolic@2x.png in Resources */,
 				4C7586291C5F618400FC46AD /* visibleView@3x.png in Resources */,
 				4C693A221C9AC51A006F9188 /* device@2x.png in Resources */,
+				4C70BD681CE47E1C00450BCD /* trashBox@2x.png in Resources */,
+				4C8F162C1CE9D9E600412A33 /* connected_error@2x.png in Resources */,
 				4C67F8211C914FBA004B96DD /* download_active@3x.png in Resources */,
 				4C6577791CBCE20A00C2D4BA /* code@3x.png in Resources */,
 				4CBFF8651CA3F07700CB783F /* share.storyboard in Resources */,
@@ -2634,14 +2706,19 @@
 				4C7B9C331C2293BC0045AD6B /* begin_classic.wav in Resources */,
 				4C34C0561CBE261000E41342 /* exper_front@2x.png in Resources */,
 				4C939D381CAD0A3E00A9EB5B /* downloadBox@3x.png in Resources */,
+				4C8F16251CE9CFFB00412A33 /* polaroid@3x.png in Resources */,
 				4CBFF8571CA3A64300CB783F /* like@2x.png in Resources */,
+				4C70BD541CE474BE00450BCD /* syncIcon@3x.png in Resources */,
+				4C8F16311CE9DBF300412A33 /* connected_check@3x.png in Resources */,
 				4C7833E91C882AAB00EAD2F7 /* me_active@3x.png in Resources */,
 				4C70B4901CB66C4000A3DA53 /* VideoDownloadedCell.xib in Resources */,
 				4C37222C1C7C385C00382214 /* Login.storyboard in Resources */,
 				4CFAA0AD1B01F1990018DF13 /* button_zipai_main@3x.png in Resources */,
 				4C70B4881CB6660400A3DA53 /* Play@2x.png in Resources */,
 				4C6485A81C23F94C005423E1 /* shot_bomb.wav in Resources */,
+				4C8F16301CE9DBF300412A33 /* connected_check@2x.png in Resources */,
 				4C0A17AD1B0C332D00D73A0A /* tab1_active@2x.png in Resources */,
+				4C5795801CEB2BAD0081D3E1 /* downloadBox_big@3x.png in Resources */,
 				4C6A048E1CCF417E002C068C /* myUser@3x.png in Resources */,
 				4C8D72B31CBB4F6700621479 /* VideoUndownloadCell.xib in Resources */,
 				4C939D2A1CACFF3500A9EB5B /* firmwareiconWhite@3x.png in Resources */,
@@ -2655,6 +2732,7 @@
 				4C6485A01C23BA12005423E1 /* shootGun.wav in Resources */,
 				4C7B77D51CAA585F008A0398 /* shutter@3x.png in Resources */,
 				4C693A1A1C9AC2ED006F9188 /* discover_active@2x.png in Resources */,
+				4C70BD561CE474CC00450BCD /* syncIcon@2x.png in Resources */,
 				4C0A7C671BABFCCB00418C7A /* 79-circle-load-left@2x.png in Resources */,
 				4C0A7C641BABFB9200418C7A /* 6-wrench-screwdriver@3x.png in Resources */,
 				4C8D21B51CC8E0740086A798 /* media_active@3x.png in Resources */,
@@ -2691,6 +2769,8 @@
 				4C0A7C7C1BABFF6700418C7A /* 427-file-download@3x.png in Resources */,
 				4C0A7C681BABFCCB00418C7A /* 79-circle-load-left@3x.png in Resources */,
 				4C70B4831CB6585C00A3DA53 /* VideoSectionHeader.xib in Resources */,
+				4C8F16231CE9CFF600412A33 /* polaroid@2x.png in Resources */,
+				4C70BD4A1CE4645500450BCD /* menu1_small@3x.png in Resources */,
 				4C75862B1C5F62C500FC46AD /* invisibleView@3x.png in Resources */,
 				4C9B9C0D1B0F13A40000A7FA /* info-symbolic@3x.png in Resources */,
 				4C6485AA1C23FB38005423E1 /* shot_whistle.wav in Resources */,
@@ -2703,10 +2783,12 @@
 				4C6D75041CC76B5500EC6489 /* like@3x.png in Resources */,
 				4CF050DD1AF8A140000A8C56 /* button_zipai_view@2x.png in Resources */,
 				4C65777B1CBCE20F00C2D4BA /* code@2x.png in Resources */,
+				4C70BD491CE4645500450BCD /* menu1_small@2x.png in Resources */,
 				4C7833D71C88203E00EAD2F7 /* check@2x.png in Resources */,
 				4C8D21B41CC8E0740086A798 /* media_active@2x.png in Resources */,
 				4C6ED4051C5A1AC100DD506A /* noFilter@2x.png in Resources */,
 				4C93B79E1C9BF39F00D34F63 /* user_male.png in Resources */,
+				4C8F161D1CE9A29200412A33 /* eyemore_v1_540.png in Resources */,
 				4C8D21A61CC87E3E0086A798 /* UserCenterController.storyboard in Resources */,
 				4C693A1E1C9AC321006F9188 /* discover@2x.png in Resources */,
 				4C7A353C1CB36E2B00871A74 /* CommentTableCell.xib in Resources */,
@@ -2733,6 +2815,7 @@
 				4C56C48B1ACA59A50056D122 /* UIImage+GIF.m in Sources */,
 				4C915B961B3177430002E19C /* SaveLoadInfoManager.m in Sources */,
 				4CEB696C1AD3D08300CDEB1F /* MZTimerLabel.m in Sources */,
+				4C8F16101CE977DC00412A33 /* ConnectionStatusView.m in Sources */,
 				4C6C05351C15755200899F42 /* JBParallaxCell.m in Sources */,
 				4C9B9C091B0F01D30000A7FA /* RootTableViewController.m in Sources */,
 				4CF050F91AF8BEF6000A8C56 /* RootNavigationController.m in Sources */,
@@ -2770,6 +2853,7 @@
 				4C6F63201C8ED5880024C57D /* CameraConfiguration.m in Sources */,
 				4C8AA7331CA91A650054D582 /* MJRefreshAutoStateFooter.m in Sources */,
 				4C719F571CD1FD430021C217 /* UIApplication+JTSImageViewController.m in Sources */,
+				4C8F16211CE9AEE700412A33 /* ConnectionProgressView.m in Sources */,
 				4CBFF8631CA3EFE300CB783F /* ShareViewController.m in Sources */,
 				4C56C48C1ACA59A50056D122 /* UIImage+MultiFormat.m in Sources */,
 				4C719F581CD1FD430021C217 /* UIImage+JTSImageEffects.m in Sources */,

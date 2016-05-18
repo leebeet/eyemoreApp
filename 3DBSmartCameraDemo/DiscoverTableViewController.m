@@ -16,6 +16,7 @@
 #import "JTSImageInfo.h"
 #import "JGActionSheet.h"
 #import "ImageAlbumManager.h"
+#import "MeTableViewController.h"
 
 static NSString *kNewsCellID = @"NewsCell";
 static CGFloat   kfixedPartHeight = 123.0;
@@ -38,8 +39,23 @@ static CGFloat   kfixedPartHeight = 123.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     [self.tableView registerNib:[UINib nibWithNibName:@"DiscoverTableViewCell" bundle:nil] forCellReuseIdentifier:kNewsCellID];
     self.loadUid = -1;
+    
+    [self instantiateRightBarItem];
 }
 
+- (void)instantiateRightBarItem
+{
+    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"me_active.png"] style:UIBarButtonItemStylePlain target:self action:@selector(rightBarItemTapped)]];
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor redColor];
+}
+
+- (void)rightBarItemTapped
+{
+    UIStoryboard *board = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    MeTableViewController *controller = [board instantiateViewControllerWithIdentifier:@"MeTableViewController"];
+    [self.navigationController pushViewController:controller animated:YES];
+    
+}
 #pragma mark - Table View Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

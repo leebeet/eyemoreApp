@@ -126,12 +126,16 @@ typedef enum _downloadButtonStatus{
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    //默认启动拍立得界面
+    //首次加载时滑动collection至底部；
     static int i = 0;
     if (i == 0) {
-//        PulseWaveController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"PulseWaveController"];
-//        [self presentViewController:controller animated:YES completion:nil];
-//        i = 1;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            float offsetHeight = self.collectionView.contentSize.height - self.collectionView.bounds.size.height;
+            if (offsetHeight > 0) {
+                [self.collectionView setContentOffset:CGPointMake(0, self.collectionView.contentSize.height - self.collectionView.bounds.size.height + 44) animated:NO];
+            }
+            i = 1;
+        });
     }
 }
 
@@ -441,14 +445,14 @@ typedef enum _downloadButtonStatus{
         [self.navigationController.navigationBar setUserInteractionEnabled:NO];
         [self.tabBarController.tabBar setUserInteractionEnabled:NO];
         [self.collectionView setUserInteractionEnabled:NO];
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SyncingNotification" object:@(YES)];
         [self setUpSyncingButton];
     }
     if (mode == NORMALMODE) {
         [self.navigationController.navigationBar setUserInteractionEnabled:YES];
         [self.tabBarController.tabBar setUserInteractionEnabled:YES];
         [self.collectionView setUserInteractionEnabled:YES];
-
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SyncingNotification" object:@(NO)];
         [self unSetUpSyncingButton];
     }
 }

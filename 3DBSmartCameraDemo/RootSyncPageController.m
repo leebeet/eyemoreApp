@@ -50,6 +50,8 @@
     self.dataSource = self;
     self.delegate = self;
     [self setUpSyncButtonItem];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syncingNotiHandling:) name:@"SyncingNotification" object:nil];
 }
 
 - (void)setUpSyncButtonItem
@@ -148,6 +150,17 @@
 -(void)dealloc
 {
     [self.socketManager removeObserver:self forKeyPath:@"isLost"];
+}
+
+- (void)syncingNotiHandling:(NSNotification *)noti
+{
+    BOOL isSyncing = [[noti object] boolValue];
+    if (isSyncing ) {
+        [self.view setUserInteractionEnabled:NO];
+    }
+    else {
+        [self.view setUserInteractionEnabled:YES];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

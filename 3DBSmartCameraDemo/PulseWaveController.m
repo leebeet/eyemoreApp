@@ -1347,7 +1347,7 @@
     self.imgClient.syncLeavingFlag = self.imgClient.lastImageIndex;
     
     dispatch_async(dispatch_get_main_queue(), ^(){
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AlbumUpdation" object:nil];
         [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDReceiveOInMode(0)];
         [self.socketManager receiveMessageWithTimeOut:-1];
         [CameraSoundPlayer playSound];

@@ -43,11 +43,6 @@
 {
     [super viewWillAppear:animated];
     NSLog(@"VideoBrowserController will appear...");
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
     [self setCameraWorkingState];
 }
 
@@ -374,7 +369,9 @@
     if (self.socketManager.isLost) {
         return 1;
     }
-    else return 2;
+    else {
+        return 2; 
+    }
 }
 
 //每个UICollectionView展示的内容

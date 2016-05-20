@@ -303,10 +303,10 @@ static const CGFloat defaultGradientPercentage = 0.2;
                           [NSNumber numberWithFloat:vector.dy],
                           nil];
     
-//    mask.colors = [NSArray arrayWithObjects:
-//                       (__bridge id)((UIColor *)colors.firstObject).CGColor,
-//                       (__bridge id)((UIColor *)colors.lastObject).CGColor,
-//                       nil];
+    mask.colors = [NSArray arrayWithObjects:
+                       (__bridge id)((UIColor *)colors.firstObject).CGColor,
+                       (__bridge id)((UIColor *)colors.lastObject).CGColor,
+                       nil];
     mask.colors = nil;
     mask.frame = bounds;
     mask.startPoint = CGPointMake(0, 0);

@@ -40,6 +40,7 @@ static CGFloat   kfixedPartHeight = 123.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 44)];
     self.tableView.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
     self.tableView.delegate = self;
@@ -50,7 +51,6 @@ static CGFloat   kfixedPartHeight = 123.0;
     [self.tableView registerNib:[UINib nibWithNibName:@"CommentTableCell" bundle:nil] forCellReuseIdentifier:kCommentCellID];
     [self.view addSubview:self.tableView];
     self.blogComments = [[self.detailObject objectForKey:@"comments"] mutableCopy];
-    
     //[self setUpTextContainView];
     [self setUpEdittinView];
 }

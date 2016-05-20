@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel  *lensTypeLabel;
 @property (weak, nonatomic) IBOutlet UILabel  *camModeLabel;
 @property (weak, nonatomic) IBOutlet UILabel  *devVersionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *batteryLabel;
 
 @property (weak, nonatomic) IBOutlet UISwitch *focusModeSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *BWModeSwitch;
@@ -387,6 +388,8 @@
         [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetSoundVolume];
         [NSThread sleepForTimeInterval:0.2f];
         [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetSoundRecordVolume];
+        [NSThread sleepForTimeInterval:0.2f];
+        [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetDebugInfo];
     }
     if (ACK.cmd == SDB_SET_LENS_FOCUS_PARAM_ACK ||
         ACK.cmd == SDB_SET_BWDISPLAY_PARAM_ACK  ||
@@ -479,7 +482,11 @@
 {}
 
 - (void)didReceiveDebugInfo:(DEBUG_INFO)info
-{}
+{
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        self.batteryLabel.text = [NSString stringWithFormat:@"%d％",info.StateOfCharge];
+    });
+}
 
 #pragma mark - Table View Delegate
 
@@ -641,18 +648,21 @@
     }
 
     if (indexPath.section == 3 && indexPath.row == 0) {
-        self.formattingAlert = [[UIAlertView alloc] initWithTitle:@"格式化相机"
-                                                          message:@"相机格式化后，相机内所有照片会被删除，确定格式化相机并重启相机吗？"
+        if (!self.socketManager.isLost) {
+        self.formattingAlert = [[UIAlertView alloc] initWithTitle:@"清空相机？"
+                                                          message:@"相机清空后，相机内所有照片会被删除"
                                                          delegate:self
                                                 cancelButtonTitle:@"取消"
                                                 otherButtonTitles:@"确定", nil];
         [self.formattingAlert show];
+        }
+        else [ProgressHUD showError:@"连接已断开, 请连接相机后再试一次！" Interaction:NO];
     }
     if (indexPath.section == 3 && indexPath.row == 1) {
         if (!self.socketManager.isLost) {
             
-            self.updateAlert = [[UIAlertView alloc] initWithTitle:@"确定更新相机吗？"
-                                                          message:@"是否更新您的相机为最新固件？"
+            self.updateAlert = [[UIAlertView alloc] initWithTitle:@"恢复相机？"
+                                                          message:@"恢复您的相机系统，但是照片和视频依然存在"
                                                          delegate:self
                                                 cancelButtonTitle:@"取消"
                                                 otherButtonTitles:@"更新",nil];
@@ -668,7 +678,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 3;
+        return 4;
     }
     if (section == 2) {
         return 5;
@@ -694,7 +704,7 @@
     NSLog(@"button tapped index :%ld", (long)buttonIndex);
     if (buttonIndex == 1 && alertView == self.updateAlert) {
         UpdateViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"updateController"];
-        controller.message = [NSString stringWithFormat:@"点击确定开始更新"];
+        controller.message = [NSString stringWithFormat:@"点击确定开始恢复"];
 
         // 此处使用模态视图，使用模态视图后将不会掉用viewwillappear，viewdidappear
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {

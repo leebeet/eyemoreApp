@@ -66,7 +66,7 @@
 @property (strong, nonatomic) UIButton             *detailButton;
 @property (strong, nonatomic) UIButton             *menuToolButton;
 @property (strong, nonatomic) UIBarButtonItem      *reloadButton;
-@property (strong, nonatomic) UIBarButtonItem      *fullScreenButton;
+@property (strong, nonatomic) UIButton             *fullScreenButton;
 @property (strong, nonatomic) UIProgressView       *recordProgressBar;
 @property (strong, nonatomic) UIActivityIndicatorView *MovieIndicator;
 @property (strong, nonatomic) UILabel              *recordLabel;
@@ -81,7 +81,7 @@
 @property (strong, nonatomic) JTWavePulserAnimation *animation;
 @property (nonatomic)         JTMaterialTransition  *transition;
 @property (strong, nonatomic) JPSVolumeButtonHandler *volumeButtonHandler;
-@property (strong, nonatomic) YJSegmentedControl   *segment;
+//@property (strong, nonatomic) YJSegmentedControl   *segment;
 @property (strong, nonatomic) YAScrollSegmentControl *scrollSegment;
 
 @property (strong, nonatomic) SEFilterControl      *exposurevValueFilter;
@@ -122,7 +122,7 @@
 
 @property (strong, nonatomic) BLFocusingIndicator  *focusingIndicator;
 @property (strong, nonatomic) UIButton             *resetButton;
-@property (strong, nonatomic) UIView               *scrollSegmentView;
+@property (strong, nonatomic) UIView               *segment;
 @property (strong, nonatomic) UIView               *extendToolView;
 @property (strong, nonatomic) UIView               *paramsToolView;
 @property (strong, nonatomic) UIView               *displayToolView;
@@ -482,7 +482,7 @@
     [self.liveViewRecorder startLiveViewing];
 }
 
-- (void)fullScreenButtonTapped
+- (void)fullScreenButtonTapped:(id)sender
 {
     if (self.isFullScreen) {
         [self updateUIWithPortait];
@@ -513,6 +513,13 @@
     [CameraSoundPlayer playSwipeSoundWithVibrate:NO];
 }
 
+- (void)setUpButtonTapped:(id)sender
+{
+    SettingCamTableViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"SettingCamTableViewController"];
+    controller.isPresentingStyle = YES;
+    RootNavigationController *navi = [[RootNavigationController alloc] initWithRootViewController:controller];
+    [self presentViewController:navi animated:YES completion:nil];
+}
 
 - (void)evHandleSwipeFrom:(UISwipeGestureRecognizer *)regonizer
 {
@@ -986,6 +993,7 @@
 
 - (void)didSelectItemAtIndex:(NSInteger)selection
 {
+    
     NSLog(@"Button selected at index: %lu", (long)index);
     if (selection == 0) {
         NSLog(@"拍立得按下");
@@ -1047,71 +1055,71 @@
         self.shootMode = LIVEVIEW_MODE;
     }
     
-    else if (selection == 2) {
-        NSLog(@"自拍30张按下");
-        if (self.shootMode == SYNC_MODE) {
-            [self showLiveViewWindow];
-            [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
-            [self updateUIWithMode:SELFIE_MODE];
-        }
-        
-        if (self.shootMode == LIVEVIEW_MODE) {
-            
-        }
-        if (self.shootMode == RECORDING_MOVIE_MODE) {
-            [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
-            [self updateUIWithMode:SELFIE_MODE];
-        }
-        
-        if (self.shootMode == HD_RECORDING_MODE) {
-            [self hideCanvas];
-            [self showLiveViewWindow];
-            [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
-            [self updateUIWithMode:SELFIE_MODE];
-        }
-        self.shootMode = SELFIE_MODE;
-
-        
-    }
-    else if (selection == 3){
-        NSLog(@"10s段视频按下");
-        if (self.shootMode == SYNC_MODE) {
-            [self showLiveViewWindow];
-            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
-            [self updateUIWithMode:RECORDING_MOVIE_MODE];
-        }
-        
-        if (self.shootMode == LIVEVIEW_MODE) {
-            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
-            [self updateUIWithMode:RECORDING_MOVIE_MODE];
-            
-        }
-        
-        if (self.shootMode == SELFIE_MODE) {
-            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
-            [self updateUIWithMode:RECORDING_MOVIE_MODE];
-        }
-        
-        if (self.shootMode == HD_RECORDING_MODE) {
-            //[self hideCanvas];
-            //[self showLiveViewWindow];
-            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
-            [self updateUIWithMode:RECORDING_MOVIE_MODE];
-        }
-        //        if (self.shootMode == SYNC_MODE || self.shootMode == HD_RECORDING_MODE) {
-        //            [self showLiveViewWindow];
-        //            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
-        //            //[self hideCanvas];
-        //        }
-        //
-        //        if (self.shootMode == SYNC_MODE || self.shootMode == LIVEVIEW_MODE) {
-        //            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
-        //            [self updateUIWithMode:RECORDING_MOVIE_MODE];
-        //        }
-        self.shootMode = RECORDING_MOVIE_MODE;
-    }
+    //    else if (selection == 2) {
+    //        NSLog(@"自拍30张按下");
+    //        if (self.shootMode == SYNC_MODE) {
+    //            [self showLiveViewWindow];
+    //            [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
+    //            [self updateUIWithMode:SELFIE_MODE];
+    //        }
+    //
+    //        if (self.shootMode == LIVEVIEW_MODE) {
+    //
+    //        }
+    //        if (self.shootMode == RECORDING_MOVIE_MODE) {
+    //            [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
+    //            [self updateUIWithMode:SELFIE_MODE];
+    //        }
+    //
+    //        if (self.shootMode == HD_RECORDING_MODE) {
+    //            [self hideCanvas];
+    //            [self showLiveViewWindow];
+    //            [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
+    //            [self updateUIWithMode:SELFIE_MODE];
+    //        }
+    //        self.shootMode = SELFIE_MODE;
+    //
+    //
+    //    }
+    //    else if (selection == 3){
+    //        NSLog(@"10s段视频按下");
+    //        if (self.shootMode == SYNC_MODE) {
+    //            [self showLiveViewWindow];
+    //            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
+    //            [self updateUIWithMode:RECORDING_MOVIE_MODE];
+    //        }
+    //
+    //        if (self.shootMode == LIVEVIEW_MODE) {
+    //            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
+    //            [self updateUIWithMode:RECORDING_MOVIE_MODE];
+    //
+    //        }
+    //
+    //        if (self.shootMode == SELFIE_MODE) {
+    //            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
+    //            [self updateUIWithMode:RECORDING_MOVIE_MODE];
+    //        }
+    //
+    //        if (self.shootMode == HD_RECORDING_MODE) {
+    //            //[self hideCanvas];
+    //            //[self showLiveViewWindow];
+    //            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
+    //            [self updateUIWithMode:RECORDING_MOVIE_MODE];
+    //        }
+    //        //        if (self.shootMode == SYNC_MODE || self.shootMode == HD_RECORDING_MODE) {
+    //        //            [self showLiveViewWindow];
+    //        //            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
+    //        //            //[self hideCanvas];
+    //        //        }
+    //        //
+    //        //        if (self.shootMode == SYNC_MODE || self.shootMode == LIVEVIEW_MODE) {
+    //        //            [self.liveViewRecorder setViewingMode:LIVE_RECORDING_MODE];
+    //        //            [self updateUIWithMode:RECORDING_MOVIE_MODE];
+    //        //        }
+    //        self.shootMode = RECORDING_MOVIE_MODE;
+    //    }
     
-    else if (selection == 4){
+    else if (selection == 2){
         NSLog(@"高清录制按下");
         //[self showCanvas];
         if (self.shootMode == SYNC_MODE) {
@@ -1140,7 +1148,6 @@
     }
     [self updateUIToolBarWithMode:self.shootMode];
     [CameraSoundPlayer playSwipeSoundWithVibrate:NO];
-
 }
 
 #pragma mark - TTRange Slider Delegate
@@ -1540,9 +1547,9 @@
 
 - (void)didReceiveDebugInfo:(DEBUG_INFO)info
 {
-    dispatch_async(dispatch_get_main_queue(), ^(){
-        [self.statusView.battIndicator setBatteryPowerProcessing:info.StateOfCharge / 100.0];
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^(){
+//        [self.statusView.battIndicator setBatteryPowerProcessing:info.StateOfCharge / 100.0];
+//    });
     [self.socketManager receiveMessageWithTimeOut:-1];
     [self.socketManager receiveMessageWithTimeOut:-1];
     [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetFilterMode];
@@ -1602,7 +1609,7 @@
 - (void)setUpWavePulser
 {
     //初始化wave动画效果
-    self.wavePulser = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    self.wavePulser = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 100)];
     self.wavePulser.backgroundColor = [UIColor clearColor];
     //CGPoint viewCenter = CGPointMake(self.displayToolView.frame.size.width / 2, (self.scrollSegmentView.frame.origin.y) / 2);
     CGPoint viewCenter = CGPointMake(self.displayToolView.frame.size.width / 2, (self.segment.frame.origin.y) / 2);
@@ -1610,9 +1617,9 @@
     self.wavePulser.layer.cornerRadius = 50;//self.wavePulser.layer.bounds.size.width / 2;
     self.wavePulser.layer.borderColor = [[UIColor greenColor] CGColor];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 150, 100)];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [imageView setImage:[UIImage imageNamed:@"polaroid.png"]];
+    [imageView setImage:[UIImage imageNamed:@"logo_mid.png"]];
     [self.wavePulser addSubview:imageView];
     [self.displayToolView insertSubview:self.wavePulser belowSubview:self.filterBar];
     
@@ -1654,8 +1661,8 @@
 
 - (void)setUpScrollSegmentControl
 {
-    self.scrollSegmentView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height / 3 * 1 + 33, self.view.bounds.size.width, 50)];
-    self.scrollSegmentView.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
+    self.segment = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height / 3 * 1 + 33, self.view.bounds.size.width, 50)];
+    self.segment.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
     
     NSArray * btnDataSource = @[@"拍立得 ", @" 抓拍 ", @" 高清录制"];
     UIFont *titleFont ;//= [UIFont fontWithName:@".Helvetica Neue Interface" size:18.0f];
@@ -1666,14 +1673,14 @@
     //5,5s界面优化
     if ([[UIScreen mainScreen] bounds].size.width == 320) {
         titleFont = [UIFont fontWithName:@".Helvetica Neue Interface" size:16.5f];
-        btnDataSource = @[@"拍立得", @"抓拍", @"连拍", @"小视频" , @"高清录制"];
+        
     }
     //6,6s界面优化
     if ([[UIScreen mainScreen] bounds].size.width == 375) {
         titleFont = [UIFont fontWithName:@".Helvetica Neue Interface" size:16.5f];
-        btnDataSource = @[@"拍立得", @"抓拍", @"连拍", @"小视频" , @"高清录制"];
     }
-    self.scrollSegment = [[YAScrollSegmentControl alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 50)];
+    self.scrollSegment = [[YAScrollSegmentControl alloc] initWithFrame:CGRectMake(0, 0, 250, 50)];
+    self.scrollSegment.center = CGPointMake(self.segment.frame.size.width / 2, self.scrollSegment.center.y);
     self.scrollSegment.buttons = btnDataSource;
     self.scrollSegment.delegate = self;
     [self.scrollSegment setFont:titleFont];
@@ -1681,20 +1688,20 @@
     [self.scrollSegment setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [self.scrollSegment setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
     [self.scrollSegment.scrollView setScrollEnabled:NO];
-    [self.scrollSegmentView addSubview:self.scrollSegment];
+    [self.segment addSubview:self.scrollSegment];
 }
 
 - (void)setUpStatusView
 {
     float statusViewHeight = self.view.frame.size.height - self.toolBar.frame.size.height - self.displayToolView.frame.size.height - self.bottomBar.frame.size.height;
     self.statusView = [[ConnectionStatusView alloc] initWithFrame:CGRectMake(0, self.toolBar.frame.size.height, self.view.frame.size.width, statusViewHeight)];
-    __weak PulseWaveController *weakSelf = self;
-    self.statusView.settingButtonTappedHandler = ^(BOOL isTapped){
-        SettingCamTableViewController *controller = [weakSelf.storyboard instantiateViewControllerWithIdentifier:@"SettingCamTableViewController"];
-        controller.isPresentingStyle = YES;
-        RootNavigationController *navi = [[RootNavigationController alloc] initWithRootViewController:controller];
-        [weakSelf presentViewController:navi animated:YES completion:nil];
-    };
+//    __weak PulseWaveController *weakSelf = self;
+//    self.statusView.settingButtonTappedHandler = ^(BOOL isTapped){
+//        SettingCamTableViewController *controller = [weakSelf.storyboard instantiateViewControllerWithIdentifier:@"SettingCamTableViewController"];
+//        controller.isPresentingStyle = YES;
+//        RootNavigationController *navi = [[RootNavigationController alloc] initWithRootViewController:controller];
+//        [weakSelf presentViewController:navi animated:YES completion:nil];
+//    };
     [self.view addSubview:self.statusView];
 }
 
@@ -1832,13 +1839,12 @@
         self.toolBar.backgroundColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1];
         self.toolBar.tintColor = [UIColor lightGrayColor];
         
-        UIBarButtonItem *btn1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(doubleDismiss)];
-        UIBarButtonItem *btn2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        UIBarButtonItem *btn4 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        self.fullScreenButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"fullScreen.png"] style:UIBarButtonItemStylePlain target:self action:@selector(fullScreenButtonTapped)];
-        self.reloadButton     = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadButtonTapped)];
+        UIBarButtonItem *btn1  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cmd_close.png"] style:UIBarButtonItemStylePlain target:self action:@selector(doubleDismiss)];
+        UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        UIBarButtonItem *btn2  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cmd_setup.png"] style:UIBarButtonItemStylePlain target:self action:@selector(setUpButtonTapped:)];
+        self.reloadButton      = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cmd_refresh.png"] style:UIBarButtonItemStyleDone target:self action:@selector(reloadButtonTapped)];
         [self.reloadButton setEnabled:NO];
-        NSArray *arr1=[[NSArray alloc]initWithObjects:btn1,btn2, self.fullScreenButton, btn4, self.reloadButton, nil];
+        NSArray *arr1=[[NSArray alloc]initWithObjects:btn1, space, btn2, space, self.reloadButton, nil];
         [self.toolBar setItems:arr1 animated:YES];
     }
     [self.view addSubview:self.toolBar];
@@ -1883,7 +1889,7 @@
     self.borderButton.layer.masksToBounds = YES;
     self.borderButton.layer.cornerRadius = 32.5;
     self.borderButton.layer.borderWidth = 4;
-    self.borderButton.layer.borderColor = [UIColor redColor].CGColor;
+    self.borderButton.layer.borderColor = [UIColor whiteColor].CGColor;
     //[self setUpShadowWithView:self.borderButton];
     //self.takeButton.imageView.image = [UIImage imageNamed:@"download2"];
     //self.borderButton.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 10 * 9.3);
@@ -2068,7 +2074,13 @@
         [self.focusingCoordinateView addGestureRecognizer:tap];
         NSLog(@"gesturer : %@", tap);
     }
-    [self.displayToolView bringSubviewToFront:self.focusingCoordinateView];
+//    if (self.fullScreenButton == nil) {
+//        self.fullScreenButton = [[UIButton alloc] initWithFrame:CGRectMake(self.focusingCoordinateView.frame.size.width - 30, 15, 30, 30)];
+//        self.fullScreenButton.alpha = 0.8;
+//        [self.fullScreenButton setImage:[UIImage imageNamed:@"screen_full.png"] forState:UIControlStateNormal];
+//        [self.fullScreenButton addTarget:self action:@selector(fullScreenButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//    }
+//    [self.focusingCoordinateView addSubview:self.fullScreenButton];
 }
 
 - (void)setUpFocusingIndicator
@@ -2080,64 +2092,64 @@
 
 - (void)setUpFilterBar
 {
-    
-    self.filterBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height / 10 * 1.0 + 14)];
+    float filterbarItmeWidth = self.view.frame.size.width / 3 - 2;
+    float filterbarHeight= 0.651 * filterbarItmeWidth;
+    self.filterBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, filterbarHeight)];
     [self.filterBar setTranslucent:NO];
     self.filterBar.barTintColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
     //self.filterBar.layer.masksToBounds = YES;
     self.filterBar.tintColor = [UIColor whiteColor];
     
-    UIButton *defaultFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
-    defaultFilter.layer.cornerRadius = 3;
+    UIButton *defaultFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, filterbarItmeWidth, filterbarHeight)];
+    //defaultFilter.layer.cornerRadius = 3;
     defaultFilter.layer.masksToBounds = YES;
     defaultFilter.imageView.contentMode = UIViewContentModeScaleToFill;
-    [defaultFilter setImage:[UIImage imageNamed:@"filterColorful"] forState:UIControlStateNormal];
+    [defaultFilter setBackgroundImage:[UIImage imageNamed:@"flit_standard"] forState:UIControlStateNormal];
     defaultFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
     defaultFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
     //[self setUpShadowWithView: defaultFilter.titleLabel];
     [defaultFilter setTitle:@"标准" forState:UIControlStateNormal];
-    defaultFilter.titleEdgeInsets = UIEdgeInsetsMake(30, -480, 0, 0);
+    defaultFilter.titleEdgeInsets = UIEdgeInsetsMake(0, 0, - filterbarHeight / 1.6, 0);
     [defaultFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *BWFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
-    BWFilter.layer.cornerRadius = 3;
+    UIButton *BWFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, filterbarItmeWidth, filterbarHeight)];
+    //BWFilter.layer.cornerRadius = 3;
     BWFilter.layer.masksToBounds = YES;
     BWFilter.imageView.contentMode = UIViewContentModeScaleToFill;
-    [BWFilter setImage:[UIImage imageNamed:@"filterBW"] forState:UIControlStateNormal];
+    [BWFilter setBackgroundImage:[UIImage imageNamed:@"flit_noncolor"] forState:UIControlStateNormal];
     BWFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
     BWFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
     //[self setUpShadowWithView: BWFilter.titleLabel];
     [BWFilter setTitle:@"黑白" forState:UIControlStateNormal];
-    BWFilter.titleEdgeInsets = UIEdgeInsetsMake(30, -480, 0, 0);
+    BWFilter.titleEdgeInsets = UIEdgeInsetsMake(0, 0, - filterbarHeight / 1.6, 0);
     [BWFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *presetFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
-    presetFilter.layer.cornerRadius = 3;
+    UIButton *presetFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, filterbarItmeWidth, filterbarHeight)];
+    //presetFilter.layer.cornerRadius = 3;
     presetFilter.layer.masksToBounds = YES;
     presetFilter.imageView.contentMode = UIViewContentModeScaleToFill;
-    [presetFilter setImage:[UIImage imageNamed:@"filterLight"] forState:UIControlStateNormal];
-    [presetFilter setBackgroundColor:[UIColor darkGrayColor]];
+    [presetFilter setBackgroundImage:[UIImage imageNamed:@"flit_recon"] forState:UIControlStateNormal];
     presetFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
     presetFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
     //[presetFilter setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     //[self setUpShadowWithView: presetFilter.titleLabel];
     [presetFilter setTitle:@"质感" forState:UIControlStateNormal];
-    presetFilter.titleEdgeInsets = UIEdgeInsetsMake(30, -480, 0, 0);
+    presetFilter.titleEdgeInsets = UIEdgeInsetsMake(0, 0, - filterbarHeight / 1.6, 0);
     [presetFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *presetsSecondFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
-    presetsSecondFilter.layer.cornerRadius = 3;
-    presetsSecondFilter.layer.masksToBounds = YES;
-    presetsSecondFilter.imageView.contentMode = UIViewContentModeScaleToFill;
-    [presetsSecondFilter setImage:[UIImage imageNamed:@"noFilter"] forState:UIControlStateNormal];
-    [presetsSecondFilter setBackgroundColor:[UIColor darkGrayColor]];
-    presetsSecondFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
-    presetsSecondFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
-    [presetsSecondFilter setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [self setUpShadowWithView: presetsSecondFilter];
-    [presetsSecondFilter setTitle:@"星空" forState:UIControlStateNormal];
-    presetsSecondFilter.titleEdgeInsets = UIEdgeInsetsMake(30, -30, 0, 0);
-    [presetsSecondFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
+//    UIButton *presetsSecondFilter = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
+//    //presetsSecondFilter.layer.cornerRadius = 3;
+//    presetsSecondFilter.layer.masksToBounds = YES;
+//    presetsSecondFilter.imageView.contentMode = UIViewContentModeScaleToFill;
+//    [presetsSecondFilter setImage:[UIImage imageNamed:@"noFilter"] forState:UIControlStateNormal];
+//    [presetsSecondFilter setBackgroundColor:[UIColor darkGrayColor]];
+//    presetsSecondFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
+//    presetsSecondFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
+//    [presetsSecondFilter setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//    [self setUpShadowWithView: presetsSecondFilter];
+//    [presetsSecondFilter setTitle:@"星空" forState:UIControlStateNormal];
+//    presetsSecondFilter.titleEdgeInsets = UIEdgeInsetsMake(30, -30, 0, 0);
+//    [presetsSecondFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *fixedCenter = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     //6p,6sp界面优化
@@ -2156,16 +2168,16 @@
     UIBarButtonItem *btn1 = [[UIBarButtonItem alloc] initWithCustomView:defaultFilter];
     UIBarButtonItem *btn2 = [[UIBarButtonItem alloc] initWithCustomView:BWFilter];
     UIBarButtonItem *btn3 = [[UIBarButtonItem alloc] initWithCustomView:presetFilter];
-    UIBarButtonItem *btn4 = [[UIBarButtonItem alloc] initWithCustomView:presetsSecondFilter];
+    //UIBarButtonItem *btn4 = [[UIBarButtonItem alloc] initWithCustomView:presetsSecondFilter];
     
-    NSArray *arr1=[[NSArray alloc]initWithObjects:fixedCenter, btn1, FlexibleSpace, btn3, FlexibleSpace, btn2, FlexibleSpace, btn4, fixedCenter, nil];
+    NSArray *arr1=[[NSArray alloc]initWithObjects:fixedCenter, btn1, FlexibleSpace, btn3, FlexibleSpace, btn2, fixedCenter, nil];
     [self.filterBar setItems:arr1 animated:YES];
 }
 
 - (void)setUpDisplayToolView
 {
-    //[self setUpScrollSegmentControl];
-    [self setUpSegmentControl];
+    [self setUpScrollSegmentControl];
+    //[self setUpSegmentControl];
     [self setUpFilterBar];
     
     //float paramsToolHeight = self.filterBar.frame.size.height + kLiveViewHeight + self.scrollSegmentView.frame.size.height;
@@ -2190,15 +2202,16 @@
 {
     [self.selectedFrame removeFromSuperview];
     if (self.selectedFrame == nil) {
-        self.selectedFrame = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 4 * 1.0 - 2, self.view.frame.size.height / 10 * 1.0)];
-        [self.selectedFrame.layer setCornerRadius:3];
-        [self.selectedFrame.layer setBorderWidth:3];
-        [self.selectedFrame.layer setBorderColor:[UIColor redColor].CGColor];
-        [self setUpShadowWithView:self.selectedFrame];
-        self.selectedFrame.layer.masksToBounds = YES;
-        self.selectedFrame.clipsToBounds = YES;
+        self.selectedFrame = [[UIView alloc] initWithFrame:CGRectMake(0, view.frame.size.height - view.frame.size.height / 2.8, view.frame.size.width, view.frame.size.height / 2.8)];
+        //[self.selectedFrame.layer setCornerRadius:1];
+        //[self.selectedFrame.layer setBorderWidth:2];
+        //[self.selectedFrame.layer setBorderColor:[UIColor redColor].CGColor];
+        //[self setUpShadowWithView:self.selectedFrame];
+        //self.selectedFrame.layer.masksToBounds = YES;
+        //self.selectedFrame.clipsToBounds = YES;
+        self.selectedFrame.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.9];
     }
-    [view addSubview:self.selectedFrame];
+    [view insertSubview:self.selectedFrame atIndex:1];
 }
 
 - (void)setUpBottomBar
@@ -2374,7 +2387,9 @@
         tapped.numberOfTouchesRequired = 1;
         [self.liveView addGestureRecognizer:tapped];
         [self.liveView setUserInteractionEnabled:NO];
+
     }
+    
     [self.displayToolView addSubview:self.liveView];
     [BLAnimation revealView:self.liveView WithBLAnimation:BLEffectFadeIn completion:^(BOOL finish){
         [self.liveViewRecorder startLiveViewing];
@@ -2646,7 +2661,7 @@
                          CGAffineTransform at = kLanscapeDirection;
                          //[self.toolBar setTransform:at];
                          //self.toolBar.center = CGPointMake(26, self.view.frame.size.height / 2);
-                         [self.fullScreenButton setImage:[UIImage imageNamed:@"originalScreen.png"]];
+                         [self.fullScreenButton setImage:[UIImage imageNamed:@"screen_normal.png"] forState:UIControlStateNormal];
                          self.toolBar.alpha = 1;
                          self.toolBar.backgroundColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:0.3];
                          self.bottomBar.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:0.3];
@@ -2673,8 +2688,12 @@
                          //[self.view bringSubviewToFront:self.resetButton];
                          [self.view bringSubviewToFront:self.borderButton];
                          //[self.view bringSubviewToFront:self.takeButton];
-                         [self.view bringSubviewToFront:self.toolBar];
+                         //[self.view bringSubviewToFront:self.toolBar];
                          [self.view bringSubviewToFront:self.bottomBar];
+                         [self.view insertSubview:self.liveView belowSubview:self.bottomBar];
+                         [self.view insertSubview:self.focusingCoordinateView belowSubview:self.bottomBar];
+                         [self.view insertSubview:self.toolBar belowSubview:self.bottomBar];
+                         
                          
                      }
                      completion:^(BOOL finished){
@@ -2698,7 +2717,7 @@
                          CGAffineTransform at = kPortraitDirection;
                          //[self.toolBar setTransform:at];
                          //self.toolBar.frame = CGRectMake(0, 0, self.view.frame.size.width, 52);
-                         [self.fullScreenButton setImage:[UIImage imageNamed:@"fullScreen.png"]];
+                         [self.fullScreenButton setImage:[UIImage imageNamed:@"screen_full.png"] forState:UIControlStateNormal];
                          self.toolBar.alpha = 1;
                          self.toolBar.backgroundColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1];
                          self.bottomBar.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];

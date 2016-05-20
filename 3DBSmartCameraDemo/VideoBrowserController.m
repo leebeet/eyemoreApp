@@ -261,7 +261,7 @@
                                                        video.videoType = @"HD_RECORDING";
                                                    }
                                                    else video.videoType = @"LD_RECORDING";
-                                                   [self makeMovieWithVideo:video];
+                                                   [self makeMovieWithVideo:video withIndex:indexPath];
                                                    //[[VideoConfig sharedVideoConfig] addEyemoreVideos:video];
                                                    //[[VideoConfig sharedVideoConfig] synchonizeEyemoreVideos];
                                                    dispatch_async(dispatch_get_main_queue(), ^(){
@@ -276,13 +276,14 @@
                                            }];
 }
 
-- (void)makeMovieWithVideo:(EyemoreVideo *)video
+- (void)makeMovieWithVideo:(EyemoreVideo *)video withIndex:(NSIndexPath *)indexpath
 {
     [self.videoClient composeCompleteMovieFileWithEyemoreVideo:video withCallBackBlock:^(BOOL success){
         if (success) {
             dispatch_async(dispatch_get_main_queue(), ^(){
                 [ProgressHUD showSuccess:@"封装成功"];
                 [self reloadDownloadedSection];
+                [self deleteRecordWithIndex:indexpath];
             });
         }
     }];
@@ -389,7 +390,8 @@
             dispatch_async(dispatch_get_main_queue(), ^(){
                 cell.lengthLabel.text = [self stringForTimeScaleValue:video.timeScale];
                 if ([video.videoType isEqualToString:@"HD_RECORDING"]) {
-                    [cell.HDLabel setHidden:NO];
+                   //[cell.HDLabel setHidden:NO];
+                    [cell.HDLabel setHidden:YES];
                 }
                 else [cell.HDLabel setHidden:YES];
                 [UIView animateWithDuration:0.1f delay:0.2f options:UIViewAnimationOptionAllowAnimatedContent animations:^(){

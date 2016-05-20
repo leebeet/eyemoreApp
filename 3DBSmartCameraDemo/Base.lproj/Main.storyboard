@@ -884,7 +884,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="57" id="zIU-jk-4Dg">
-                                        <rect key="frame" x="0.0" y="470" width="600" height="57"/>
+                                        <rect key="frame" x="0.0" y="356" width="600" height="57"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zIU-jk-4Dg" id="hDK-T2-v8m">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
@@ -1015,7 +1015,7 @@
                             <tableViewSection headerTitle=" " id="xKV-vc-m2A">
                                 <cells>
                                     <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="3bg-6G-V8u" rowHeight="55" style="IBUITableViewCellStyleDefault" id="Xpm-mu-ffZ">
-                                        <rect key="frame" x="0.0" y="555" width="600" height="55"/>
+                                        <rect key="frame" x="0.0" y="441" width="600" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xpm-mu-ffZ" id="TEb-e3-66j">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="54"/>
@@ -1991,6 +1991,37 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="---" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qpc-2h-IcP">
+                                                    <rect key="frame" x="562" y="12" width="23" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.14901960780000001" green="0.14901960780000001" blue="0.15686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="ffC-o7-gG4" detailTextLabel="Rs8-lc-PuD" rowHeight="44" style="IBUITableViewCellStyleValue1" id="T7T-n9-Qhw">
+                                        <rect key="frame" x="0.0" y="202" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T7T-n9-Qhw" id="2m1-aL-T4E">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="剩余电量" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ffC-o7-gG4">
+                                                    <rect key="frame" x="15" y="12" width="68" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    </variation>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="---" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Rs8-lc-PuD">
                                                     <rect key="frame" x="562" y="12" width="23" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -3077,7 +3108,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="57"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="更新相机" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="76k-oa-R2b">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="恢复相机" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="76k-oa-R2b">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="ORL-KL-KN4"/>
@@ -3170,6 +3201,7 @@
                         <outlet property="EVFBackLightSlider" destination="oH3-Jt-THl" id="H0o-Y2-4PQ"/>
                         <outlet property="autoPowerOffSwitcher" destination="OnN-3z-IaV" id="J6H-Jg-tJ7"/>
                         <outlet property="autoPowerOffTimeLabel" destination="jPL-Gw-Ov1" id="qEw-73-wBb"/>
+                        <outlet property="batteryLabel" destination="Rs8-lc-PuD" id="wn0-at-7Hd"/>
                         <outlet property="camModeLabel" destination="ZF4-PQ-WKC" id="FST-Zs-VwS"/>
                         <outlet property="cameraVolumeSlider" destination="ego-cj-clO" id="bPY-iq-f2f"/>
                         <outlet property="devVersionLabel" destination="Qpc-2h-IcP" id="xwG-Dp-59Y"/>

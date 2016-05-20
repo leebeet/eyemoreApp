@@ -143,14 +143,24 @@
              NSInteger status = [[result objectForKey:@"status"] integerValue];
              NSLog(@"%@", result);
              if (status == 1) {
-                 if ([[[result valueForKey:@"results"] objectForKey:@"total_count"] integerValue]) {
-                     NSDictionary *results = [result objectForKey:@"results"];
-                     NSLog(@"fetchObjects: %@", results);
-                     [self extractObjects:results];
+                 
+                 NSDictionary *results = [result valueForKey:@"results"];
+                 NSLog(@"results -%@-",[results isEqual:@""] ? @"yes":@"no");
+                 
+                 if (![results isEqual:@""]) {
+                     if ([[results objectForKey:@"total_count"] integerValue]) {
+                         NSDictionary *results = [result objectForKey:@"results"];
+                         NSLog(@"fetchObjects: %@", results);
+                         [self extractObjects:results];
+                     }
+                     else {
+                         dispatch_async(dispatch_get_main_queue(), ^(){ [ProgressHUD showError:@"无更新" Interaction:YES];});
+                     }
                  }
                  else {
-                     dispatch_async(dispatch_get_main_queue(), ^(){ [ProgressHUD showError:@"无更新" Interaction:YES];});
+                     dispatch_async(dispatch_get_main_queue(), ^(){ [ProgressHUD showError:@"无照片" Interaction:YES];});
                  }
+
              }
              else {
                  [ProgressHUD showError:[NSString stringWithFormat:@"%@",[result objectForKey:@"error"]] Interaction:YES];
@@ -162,8 +172,9 @@
              }
          }
          failure:^(NSURLSessionDataTask *task, NSError *error){
-             [ProgressHUD showError:@"获取超时" Interaction:YES];
+             [ProgressHUD showError:@"获取超时,请检查网络" Interaction:YES];
              NSLog(@"获取失败: %@", error);
+             [self.tableView.mj_header endRefreshing];
          }];
 }
 

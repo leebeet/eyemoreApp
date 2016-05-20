@@ -60,7 +60,7 @@
         [self addSubview:self.connectionChartView];
         
         self.connectState = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        self.connectState.center = CGPointMake(frame.size.width / 2, frame.size.height / 2 + 36);
+        self.connectState.center = CGPointMake(frame.size.width / 2, frame.size.height / 4 * 2.71);
         self.connectState.contentMode = UIViewContentModeScaleAspectFit;
         [self.connectState setImage:[UIImage imageNamed:@"connected_check"]];
         [self addSubview:self.connectState];

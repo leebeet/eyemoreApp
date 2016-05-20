@@ -1609,15 +1609,15 @@
 - (void)setUpWavePulser
 {
     //初始化wave动画效果
-    self.wavePulser = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 100)];
+    self.wavePulser = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 3, 100)];
     self.wavePulser.backgroundColor = [UIColor clearColor];
     //CGPoint viewCenter = CGPointMake(self.displayToolView.frame.size.width / 2, (self.scrollSegmentView.frame.origin.y) / 2);
-    CGPoint viewCenter = CGPointMake(self.displayToolView.frame.size.width / 2, (self.segment.frame.origin.y) / 2);
+    CGPoint viewCenter = CGPointMake(self.displayToolView.frame.size.width / 2, (self.segment.frame.origin.y) / 2 + 10);
     self.wavePulser.center = viewCenter;
     self.wavePulser.layer.cornerRadius = 50;//self.wavePulser.layer.bounds.size.width / 2;
     self.wavePulser.layer.borderColor = [[UIColor greenColor] CGColor];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 150, 100)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 3, 100)];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [imageView setImage:[UIImage imageNamed:@"logo_mid.png"]];
     [self.wavePulser addSubview:imageView];

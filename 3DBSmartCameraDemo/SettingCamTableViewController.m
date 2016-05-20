@@ -665,7 +665,7 @@
                                                           message:@"恢复您的相机系统，但是照片和视频依然存在"
                                                          delegate:self
                                                 cancelButtonTitle:@"取消"
-                                                otherButtonTitles:@"更新",nil];
+                                                otherButtonTitles:@"恢复",nil];
             
             [self.updateAlert show];
         }

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "AFNetworking.h"
 
+#define kFirmwareVersion @"T2.10"
+
 @interface FirmwareManager : NSObject 
 
 typedef void (^FinishedBlock)(NSArray *descriptions);

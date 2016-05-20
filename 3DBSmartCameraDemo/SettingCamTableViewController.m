@@ -711,9 +711,9 @@
             controller.modalPresentationStyle = UIModalPresentationOverCurrentContext;
             controller.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         }else{
-            self.tabBarController.modalPresentationStyle = UIModalPresentationCurrentContext;
+            self.modalPresentationStyle = UIModalPresentationCurrentContext;
         }
-        [self.tabBarController presentViewController:controller animated:YES completion:nil];
+        [self presentViewController:controller animated:YES completion:nil];
     }
     
     if (buttonIndex == 1 && alertView == self.formattingAlert) {

@@ -746,8 +746,6 @@
 		4C863E6B1C9FEF5D005CFFB0 /* FSMediaPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSMediaPicker.h; sourceTree = "<group>"; };
 		4C863E6C1C9FEF5D005CFFB0 /* FSMediaPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSMediaPicker.m; sourceTree = "<group>"; };
 		4C863E791C9FF7A6005CFFB0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		4C863E7B1C9FF7C7005CFFB0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		4C863E7C1C9FF7DB005CFFB0 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		4C8991771C04095200F6116F /* LiveViewRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveViewRecorder.h; sourceTree = "<group>"; };
 		4C8991781C04095200F6116F /* LiveViewRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveViewRecorder.m; sourceTree = "<group>"; };
 		4C89917A1C045ABC00F6116F /* LiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveViewController.h; sourceTree = "<group>"; };
@@ -886,6 +884,9 @@
 		4CBFF8641CA3F07700CB783F /* share.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = share.storyboard; sourceTree = "<group>"; };
 		4CC9F1971ACA79E500E68E41 /* JLResourcePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JLResourcePath.h; sourceTree = "<group>"; };
 		4CC9F1981ACA79E500E68E41 /* JLResourcePath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JLResourcePath.m; sourceTree = "<group>"; };
+		4CCF5EF11CF3FAEB0040DB0C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		4CCF5EF21CF3FAEB0040DB0C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		4CCF5EF31CF3FAFF0040DB0C /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		4CCFB08E1B15B77100600F85 /* GCNetworkReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCNetworkReachability.h; path = Reachability/GCNetworkReachability.h; sourceTree = "<group>"; };
 		4CCFB08F1B15B77100600F85 /* GCNetworkReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCNetworkReachability.m; path = Reachability/GCNetworkReachability.m; sourceTree = "<group>"; };
 		4CD5EEAA1ACBB72300418216 /* RootScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootScrollViewController.h; sourceTree = "<group>"; };
@@ -2654,7 +2655,6 @@
 				en,
 				Base,
 				"zh-Hans",
-				"zh-Hant",
 			);
 			mainGroup = 4C1B6FF61ABFB84900267E49;
 			productRefGroup = 4C1B70001ABFB84900267E49 /* Products */;
@@ -3080,6 +3080,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4C1B70121ABFB84900267E49 /* Base */,
+				4CCF5EF11CF3FAEB0040DB0C /* zh-Hans */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -3088,6 +3089,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4C8082DF1B42386000BF35A5 /* Base */,
+				4CCF5EF21CF3FAEB0040DB0C /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -3096,8 +3098,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				4C863E791C9FF7A6005CFFB0 /* en */,
-				4C863E7B1C9FF7C7005CFFB0 /* zh-Hans */,
-				4C863E7C1C9FF7DB005CFFB0 /* zh-Hant */,
+				4CCF5EF31CF3FAFF0040DB0C /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

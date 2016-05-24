@@ -100,7 +100,7 @@
 {
     
     if (self.genderPicker == nil) {
-        self.genderPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height / 4)];
+        self.genderPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 64, self.view.frame.size.width, self.view.frame.size.height / 4)];
         self.genderPicker.delegate = self;
         self.genderPicker.dataSource = self;
         self.genderArray = @[@"男", @"女"];
@@ -191,8 +191,11 @@
     NSLog(@"did selected row : %ld and section : %ld", (long)indexPath.row, (long)indexPath.section);
     
     if (indexPath.section == 0 && indexPath.row == 0) {
-        self.imagePicker = [[FSMediaPicker alloc] initWithDelegate:self];
-        [self.imagePicker showFromView:self.view];
+        FSMediaPicker *mediaPicker = [[FSMediaPicker alloc] init];
+        mediaPicker.mediaType = FSMediaTypePhoto;
+        mediaPicker.editMode = FSEditModeStandard;
+        mediaPicker.delegate = self;
+        [mediaPicker showFromView:self.view];
     }
     if (indexPath.section == 1 &&indexPath.row == 0) {
 

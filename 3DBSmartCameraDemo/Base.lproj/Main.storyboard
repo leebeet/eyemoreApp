@@ -1695,11 +1695,11 @@
             </objects>
             <point key="canvasLocation" x="-153" y="786"/>
         </scene>
-        <!--同步-->
+        <!--Sync-->
         <scene sceneID="T5e-Ft-pIU">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CNA-lj-UWu" customClass="RootNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" tag="2" title="同步" image="media.png" selectedImage="media_active.png" id="ciS-3Q-4q0">
+                    <tabBarItem key="tabBarItem" tag="2" title="Sync" image="media.png" selectedImage="media_active.png" id="ciS-3Q-4q0">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-1"/>
                     </tabBarItem>
                     <toolbarItems/>

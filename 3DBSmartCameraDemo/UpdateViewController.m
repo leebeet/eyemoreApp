@@ -23,6 +23,8 @@
 #import "WIFIDetector.h"
 #import "FirmwareManager.h"
 
+#define kFirmwareName @"BOOT_T2.09"
+
 @interface UpdateViewController ()<TCPSocketManagerDelegate, TimeOutManagerDelegate>
 
 @property (nonatomic, strong) TCPSocketManager  *socketManager;
@@ -96,23 +98,14 @@
 
 - (void)updateCamera {
     
-    //[ProgressHUD show:@"正在校验相机固件..." Interaction:NO];
-    
-    //NSData *data = UIImageJPEGRepresentation([UIImage imageNamed:@"3db_拍立得3"], 1);
-    
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"BOOT20160226" ofType:@"bin"];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:kFirmwareName ofType:@"bin"];
     NSData *data = [NSData dataWithContentsOfFile:filePath];
-    
     self.socketManager.upLoadData = data;
     unsigned int checksum;
     checksum = [BL32BitCheckSumValidator calculateCheckSumWithData:data];
-    //[self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDUploadSingleFileWithData(data)];
-    //[ProgressHUD show:@"正在上传最新固件至相机中..." Interaction:NO];
     NSLog(@"开始上传固件，校验和checksum is :%u", checksum);
-    
     [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDUploadSingleFileWithDataWithCheckSum(checksum, data)];
     [self.timeoutManager executeTimeOutCounterWithCMD:nil withAmout:0 withTimeOut:90.0 repeat:NO];
-    //self.uploadCheckingTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(checkingUploaState) userInfo:nil repeats:YES];
     [self.socketManager receiveMessageWithTimeOut:-1];
 }
 
@@ -378,24 +371,24 @@
 
 - (void)startUpdating
 {
-    //[self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetStandbyEnable(STADNDBY_DISABLE)];
-    //[self updateCamera];
-    FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
-    if (manager.firmwareFileName && [[manager.latestUpdateURL substringWithRange:NSMakeRange(37 + 13, 14)] isEqualToString:manager.firmwareFileName]) {
-        [self updateCameraWithFirmwarePath:manager.firmwarePathURL];
-        NSLog(@"已有更新包，确认上传");
-    }
-    else {
-        self.hintLabel.text = @"正在下载更新包...";
-        NSLog(@"没有检测到最新更新包，开始下载");
-        [manager downloadLatestFirmwareWithURL:manager.latestUpdateURL progress:^(NSProgress *downloadProgress){
-            dispatch_async(dispatch_get_main_queue(), ^(){
-                self.hintLabel.text = [NSString stringWithFormat:@"正在下载...%.1f％", (downloadProgress.fractionCompleted) * 100];
-            });
-        } completeHandler:^(NSURL *filePath, NSError *error){
-            [self updateCameraWithFirmwarePath:filePath];
-        }];
-    }
+    [self updateCamera];
+    
+//    FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
+//    if (manager.firmwareFileName && [[manager.latestUpdateURL substringWithRange:NSMakeRange(37 + 13, 14)] isEqualToString:manager.firmwareFileName]) {
+//        [self updateCameraWithFirmwarePath:manager.firmwarePathURL];
+//        NSLog(@"已有更新包，确认上传");
+//    }
+//    else {
+//        self.hintLabel.text = @"正在下载更新包...";
+//        NSLog(@"没有检测到最新更新包，开始下载");
+//        [manager downloadLatestFirmwareWithURL:manager.latestUpdateURL progress:^(NSProgress *downloadProgress){
+//            dispatch_async(dispatch_get_main_queue(), ^(){
+//                self.hintLabel.text = [NSString stringWithFormat:@"正在下载...%.1f％", (downloadProgress.fractionCompleted) * 100];
+//            });
+//        } completeHandler:^(NSURL *filePath, NSError *error){
+//            [self updateCameraWithFirmwarePath:filePath];
+//        }];
+//    }
 }
 
 #pragma mark - Time out handle delegate

@@ -229,7 +229,7 @@ typedef enum _downloadButtonStatus{
 {
     self.hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 150)];
     self.hintLabel.center = CGPointMake(self.view.center.x, self.view.center.y);
-    self.hintLabel.text = @"无照片";
+    self.hintLabel.text = NSLocalizedString(@"No Photos", nil);
     self.hintLabel.textAlignment = NSTextAlignmentCenter;
     self.hintLabel.textColor = [UIColor grayColor];
     [self.hintLabel setFont:[UIFont systemFontOfSize:25]];
@@ -509,13 +509,13 @@ typedef enum _downloadButtonStatus{
 
 - (void)saveBarItemTapped
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"保存全部照片" message:@"确定保存所有照片至相册，同时清空app内的所有照片？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Save All", nil) message:NSLocalizedString(@"Save All Detail", nil) preferredStyle:UIAlertControllerStyleAlert];
     // Create the actions.
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"The \"Okay/Cancel\" alert's cancel action occured.");
     }];
     
-    UIAlertAction *otherAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *otherAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"The \"Okay/Cancel\" alert's other action occured.");
         [self menuButtonTapped];
         
@@ -525,7 +525,7 @@ typedef enum _downloadButtonStatus{
         _savingProgress.trackTintColor = [UIColor grayColor];
         _savingProgress.progress = 0;
         _savingProgress.transform = CGAffineTransformMakeScale(1, 3);
-        [ProgressHUD show:@"正在保存照片..." view:_savingProgress Interaction:NO];
+        [ProgressHUD show:NSLocalizedString(@"Saving", nil) view:_savingProgress Interaction:NO];
         
         _progressValueUnit = (float)1.0 / self.imgClient.imgPath.count;
         [self batchSaveAllPhotos];
@@ -539,13 +539,13 @@ typedef enum _downloadButtonStatus{
 
 - (void)deleteBarItemTapped
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"删除全部照片" message:@"确定清空app内的所有照片？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Delete All", nil)  message:NSLocalizedString(@"Delete All Detail", nil)  preferredStyle:UIAlertControllerStyleAlert];
     // Create the actions.
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"The \"Okay/Cancel\" alert's cancel action occured.");
     }];
     
-    UIAlertAction *otherAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    UIAlertAction *otherAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", nil)  style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"The \"Okay/Cancel\" alert's other action occured.");
         [self menuButtonTapped];
         [self.imgClient.dataCache removeAllWithBlock:^(BOOL success){
@@ -554,7 +554,7 @@ typedef enum _downloadButtonStatus{
                 [SaveLoadInfoManager saveAppInfoWithClient:self.imgClient];
                 
                 //删除完成后ui刷新
-                [ProgressHUD showSuccess:@"删除成功"];
+                [ProgressHUD showSuccess:NSLocalizedString(@"Deleted", nil)];
                 [self setUpHintLabel];
                 [self updateUIWithReloadCollectionView];
             });
@@ -659,7 +659,7 @@ typedef enum _downloadButtonStatus{
                                            }];
     }
     else {
-        [ProgressHUD showSuccess:@"保存成功" Interaction: NO];
+        [ProgressHUD showSuccess:NSLocalizedString(@"Saved", nil) Interaction: NO];
         [self setUpHintLabel];
         [self updateUIWithReloadCollectionView];
         progress = 0;
@@ -710,7 +710,7 @@ typedef enum _downloadButtonStatus{
 - (void)syncingStateChangged:(NSNotification *)noti
 {
     NSString *notiString = [noti object];
-    if ([notiString isEqualToString:@"已同步所有照片"]) {
+    if ([notiString isEqualToString:NSLocalizedString(@"Synced", nil)]) {
         dispatch_async(dispatch_get_main_queue(), ^(){
             [ProgressHUD showSuccess:notiString];
         });
@@ -1221,7 +1221,7 @@ typedef enum _downloadButtonStatus{
                 if (self.socketManager.fileList.paramn[0] == 0) {
                     NSLog(@"NO MORE PHOTOS");
                 
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"SyncState" object:@"已同步所有照片"];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"SyncState" object:NSLocalizedString(@"Synced", nil)];
                     
                     //下载完成后，清空超时信息
                     self.timeOutInfo = nil;
@@ -1233,7 +1233,7 @@ typedef enum _downloadButtonStatus{
                 dispatch_async(dispatch_get_main_queue(), ^(){
                     
                     if (self.socketManager.fileList.paramn[0] == 0 && self.progressView.progress == 0) {
-                        [ProgressHUD showError:@"没有照片可以同步" Interaction:YES];
+                        [ProgressHUD showError:NSLocalizedString(@"No Sync", nil) Interaction:YES];
                     }
                     else if (self.socketManager.fileList.paramn[0] != 0) {
                         
@@ -1243,8 +1243,8 @@ typedef enum _downloadButtonStatus{
                         else self.imgPathBeforeDownloadedIndex = self.imgClient.imgPath.count;
                         self.imgPathAfterDownloadedIndex = (NSUInteger)self.socketManager.fileList.paramn[0] + self.imgPathBeforeDownloadedIndex;
                         
-                        NSString *msgString = [NSString stringWithFormat:@"相机内有%d张新照片未同步, 立即同步？", (int)self.socketManager.fileList.paramn[0]];
-                        UIAlertView *syncAlert = [[UIAlertView alloc] initWithTitle:@"同步照片" message:msgString delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"同步", nil];
+                        NSString *msgString = [NSString stringWithFormat:@"%d %@？", (int)self.socketManager.fileList.paramn[0], NSLocalizedString(@"New Sync", nil)];
+                        UIAlertView *syncAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"New Photos", nil) message:msgString delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
                         [syncAlert show];
                         [self setUpItemBadgeValueWithNumber:[NSNumber numberWithInt:self.socketManager.fileList.paramn[0]]];
                     }

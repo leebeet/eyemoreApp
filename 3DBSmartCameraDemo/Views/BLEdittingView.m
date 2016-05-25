@@ -154,12 +154,12 @@
 - (void)setUpHintLabel
 {
     if (self.placeHolder == nil) {
-        self.placeHolder = [[UILabel alloc] initWithFrame:CGRectMake(6, 0, 100, 36)];
+        self.placeHolder = [[UILabel alloc] initWithFrame:CGRectMake(6, 0, 200, 36)];
         self.placeHolder.textColor = [UIColor darkGrayColor];
         [self.textView addSubview:self.placeHolder];
         self.placeHolder.font = [UIFont systemFontOfSize:14.0];
     }
-    [self.placeHolder setText:@"输入评论..."];
+    [self.placeHolder setText:NSLocalizedString(@"input comment...", nil)];
 }
 
 - (void)unSetUpHintLabel

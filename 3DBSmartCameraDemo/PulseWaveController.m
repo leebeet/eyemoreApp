@@ -495,21 +495,21 @@
     UIButton *btn = sender;
     [self setUpSelectedFrameOnView:btn];
     
-    if ([btn.titleLabel.text isEqualToString:@"质感"]) {
+    if ([btn.titleLabel.text isEqualToString:NSLocalizedString(@"Texture", nil)]) {
         //[self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetBWDisplayParam(DISPLAY_COLOR)];
         [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetFilterMode(DISPLAY_COLOR)];
     }
-    if ([btn.titleLabel.text isEqualToString:@"标准"]) {
+    if ([btn.titleLabel.text isEqualToString:NSLocalizedString(@"Standard", nil)]) {
         [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetFilterMode(DISPLAY_SOFT)];
     }
-    if ([btn.titleLabel.text isEqualToString:@"黑白"]) {
+    if ([btn.titleLabel.text isEqualToString:NSLocalizedString(@"B&W", nil)]) {
         //[self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetBWDisplayParam(DISPLAY_BLACKANDWHITE)];
         [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetFilterMode(DISPLAY_BLACKANDWHITE)];
     }
-    if ([btn.titleLabel.text isEqualToString:@"星空"]) {
-        //[self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetBWDisplayParam(DISPLAY_BLACKANDWHITE)];
-        [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetFilterMode(DISPLAY_LONG_EXPOSURE)];
-    }
+//    if ([btn.titleLabel.text isEqualToString:@"星空"]) {
+//        //[self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetBWDisplayParam(DISPLAY_BLACKANDWHITE)];
+//        [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetFilterMode(DISPLAY_LONG_EXPOSURE)];
+//    }
     [CameraSoundPlayer playSwipeSoundWithVibrate:NO];
 }
 
@@ -1633,7 +1633,7 @@
 
 - (void)setUpSegmentControl
 {
-    NSArray * btnDataSource = @[@"拍立得", @"抓拍" , @"高清录制"];
+    NSArray * btnDataSource = @[[NSString stringWithFormat:@"%@", NSLocalizedString(@"Polaroid", nil)], [NSString stringWithFormat:@"%@", NSLocalizedString(@"Photo", nil)] , [NSString stringWithFormat:@"%@", NSLocalizedString(@"Video", nil)]];
     UIFont *titleFont ;//= [UIFont fontWithName:@".Helvetica Neue Interface" size:18.0f];
     //6p,6sp界面优化
     if ([[UIScreen mainScreen] bounds].size.width == 414) {
@@ -1664,7 +1664,7 @@
     self.segment = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height / 3 * 1 + 33, self.view.bounds.size.width, 50)];
     self.segment.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
     
-    NSArray * btnDataSource = @[@"拍立得 ", @" 抓拍 ", @" 高清录制"];
+    NSArray * btnDataSource = @[[NSString stringWithFormat:@"%@", NSLocalizedString(@"Polaroid", nil)], [NSString stringWithFormat:@"%@", NSLocalizedString(@"Photo", nil)] , [NSString stringWithFormat:@"%@", NSLocalizedString(@"Video", nil)]];
     UIFont *titleFont ;//= [UIFont fontWithName:@".Helvetica Neue Interface" size:18.0f];
     //6p,6sp界面优化
     if ([[UIScreen mainScreen] bounds].size.width == 414) {
@@ -1717,7 +1717,7 @@
     UILabel *exposureLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 20)];
     exposureLabel.center = CGPointMake(35, frame.frame.size.height / 2 );
     [exposureLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:17]];
-    exposureLabel.text = @"曝光";
+    exposureLabel.text = NSLocalizedString(@"Exposure", nil);
     exposureLabel.textColor = [[UIColor grayColor] colorWithAlphaComponent:0.45];
     self.exposureArray = [NSArray arrayWithObjects:@"-3", @"-2", @"-1", @"0", @"+1",@"+2",@"+3", nil];
     [frame addSubview:exposureLabel];
@@ -1733,7 +1733,7 @@
     
     UILabel *shutterLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, self.view.bounds.size.height / 10 * 6.5, 40, 20)];
     shutterLabel.center = CGPointMake(35, frame.frame.size.height / 2 );
-    shutterLabel.text = @"快门";
+    shutterLabel.text = NSLocalizedString(@"Shutter", nil);
     [shutterLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:17]];
     shutterLabel.textColor = [[UIColor grayColor] colorWithAlphaComponent:0.45];
     self.shutterArray =[NSArray arrayWithObjects:@"0", @"+1", @"+2", @"+3", @"+4", @"+5", @"+6", nil];
@@ -1750,7 +1750,7 @@
     
     UILabel *irisLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, self.view.bounds.size.height / 10 * 6.5, 40, 20)];
     irisLabel.center = CGPointMake(35, frame.frame.size.height / 2);
-    irisLabel.text = @"光圈";
+    irisLabel.text = NSLocalizedString(@"Aperture", nil);
     [irisLabel setFont:[UIFont fontWithName:@"Trebuchet MS" size:17]];
     irisLabel.textColor = [[UIColor grayColor] colorWithAlphaComponent:0.45];
     self.irisArray =[NSArray arrayWithObjects:@"0", @"-1", @"-2", @"-3", @"-4", @"-5", @"-6", nil];
@@ -2108,7 +2108,7 @@
     defaultFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
     defaultFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
     //[self setUpShadowWithView: defaultFilter.titleLabel];
-    [defaultFilter setTitle:@"标准" forState:UIControlStateNormal];
+    [defaultFilter setTitle:NSLocalizedString(@"Standard", nil) forState:UIControlStateNormal];
     defaultFilter.titleEdgeInsets = UIEdgeInsetsMake(0, 0, - filterbarHeight / 1.6, 0);
     [defaultFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -2120,7 +2120,7 @@
     BWFilter.titleLabel.textAlignment = NSTextAlignmentCenter;
     BWFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
     //[self setUpShadowWithView: BWFilter.titleLabel];
-    [BWFilter setTitle:@"黑白" forState:UIControlStateNormal];
+    [BWFilter setTitle:NSLocalizedString(@"B&W", nil) forState:UIControlStateNormal];
     BWFilter.titleEdgeInsets = UIEdgeInsetsMake(0, 0, - filterbarHeight / 1.6, 0);
     [BWFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -2133,7 +2133,7 @@
     presetFilter.titleLabel.font = [UIFont systemFontOfSize:13.0];
     //[presetFilter setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     //[self setUpShadowWithView: presetFilter.titleLabel];
-    [presetFilter setTitle:@"质感" forState:UIControlStateNormal];
+    [presetFilter setTitle:NSLocalizedString(@"Texture", nil) forState:UIControlStateNormal];
     presetFilter.titleEdgeInsets = UIEdgeInsetsMake(0, 0, - filterbarHeight / 1.6, 0);
     [presetFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
     

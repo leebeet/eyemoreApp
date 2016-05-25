@@ -569,7 +569,7 @@ static CGFloat   kfixedPartHeight = 123.0;
                 
                 UITableViewCell *cell = [[UITableViewCell alloc] init];
                 cell.backgroundColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1];
-                cell.textLabel.text = @"他还没有关注任何人";
+                cell.textLabel.text = NSLocalizedString(@"No Following", nil);
                 cell.textLabel.textAlignment = NSTextAlignmentCenter;
                 cell.textLabel.textColor = [UIColor darkGrayColor];
                 return cell;
@@ -597,7 +597,7 @@ static CGFloat   kfixedPartHeight = 123.0;
                 
                 UITableViewCell *cell = [[UITableViewCell alloc] init];
                 cell.backgroundColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1];
-                cell.textLabel.text = @"他还没有粉丝";
+                cell.textLabel.text = NSLocalizedString(@"No Followers", nil);
                 cell.textLabel.textAlignment = NSTextAlignmentCenter;
                 cell.textLabel.textColor = [UIColor darkGrayColor];
                 return cell;
@@ -653,11 +653,11 @@ static CGFloat   kfixedPartHeight = 123.0;
                   cell.likeLabel.text = [NSString stringWithFormat:@"%ld", [cell.likeLabel.text integerValue] + 1];
               }
               else {
-                  [ProgressHUD showSuccess:@"已赞过" Interaction:YES];
+                  [ProgressHUD showSuccess:NSLocalizedString(@"Liked", nil) Interaction:YES];
               }
           }
           failure:^(NSURLSessionDataTask *task, NSError *error){
-              [ProgressHUD showError:@"点赞失败" Interaction:YES];
+              [ProgressHUD showError:NSLocalizedString(@"Like Error", nil) Interaction:YES];
               NSLog(@"点赞失败: %@", error);
           }];
 }

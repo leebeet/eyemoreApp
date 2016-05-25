@@ -72,7 +72,7 @@ NSString * const kFansList = @"fansList";
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     [userDefaults setObject:@(0) forKey:kUserID];
-    [userDefaults setObject:@"点击头像登录" forKey:kUserName];
+    [userDefaults setObject:NSLocalizedString(@"Login Tap", nil) forKey:kUserName];
 
     [userDefaults synchronize];
 }
@@ -90,7 +90,7 @@ NSString * const kFansList = @"fansList";
     user.fansList = [userDefaults arrayForKey:kFansList];
     
     if (!user.nickName) {
-        user.nickName = @"点击头像登录";
+        user.nickName = NSLocalizedString(@"Login Tap", nil);
     }
     if (user.followerList == nil || user.followerList.count == 0) {
         user.followerList = [NSArray new];

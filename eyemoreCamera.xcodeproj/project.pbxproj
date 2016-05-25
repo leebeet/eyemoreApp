@@ -1198,6 +1198,7 @@
 				4C1619A81CC615670030447A /* BLEdittingView.m */,
 			);
 			name = BLEdittingView;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		4C1B6FF61ABFB84900267E49 = {
@@ -1558,6 +1559,7 @@
 				4C6219761C902B480094D553 /* BLCountDowner.m */,
 			);
 			name = BLCountDownER;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		4C6283E01C7D81C000CD82D8 /* Social */ = {
@@ -1908,13 +1910,9 @@
 			isa = PBXGroup;
 			children = (
 				4C8D21A71CC8ABAB0086A798 /* SwipeView */,
-				4C1619A61CC6153D0030447A /* BLEdittingView */,
 				4C70B4791CB637CD00A3DA53 /* Wifiicon */,
 				4C6C052C1C15755200899F42 /* JBParallaxCell */,
 				4C6C052F1C15755200899F42 /* MGSwipeTableCell */,
-				4C6219741C902ACB0094D553 /* BLCountDownER */,
-				4CBFF8451CA3954000CB783F /* BLFocusingIndicator */,
-				4C9D33F01C854321000BE403 /* BLRocker */,
 				4C7750CD1C84327800A66178 /* CustomedToolBar */,
 			);
 			name = Etc;
@@ -1957,13 +1955,17 @@
 		4C7B77C21CAA2FBF008A0398 /* My Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4C719F1F1CD1F0CA0021C217 /* CamParasConverter */,
 				4C78E4971CE344AB004D9D3E /* BLUlKitTool */,
 				4CEB44111ACCF63500F186F7 /* BLSeeImageView */,
 				4CFB98901BB28EBA004356A9 /* BL32BitCheckSumValidator */,
 				4C56C4481ACA59A50056D122 /* BLAnimation */,
-				4C719F1F1CD1F0CA0021C217 /* CamParasConverter */,
 				4C719F1E1CD1F0B10021C217 /* BLBatteryView */,
+				4C1619A61CC6153D0030447A /* BLEdittingView */,
 				4C5EB9D41C19664D006703D6 /* BLPCMToWAV */,
+				4C9D33F01C854321000BE403 /* BLRocker */,
+				4CBFF8451CA3954000CB783F /* BLFocusingIndicator */,
+				4C6219741C902ACB0094D553 /* BLCountDownER */,
 				4CBFF8441CA3952E00CB783F /* CameraSoundEffects */,
 			);
 			name = "My Utilities";
@@ -2216,6 +2218,7 @@
 				4C9D33F21C85434A000BE403 /* BLRocker.m */,
 			);
 			name = BLRocker;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		4CA283C11C3A827100640BD2 /* DeformationButton */ = {
@@ -2254,6 +2257,7 @@
 				4C85FDAE1C55C6BD008134A4 /* BLFocusingIndicator.m */,
 			);
 			name = BLFocusingIndicator;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		4CBFF8461CA3958800CB783F /* DiscoverCell */ = {
@@ -2261,7 +2265,6 @@
 			children = (
 				4CBFF8471CA395B400CB783F /* DiscoverTableViewCell.h */,
 				4CBFF8481CA395B400CB783F /* DiscoverTableViewCell.m */,
-				4CBFF8521CA3A28800CB783F /* DiscoverTableViewCell.xib */,
 			);
 			name = DiscoverCell;
 			sourceTree = "<group>";
@@ -2814,7 +2817,6 @@
 				4C6272B11C2923BC007DC815 /* originalScreen@2x.png in Resources */,
 				4CA75E0A1C58DE8300F73819 /* filterColorful.png in Resources */,
 				4C70B48A1CB6660C00A3DA53 /* Play@3x.png in Resources */,
-				4CBFF8531CA3A28800CB783F /* DiscoverTableViewCell.xib in Resources */,
 				4C7B77D31CAA5859008A0398 /* shutter@2x.png in Resources */,
 				4C7833A11C87E9F200EAD2F7 /* 138-Download@2x.png in Resources */,
 				4CF9D40A1B0B277500FA336A /* ProgressHUD.bundle in Resources */,

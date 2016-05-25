@@ -53,15 +53,11 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    self.updateAlert = [[UIAlertView alloc] initWithTitle:@"更新相机"
-                        
+    self.updateAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Update Camera", nil)
                                                   message:self.message
-                        
                                                  delegate:self
-                        
-                                        cancelButtonTitle:@"取消"
-                        
-                                        otherButtonTitles:@"确定", nil];
+                                        cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                        otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
     
     [self.updateAlert show];
 
@@ -181,7 +177,7 @@
 
 - (void)didDisconnectSocket
 {
-    [self updateLabelWithString:@"已失去与设备的连接！"];
+    [self updateLabelWithString:NSLocalizedString(@"Connection Lost", nil)];
     //[self.updateAlert dismissWithClickedButtonIndex:0 animated:YES];
     [self.updateAlert dismissWithClickedButtonIndex:0 animated:YES];
     [self prepareDismiss];
@@ -212,7 +208,7 @@
     if (ACK.cmd == SDB_SET_UPLOAD_ZYNQ_FRIMWARE_ACK) {
         
         //if (self.currentVersion < 1.13f) {
-            [self updateLabelWithString:[NSString stringWithFormat:@"准备更新...(state: %d)",ACK.state]];
+            [self updateLabelWithString:[NSString stringWithFormat:@"%@ (state: %d)",NSLocalizedString(@"Preparing update", nil), ACK.state]];
         //}
     }
     if (ACK.cmd == SDB_GET_UPLOAD_STATE_ACK) {
@@ -224,87 +220,87 @@
                 
             case SDB_STATE_TRANSMITTING:
                 [self.socketManager receiveMessageWithTimeOut:-1];
-                [self updateLabelWithString:@"正在更新..."];
+                [self updateLabelWithString:NSLocalizedString(@"Updating", nil)];
                 
                 break;
                 
             case SDB_STATE_TRANSMIT_SUCCESS:
                 [self.socketManager receiveMessageWithTimeOut:-1];
-                [self updateLabelWithString:@"更新成功..."];
+                [self updateLabelWithString:NSLocalizedString(@"Updated", nil)];
                 //[self prepareDismiss];
                 
                 break;
                 
             case SDB_STATE_TRANSMIT_FAILED:
-                [self updateLabelWithString:@"更新失败"];
+                [self updateLabelWithString:NSLocalizedString(@"Update Failed", nil)];
                 [self prepareDismiss];
                 
                 break;
                 
             case SDB_STATE_CHECKING:
                 [self.socketManager receiveMessageWithTimeOut:-1];
-                [self updateLabelWithString:@"校验固件..."];
+                [self updateLabelWithString:NSLocalizedString(@"Verifying", nil)];
                 
                 break;
                 
             case SDB_STATE_CHECK_SUCCESS:
                 [self.socketManager receiveMessageWithTimeOut:-1];
-                [self updateLabelWithString:@"校验成功"];
+                [self updateLabelWithString:NSLocalizedString(@"Verified", nil)];
                 
                 break;
                 
             case SDB_STATE_CHECK_FAILED:
-                [self updateLabelWithString:@"校验失败,准备重更新"];
+                [self updateLabelWithString:NSLocalizedString(@"Verify Failed", nil)];
                 [self prepareReupdate];
                 //[self prepareDismiss];
                 break;
                 
             case SDB_STATE_SAVING:
                 [self.socketManager receiveMessageWithTimeOut:-1];
-                [self updateLabelWithString:@"正在保存..."];
+                [self updateLabelWithString:NSLocalizedString(@"Saving", nil)];
                 
                 break;
                 
             case SDB_STATE_SAVE_SUCCESS:
                 [self.socketManager receiveMessageWithTimeOut:-1];
-                [self updateLabelWithString:@"保存成功"];
+                [self updateLabelWithString:NSLocalizedString(@"Saved", nil)];
                 
                 break;
                 
             case SDB_STATE_SAVE_FAILED:
-                [self updateLabelWithString:@"保存失败，准备重更新"];
+                [self updateLabelWithString:NSLocalizedString(@"Save Failed", nil)];
                 [self prepareReupdate];
                 //[self prepareDismiss];
                 break;
                 
             case SDB_STATE_RECHECKING:
                 [self.socketManager receiveMessageWithTimeOut:-1];
-                [self updateLabelWithString:@"重校验固件..."];
+                [self updateLabelWithString:NSLocalizedString(@"Re-verifying", nil)];
                 
                 break;
                 
             case SDB_STATE_RECHECK_SUCCESS:
                 [self.socketManager receiveMessageWithTimeOut:-1];
-                [self updateLabelWithString:@"重校验成功"];
+                [self updateLabelWithString:NSLocalizedString(@"Re-verified", nil)];
                 
                 break;
                 
             case SDB_STATE_RECHECK_FAILED:
                 [self.socketManager receiveMessageWithTimeOut:-1];
-                [self updateLabelWithString:@"重校验失败，准备重更新"];
+                [self updateLabelWithString:NSLocalizedString(@"Re-verify Failed", nil)];
                 //[self prepareReupdate];
                 [self prepareDismiss];
                 break;
                 
             case SDB_STATE_UPLOAD_SUCCESS:
                 [self.socketManager receiveMessageWithTimeOut:-1];
-                [self updateLabelWithString:@"更新成功"];
+                [self updateLabelWithString:NSLocalizedString(@"Updated", nil)];
                 [self prepareDismiss];
                 
                 break;
                 
             case SDB_STATE_UPLOAD_RESET:
-                [self updateLabelWithString:@"更新完毕, 正在重启"];
+                [self updateLabelWithString:NSLocalizedString(@"Restarting", nil)];
                 [[FirmwareManager sharedFirmwareManager] submitToNewestFirmware];
                 [[FirmwareManager sharedFirmwareManager] saveFirmware];
                 [self prepareDismiss];
@@ -370,7 +366,7 @@
             self.hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 50)];
             self.hintLabel.center = CGPointMake(self.view.center.x, self.view.center.y + 25);
             self.hintLabel.textColor = [UIColor lightGrayColor];
-            self.hintLabel.text = @"检查更新包...";
+            self.hintLabel.text = NSLocalizedString(@"Checking Firmware", nil);
             self.hintLabel.font = [UIFont systemFontOfSize:14.0f];
             self.hintLabel.textAlignment = NSTextAlignmentCenter;
             [self.view addSubview:self.hintLabel];
@@ -406,7 +402,7 @@
 - (void)didTimeoutWithInfo:(id)userInfo
 {
     NSLog(@"transfer data is timing out");
-    [self updateLabelWithString:@"失去连接，请重新启动app后再试一次"];
+    [self updateLabelWithString:NSLocalizedString(@"Connection Lost", nil)];
     [self prepareDismiss];
 }
 

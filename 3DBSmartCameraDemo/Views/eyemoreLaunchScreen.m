@@ -52,12 +52,12 @@
 - (void)lazyLoadSlogon
 {
     if (self.slogon == nil) {
-        self.slogon = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 170, 80)];
+        self.slogon = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
         self.slogon.center = CGPointMake(self.view.center.x, self.view.frame.size.height / 10 * 5.5);
         self.slogon.textAlignment = NSTextAlignmentCenter;
         self.slogon.textColor = [UIColor darkGrayColor];
         self.slogon.font = [UIFont systemFontOfSize:20.0];
-        self.slogon.text = @"新引擎 • 新视界";
+        self.slogon.text = NSLocalizedString(@"Slogon", nil);
         [self.view addSubview:self.slogon];
     }
     self.slogon.alpha = 0;

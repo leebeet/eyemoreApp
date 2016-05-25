@@ -215,7 +215,7 @@
     VideoDownloadedCell  *cell = (__bridge VideoDownloadedCell *)contextInfo;
     dispatch_async(dispatch_get_main_queue(), ^(){
         [self deleteDownloadedVideWithIndex:[self.collectionView indexPathForCell:cell]];
-        [ProgressHUD showSuccess:@"保存成功"];
+        [ProgressHUD showSuccess:NSLocalizedString(@"Saved", nil)];
     });
 }
 
@@ -243,7 +243,7 @@
 - (void)downloadRecordWithIndexPath:(NSIndexPath *)indexPath
 {
     [self setUpSavingProgressView];
-    [ProgressHUD show:@"正在下载..." view:self.savingProgress Interaction:NO];
+    [ProgressHUD show:NSLocalizedString(@"Syncing", nil) view:self.savingProgress Interaction:NO];
     [self downloadVideoWithIndex:indexPath];
 }
 
@@ -265,12 +265,12 @@
                                                    //[[VideoConfig sharedVideoConfig] addEyemoreVideos:video];
                                                    //[[VideoConfig sharedVideoConfig] synchonizeEyemoreVideos];
                                                    dispatch_async(dispatch_get_main_queue(), ^(){
-                                                    [ProgressHUD show:@"正在封装..." Interaction:NO];
+                                                    [ProgressHUD show:NSLocalizedString(@"Encoding", nil) Interaction:NO];
                                                    });
                                                }
                                                else {
                                                    dispatch_async(dispatch_get_main_queue(), ^(){
-                                                       [ProgressHUD showError:@"下载失败" Interaction:NO];
+                                                       [ProgressHUD showError:NSLocalizedString(@"Sync Failed", nil) Interaction:NO];
                                                    });
                                                }
                                            }];
@@ -281,7 +281,7 @@
     [self.videoClient composeCompleteMovieFileWithEyemoreVideo:video withCallBackBlock:^(BOOL success){
         if (success) {
             dispatch_async(dispatch_get_main_queue(), ^(){
-                [ProgressHUD showSuccess:@"封装成功"];
+                [ProgressHUD showSuccess:NSLocalizedString(@"Encoded", nil)];
                 [self reloadDownloadedSection];
                 [self deleteRecordWithIndex:indexpath];
             });
@@ -431,11 +431,11 @@
     if (kind == UICollectionElementKindSectionHeader && indexPath.section == 0)
     {
         reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
-        reusableview.headerLabel.text = @"已同步";
+        reusableview.headerLabel.text = NSLocalizedString(@"Synced", nil);
     }
     else if (kind == UICollectionElementKindSectionHeader && indexPath.section == 1) {
         reusableview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
-        reusableview.headerLabel.text = @"未同步";
+        reusableview.headerLabel.text = NSLocalizedString(@"Unsynced", nil);
     }
     return reusableview;
 }

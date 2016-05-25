@@ -95,7 +95,7 @@
         [self.wifiMessageFail showMessageView];
     }
     else {
-        self.wifiMessageSuccess.subTitleLabel.text = [NSString stringWithFormat:@"与%@相机连接中", [[WIFIDetector sharedWIFIDetector] getDeviceSSID]];
+        self.wifiMessageSuccess.subTitleLabel.text = [NSString stringWithFormat:@"%@ %@", [[WIFIDetector sharedWIFIDetector] getDeviceSSID], NSLocalizedString(@"Communicating", nil)];
         [self.wifiMessageSuccess showMessageView];
     }
     
@@ -104,8 +104,8 @@
 - (void)setUpwifiMessageView
 {
     if (self.wifiMessageFail == nil) {
-        self.wifiMessageFail = [[JRMessageView alloc] initWithTitle:@"未连接eyemore相机"
-                                                           subTitle:@"点我跳转wifi设置"
+        self.wifiMessageFail = [[JRMessageView alloc] initWithTitle:NSLocalizedString(@"Connect Eyemore Device", nil)
+                                                           subTitle:NSLocalizedString(@"Tap To connect", nil)
                                                            iconName:@"11"
                                                         messageType:JRMessageViewTypeWarning
                                                     messagePosition:JRMessagePositionTop
@@ -114,8 +114,8 @@
     }
     
     if (self.wifiMessageSuccess == nil) {
-        self.wifiMessageSuccess = [[JRMessageView alloc] initWithTitle:@"已连接"
-                                                              subTitle:@"与eyemore相机正常通信中 "
+        self.wifiMessageSuccess = [[JRMessageView alloc] initWithTitle:NSLocalizedString(@"Connected", nil)
+                                                              subTitle:NSLocalizedString(@"Communicating", nil)
                                                               iconName:@"11"
                                                            messageType:JRMessageViewTypeSuccess
                                                        messagePosition:JRMessagePositionTop

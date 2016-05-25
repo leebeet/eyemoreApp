@@ -268,7 +268,7 @@
 {
     if (isConnected) {
         dispatch_async(dispatch_get_main_queue(), ^(){
-            self.connectHintLabel.text = @"已连接eyemore设备:";
+            self.connectHintLabel.text = NSLocalizedString(@"Connect Eyemore Device", nil);
             self.DeviceNameLabel.text = [[WIFIDetector sharedWIFIDetector] getDeviceSSID];
             //[self.DeviceImageView setImage:[UIImage imageNamed:@""]];
             [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetDeviceInfo];
@@ -278,8 +278,8 @@
     }
     else {
         dispatch_async(dispatch_get_main_queue(), ^(){
-            self.connectHintLabel.text = @"连接你的eyemore设备";
-            self.DeviceNameLabel.text = @"无设备";
+            self.connectHintLabel.text = NSLocalizedString(@"Connect Eyemore Device", nil);
+            self.DeviceNameLabel.text = NSLocalizedString(@"No Device", nil);
             //[self.DeviceImageView setImage:[UIImage imageNamed:@""]];
             [self unSetUpCollectionView];
             [self unSetUpWavePulser];

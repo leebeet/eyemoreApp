@@ -561,7 +561,7 @@
             </objects>
             <point key="canvasLocation" x="-153" y="2199.75"/>
         </scene>
-        <!--我-->
+        <!--Me-->
         <scene sceneID="5sz-Kj-mcY">
             <objects>
                 <tableViewController storyboardIdentifier="MeTableViewController" id="Hpg-mG-qfo" customClass="MeTableViewController" sceneMemberID="viewController">
@@ -595,10 +595,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的帐号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htE-DJ-z2K">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My account" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="htE-DJ-z2K">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="64" id="5ws-dM-Ovp"/>
+                                                        <constraint firstAttribute="width" constant="64" id="5ws-dM-Ovp">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="85"/>
+                                                        </constraint>
                                                         <constraint firstAttribute="height" constant="20" id="yyh-ea-Xm2"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -741,10 +743,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设置相机" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arN-3f-G4r">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arN-3f-G4r">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="64" id="24h-Dc-98f"/>
+                                                        <constraint firstAttribute="width" constant="64" id="24h-Dc-98f">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="121"/>
+                                                        </constraint>
                                                         <constraint firstAttribute="height" constant="20" id="FTv-Vc-UoH"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -907,14 +911,14 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="开发专用" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fnl-c0-cG1">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Development" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fnl-c0-cG1">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="69A-G6-4Xx">
                                                             <variation key="heightClass=regular-widthClass=compact" constant="21"/>
                                                         </constraint>
                                                         <constraint firstAttribute="width" constant="64" id="a0a-LH-Uad">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="68"/>
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="97"/>
                                                         </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -1021,7 +1025,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="54"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="left" text="软件版本: Beta 3.18" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3bg-6G-V8u">
+                                                <label opaque="NO" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="left" text="Verison: Beta 3.18" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3bg-6G-V8u">
                                                     <rect key="frame" x="15" y="0.0" width="570" height="54"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1048,7 +1052,7 @@
                             <outlet property="delegate" destination="Hpg-mG-qfo" id="19F-Gd-lJM"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="我" id="z2y-hT-xF3"/>
+                    <navigationItem key="navigationItem" title="Me" id="z2y-hT-xF3"/>
                     <connections>
                         <outlet property="batterLabel" destination="3bg-6G-V8u" id="jCQ-RC-LqJ"/>
                     </connections>
@@ -1717,7 +1721,7 @@
             </objects>
             <point key="canvasLocation" x="1191" y="786"/>
         </scene>
-        <!--设备-->
+        <!--Device-->
         <scene sceneID="T6g-SO-SeV">
             <objects>
                 <viewController storyboardIdentifier="DeviceViewController" id="7h7-Qd-v5y" customClass="DeviceViewController" sceneMemberID="viewController">
@@ -1729,7 +1733,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="连接你的eyemore设备" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTW-NF-Ami">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect eyemore device" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTW-NF-Ami">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="pTg-N1-gBp"/>
@@ -1748,7 +1752,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="无设备" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOh-IA-DDB">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No device" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOh-IA-DDB">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="AJv-7T-smy">
@@ -1832,7 +1836,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="设备" id="3op-9d-nt4"/>
+                    <navigationItem key="navigationItem" title="Device" id="3op-9d-nt4"/>
                     <connections>
                         <outlet property="DeviceNameLabel" destination="aOh-IA-DDB" id="aQv-Zy-UDf"/>
                         <outlet property="connectHintLabel" destination="hTW-NF-Ami" id="TnK-E1-7Pa"/>
@@ -1909,7 +1913,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
-                            <tableViewSection headerTitle="相机信息" id="px1-Fm-Yym">
+                            <tableViewSection headerTitle="Camera information" id="px1-Fm-Yym">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="tvL-Of-YJS" detailTextLabel="r6z-SI-KQb" rowHeight="44" style="IBUITableViewCellStyleValue1" id="7ML-uM-NB9">
                                         <rect key="frame" x="0.0" y="114" width="600" height="44"/>
@@ -1918,7 +1922,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="镜头型号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tvL-Of-YJS">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Len Type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tvL-Of-YJS">
                                                     <rect key="frame" x="15" y="12" width="68" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1949,7 +1953,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="相机模式" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="myO-tG-aFK">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="myO-tG-aFK">
                                                     <rect key="frame" x="15" y="12" width="68" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1980,7 +1984,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="相机固件" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="E95-Pl-nPN">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Firmware" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="E95-Pl-nPN">
                                                     <rect key="frame" x="15" y="12" width="68" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2011,7 +2015,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="剩余电量" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ffC-o7-gG4">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Battery" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ffC-o7-gG4">
                                                     <rect key="frame" x="15" y="12" width="68" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -2509,7 +2513,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="设置相机" id="lSZ-Fa-daI">
+                            <tableViewSection headerTitle="Camera settings" id="lSZ-Fa-daI">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="56" id="fJ1-To-FLz">
                                         <rect key="frame" x="0.0" y="785" width="600" height="56"/>
@@ -2523,11 +2527,13 @@
                                                     <color key="onTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="thumbTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手动对焦" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LET-JI-zVX">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manual Focus" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LET-JI-zVX">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="4LL-BW-r35"/>
-                                                        <constraint firstAttribute="width" constant="68" id="clr-Qu-BTw"/>
+                                                        <constraint firstAttribute="width" constant="68" id="clr-Qu-BTw">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="101"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -2629,10 +2635,12 @@
                                                         <action selector="poweroffSwitchAction:" destination="Zkp-QO-wkE" eventType="valueChanged" id="rpM-Qj-o3f"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="开启自动关机 (10mins)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ies-sB-Qc5">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto-Power Off (10mins)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ies-sB-Qc5">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="172" id="MyD-48-LUB"/>
+                                                        <constraint firstAttribute="width" constant="172" id="MyD-48-LUB">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="180"/>
+                                                        </constraint>
                                                         <constraint firstAttribute="height" constant="21" id="RfS-Jb-owA"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -2732,7 +2740,7 @@
                                                     <color key="onTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="thumbTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="相机静音" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MFH-9b-731">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mute" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MFH-9b-731">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="Vql-1i-z0C"/>
@@ -2839,7 +2847,7 @@
                                                     <color key="maximumTrackTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="thumbTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 </slider>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="屏幕亮度" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FUr-Pk-k2n">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVF" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FUr-Pk-k2n">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -2931,12 +2939,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="清空照片信息" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tlh-dV-c4P" userLabel="清空照片信息">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clean Photo Infos" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tlh-dV-c4P" userLabel="清空照片信息">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="0Sd-rr-70c"/>
                                                         <constraint firstAttribute="width" constant="68" id="Z9E-OX-jap">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="100"/>
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="128"/>
                                                         </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -2985,7 +2993,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="系统" id="k3K-P0-uaj">
+                            <tableViewSection headerTitle="Camera system" id="k3K-P0-uaj">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="57" id="NPu-QQ-JNO">
                                         <rect key="frame" x="0.0" y="1108" width="600" height="57"/>
@@ -3032,11 +3040,13 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="清空相机" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imw-k6-zgE" userLabel="删除所有照片">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clear Camera" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imw-k6-zgE" userLabel="删除所有照片">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="3Tl-7f-6kv"/>
-                                                        <constraint firstAttribute="width" constant="96" id="zuQ-1i-sAU"/>
+                                                        <constraint firstAttribute="width" constant="96" id="zuQ-1i-sAU">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="99"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -3108,7 +3118,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="57"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="恢复相机" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="76k-oa-R2b">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Restore Camera" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="76k-oa-R2b">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="ORL-KL-KN4"/>
@@ -3230,8 +3240,8 @@
                             <rect key="frame" x="-60" y="-14" width="121" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
-                                <segment title="照片"/>
-                                <segment title="视频"/>
+                                <segment title="Photos"/>
+                                <segment title="Videos"/>
                             </segments>
                             <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -3851,7 +3861,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
-                            <tableViewSection headerTitle="头像" id="BbX-Sn-fZZ">
+                            <tableViewSection headerTitle="Avatar" id="BbX-Sn-fZZ">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="kf9-TK-yyj">
                                         <rect key="frame" x="0.0" y="50" width="600" height="100"/>
@@ -3932,7 +3942,7 @@
                                                         </mask>
                                                     </variation>
                                                 </view>
-                                                <label opaque="NO" multipleTouchEnabled="YES" tag="2" contentMode="left" text="设置" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="evY-Tg-95y">
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="2" contentMode="left" text="Set" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="evY-Tg-95y">
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="Jr5-fX-MDh"/>
@@ -4002,7 +4012,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="用户资料" id="g2j-rq-HJX">
+                            <tableViewSection headerTitle="Profile" id="g2j-rq-HJX">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" tag="1" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="56" id="3Xx-Xe-pMU">
                                         <rect key="frame" x="0.0" y="201" width="600" height="56"/>
@@ -4030,30 +4040,7 @@
                                                         </mask>
                                                     </variation>
                                                 </view>
-                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" text="昵称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mcS-nz-xYx">
-                                                    <rect key="frame" x="15" y="0.0" width="570" height="43"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="ZAd-nN-TOq"/>
-                                                        <constraint firstAttribute="width" constant="32" id="agt-Tx-ePE"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="ZAd-nN-TOq"/>
-                                                            <exclude reference="agt-Tx-ePE"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
-                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                        <mask key="constraints">
-                                                            <include reference="ZAd-nN-TOq"/>
-                                                            <include reference="agt-Tx-ePE"/>
-                                                        </mask>
-                                                    </variation>
-                                                </label>
-                                                <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Nickname" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xTv-p4-4Jr">
+                                                <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Your Name" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xTv-p4-4Jr">
                                                     <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -4080,6 +4067,31 @@
                                                         </mask>
                                                     </variation>
                                                 </textField>
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" text="Nick Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mcS-nz-xYx">
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="ZAd-nN-TOq"/>
+                                                        <constraint firstAttribute="width" constant="32" id="agt-Tx-ePE">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="79"/>
+                                                        </constraint>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="ZAd-nN-TOq"/>
+                                                            <exclude reference="agt-Tx-ePE"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                        <mask key="constraints">
+                                                            <include reference="ZAd-nN-TOq"/>
+                                                            <include reference="agt-Tx-ePE"/>
+                                                        </mask>
+                                                    </variation>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="mcS-nz-xYx" firstAttribute="leading" secondItem="V3N-cv-Mrr" secondAttribute="leadingMargin" constant="11" id="4TL-aq-9Jk"/>
@@ -4097,8 +4109,8 @@
                                             <variation key="default">
                                                 <mask key="subviews">
                                                     <exclude reference="hCT-JY-pKG"/>
-                                                    <exclude reference="mcS-nz-xYx"/>
                                                     <exclude reference="xTv-p4-4Jr"/>
+                                                    <exclude reference="mcS-nz-xYx"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <exclude reference="DsF-BX-bAd"/>
@@ -4113,8 +4125,8 @@
                                             <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="subviews">
                                                     <include reference="hCT-JY-pKG"/>
-                                                    <include reference="mcS-nz-xYx"/>
                                                     <include reference="xTv-p4-4Jr"/>
+                                                    <include reference="mcS-nz-xYx"/>
                                                 </mask>
                                                 <mask key="constraints">
                                                     <include reference="DsF-BX-bAd"/>
@@ -4136,7 +4148,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" tag="2" contentMode="left" text="经典" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2xh-jW-w5s">
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="2" contentMode="left" text="Male" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2xh-jW-w5s">
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="DVF-jh-f9R">
@@ -4161,11 +4173,13 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" text="性别" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZv-Vt-Hrn">
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" text="Gender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZv-Vt-Hrn">
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="K9q-mw-bzL"/>
-                                                        <constraint firstAttribute="width" constant="32" id="Yt5-Nv-EuX"/>
+                                                        <constraint firstAttribute="width" constant="32" id="Yt5-Nv-EuX">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="54"/>
+                                                        </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -4280,12 +4294,12 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" text="重置密码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mRV-yh-gsa">
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" text="Password Reset" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mRV-yh-gsa">
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="NjU-sw-2Fq"/>
                                                         <constraint firstAttribute="width" constant="32" id="Nn9-a2-jVr">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="64"/>
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="116"/>
                                                         </constraint>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -4369,10 +4383,12 @@
                                                         </mask>
                                                     </variation>
                                                 </view>
-                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" text="退出登录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bgo-Nr-2Za">
+                                                <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" text="Sign Out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bgo-Nr-2Za">
                                                     <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="20" id="5K4-L3-YA8"/>
+                                                        <constraint firstAttribute="height" constant="20" id="5K4-L3-YA8">
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="21"/>
+                                                        </constraint>
                                                         <constraint firstAttribute="width" constant="32" id="uoX-4E-cWk">
                                                             <variation key="heightClass=regular-widthClass=compact" constant="70"/>
                                                         </constraint>
@@ -4800,11 +4816,11 @@
             </objects>
             <point key="canvasLocation" x="3279" y="2203.5"/>
         </scene>
-        <!--发现-->
+        <!--Discover-->
         <scene sceneID="6gE-00-RjM">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Nh2-um-Zs2" customClass="RootNavigationController" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="发现" image="discover.png" selectedImage="discover_active.png" id="ARk-Ef-Jia">
+                    <tabBarItem key="tabBarItem" title="Discover" image="discover.png" selectedImage="discover_active.png" id="ARk-Ef-Jia">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-1"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -4821,7 +4837,7 @@
             </objects>
             <point key="canvasLocation" x="1887" y="786"/>
         </scene>
-        <!--发现-->
+        <!--Discover-->
         <scene sceneID="7Ef-HB-IkJ">
             <objects>
                 <tableViewController id="UyH-mg-Kpo" customClass="DiscoverTableViewController" sceneMemberID="viewController">
@@ -4844,7 +4860,7 @@
                             <outlet property="delegate" destination="UyH-mg-Kpo" id="zOg-nG-tcH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="发现" id="IfD-8K-VBP"/>
+                    <navigationItem key="navigationItem" title="Discover" id="IfD-8K-VBP"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PwE-db-KMO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

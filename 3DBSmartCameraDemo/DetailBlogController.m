@@ -69,7 +69,7 @@ static CGFloat   kfixedPartHeight = 123.0;
 
 - (void)setUpEdittinView
 {
-    self.edittingView = [[BLEdittingView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44) actionTitle:@"发送" inSuperView:self.view];
+    self.edittingView = [[BLEdittingView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44) actionTitle:NSLocalizedString(@"Send", nil) inSuperView:self.view];
     self.edittingView.delegate = self;
     [self.view addSubview:self.edittingView];
 }
@@ -201,7 +201,7 @@ static CGFloat   kfixedPartHeight = 123.0;
         else {
             UITableViewCell *cell = [[UITableViewCell alloc] init];
             cell.backgroundColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1];
-            cell.textLabel.text = @"快来发表你的评论吧";
+            cell.textLabel.text = NSLocalizedString(@"Please Comment", nil);
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
             cell.textLabel.textColor = [UIColor darkGrayColor];
             return cell;
@@ -227,7 +227,7 @@ static CGFloat   kfixedPartHeight = 123.0;
         UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 100, 35)];
         label1.textColor = [UIColor darkGrayColor];
         label1.font = [UIFont systemFontOfSize:15.0];
-        label1.text = @"评论";
+        label1.text = NSLocalizedString(@"Comments", nil);
         [header addSubview:label1];
         return header;
     }
@@ -301,11 +301,11 @@ static CGFloat   kfixedPartHeight = 123.0;
                   cell.likeLabel.text = [NSString stringWithFormat:@"%ld", [cell.likeLabel.text integerValue] + 1];
               }
               else {
-                  [ProgressHUD showSuccess:@"已赞过" Interaction:YES];
+                  [ProgressHUD showSuccess:NSLocalizedString(@"Liked", nil) Interaction:YES];
               }
           }
           failure:^(NSURLSessionDataTask *task, NSError *error){
-              [ProgressHUD showError:@"点赞失败" Interaction:YES];
+              [ProgressHUD showError:NSLocalizedString(@"Like Error", nil) Interaction:YES];
               NSLog(@"点赞失败: %@", error);
           }];
 }
@@ -335,7 +335,7 @@ static CGFloat   kfixedPartHeight = 123.0;
               NSLog(@"like result: %@", result);
               NSInteger status = [[result objectForKey:@"status"] integerValue];
               if (status == 1) {
-                  [ProgressHUD showSuccess:@"评论成功" Interaction:YES];
+                  [ProgressHUD showSuccess:NSLocalizedString(@"Post Success", nil) Interaction:YES];
                   [self.edittingView resetPlaceHolder];
                   NSString *name = [Config getOwnUserName];
                   NSString *date = [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]];
@@ -346,11 +346,11 @@ static CGFloat   kfixedPartHeight = 123.0;
                   else [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationRight];
               }
               else {
-                  [ProgressHUD showSuccess:@"评论响应出错" Interaction:YES];
+                  [ProgressHUD showSuccess:NSLocalizedString(@"Service Error", nil) Interaction:YES];
               }
           }
           failure:^(NSURLSessionDataTask *task, NSError *error){
-              [ProgressHUD showError:@"评论失败" Interaction:YES];
+              [ProgressHUD showError:NSLocalizedString(@"Post Failed", nil) Interaction:YES];
               NSLog(@"评论失败: %@", error);
           }];
     

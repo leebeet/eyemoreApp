@@ -3202,7 +3202,7 @@
 				INFOPLIST_FILE = 3DBSmartCameraDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.3db.SmartCamera;
+				PRODUCT_BUNDLE_IDENTIFIER = com.3db.SmartCameraBeta;
 				PRODUCT_NAME = eyemoreCamera;
 				PROVISIONING_PROFILE = "";
 			};
@@ -3218,7 +3218,7 @@
 				INFOPLIST_FILE = 3DBSmartCameraDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.3db.SmartCamera;
+				PRODUCT_BUNDLE_IDENTIFIER = com.3db.SmartCameraBeta;
 				PRODUCT_NAME = eyemoreCamera;
 				PROVISIONING_PROFILE = "";
 			};

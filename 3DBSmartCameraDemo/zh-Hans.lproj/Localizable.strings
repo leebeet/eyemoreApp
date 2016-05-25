@@ -68,7 +68,11 @@
 "Aperture"                        = "光圈";
 "Polaroid"                        = "拍立得";
 "Photo"                           = "抓拍";
+"Photos"                          = "照片";
 "Video"                           = "视频";
 "Standard"                        = "标准";
 "B&W"                             = "黑白";
 "Texture"                         = "质感";
+"Following"                       = "已关注";
+"Follow"                          = "关注";
+"Followers"                       = "粉丝";

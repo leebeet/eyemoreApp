@@ -104,7 +104,7 @@ static CGFloat   kfixedPartHeight = 123.0;
 - (void)setUpSegmentControl
 {
     if (self.scrollSegment == nil) {
-        NSArray * btnDataSource = @[@"照片 ", @"已关注", @"粉丝"];
+        NSArray * btnDataSource = @[[NSString stringWithFormat:@"%@", NSLocalizedString(@"Photos", nil)], [NSString stringWithFormat:@"%@", NSLocalizedString(@"Following", nil)], [NSString stringWithFormat:@"%@", NSLocalizedString(@"Followers", nil)]];
         UIFont *titleFont ;//= [UIFont fontWithName:@".Helvetica Neue Interface" size:18.0f];
         //6p,6sp界面优化
         if ([[UIScreen mainScreen] bounds].size.width == 414) {
@@ -143,11 +143,11 @@ static CGFloat   kfixedPartHeight = 123.0;
 - (void)updateFollowingButton:(BOOL)hasFollowed
 {
     if (hasFollowed) {
-        [self.myProfileView.followButton setTitle:@"已关注" forState:UIControlStateNormal];
+        [self.myProfileView.followButton setTitle:[NSString stringWithFormat:@"%@", NSLocalizedString(@"Following", nil)] forState:UIControlStateNormal];
         [self.myProfileView.followButton setImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
     }
     else {
-        [self.myProfileView.followButton setTitle:@"关注" forState:UIControlStateNormal];
+        [self.myProfileView.followButton setTitle:[NSString stringWithFormat:@"%@", NSLocalizedString(@"Follow", nil)] forState:UIControlStateNormal];
         [self.myProfileView.followButton setImage:nil forState:UIControlStateNormal];
     }
 }
@@ -281,7 +281,7 @@ static CGFloat   kfixedPartHeight = 123.0;
                   NSLog(@"%@", [result objectForKey:@"results"]);
                   eyemoreUser *owner = [Config myProfile];
                   dispatch_async(dispatch_get_main_queue(), ^(){
-                      if ([self.myProfileView.followButton.titleLabel.text isEqualToString:@"关注"]) {
+                      if ([self.myProfileView.followButton.titleLabel.text isEqualToString:NSLocalizedString(@"Follow", nil)]) {
                           [self updateFollowingButton:YES];
                           [self.ownerFollowList addObject: @{@"uid": @(self.myProfile.userID)}];
                       }

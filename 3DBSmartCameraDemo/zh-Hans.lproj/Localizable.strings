@@ -13,6 +13,7 @@
 "Save"                            = "保存";
 "Input Comment..."                = "输入评论...";
 "Send"                            = "发送";
+"Sent"                            = "发送成功";
 "Checking Firmware"               = "检查更新包...";
 "Preparing update"                = "准备更新";
 "Updating"                        = "正在更新...";
@@ -76,3 +77,12 @@
 "Following"                       = "已关注";
 "Follow"                          = "关注";
 "Followers"                       = "粉丝";
+"Register"                        = "注册新用户";
+"Registered"                      = "注册成功";
+"Register Failed"                 = "注册失败";
+"Sign in"                         = "登录";
+"Sign in success"                 = "登录成功";
+"Signed Out"                      = "已注销";
+"Forgot Password?"                = "忘记密码?";
+"Signing in"                      = "正在登录";
+"Login Failed"                    = "登录失败";

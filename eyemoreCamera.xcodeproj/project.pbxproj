@@ -50,7 +50,6 @@
 		4C34C0541CBDF55B00E41342 /* exper_front@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C34C0531CBDF55B00E41342 /* exper_front@3x.png */; };
 		4C34C0561CBE261000E41342 /* exper_front@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C34C0551CBE260F00E41342 /* exper_front@2x.png */; };
 		4C37222A1C7C2CD700382214 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3722291C7C2CD700382214 /* LoginViewController.m */; };
-		4C37222C1C7C385C00382214 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C37222B1C7C385C00382214 /* Login.storyboard */; };
 		4C37222E1C7C3C9C00382214 /* 3dbLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C37222D1C7C3C9C00382214 /* 3dbLogo.jpg */; };
 		4C4F109F1BECA6390029EBF6 /* UpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4F109E1BECA6390029EBF6 /* UpdateViewController.m */; };
 		4C4F10A31BECA9310029EBF6 /* LZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4F10A21BECA9310029EBF6 /* LZProgressView.m */; };
@@ -194,6 +193,7 @@
 		4C74817C1CCA354C003CE115 /* UserListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C74817A1CCA354C003CE115 /* UserListCell.xib */; };
 		4C74CF0E1C33C9BD00A0F97B /* BLMovieEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C74CF0D1C33C9BD00A0F97B /* BLMovieEncoder.m */; };
 		4C75566E1CF557D400091BF6 /* DiscoverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C75566D1CF557D400091BF6 /* DiscoverTableViewCell.xib */; };
+		4C75566F1CF57C0A00091BF6 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C7556711CF57C0A00091BF6 /* Login.storyboard */; };
 		4C7586211C5F4F7900FC46AD /* filterLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7586201C5F4F7900FC46AD /* filterLight.png */; };
 		4C7586271C5F608100FC46AD /* visibleView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7586261C5F608100FC46AD /* visibleView@2x.png */; };
 		4C7586291C5F618400FC46AD /* visibleView@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7586281C5F618400FC46AD /* visibleView@3x.png */; };
@@ -460,7 +460,6 @@
 		4C34C0551CBE260F00E41342 /* exper_front@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "exper_front@2x.png"; sourceTree = "<group>"; };
 		4C3722281C7C2CD700382214 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		4C3722291C7C2CD700382214 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		4C37222B1C7C385C00382214 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		4C37222D1C7C3C9C00382214 /* 3dbLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3dbLogo.jpg; sourceTree = "<group>"; };
 		4C4F109D1BECA6390029EBF6 /* UpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateViewController.h; sourceTree = "<group>"; };
 		4C4F109E1BECA6390029EBF6 /* UpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateViewController.m; sourceTree = "<group>"; };
@@ -669,6 +668,9 @@
 		4C74CF0C1C33C9BD00A0F97B /* BLMovieEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLMovieEncoder.h; sourceTree = "<group>"; };
 		4C74CF0D1C33C9BD00A0F97B /* BLMovieEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLMovieEncoder.m; sourceTree = "<group>"; };
 		4C75566D1CF557D400091BF6 /* DiscoverTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscoverTableViewCell.xib; sourceTree = "<group>"; };
+		4C7556701CF57C0A00091BF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
+		4C7556731CF57C1300091BF6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Login.strings; sourceTree = "<group>"; };
+		4C7556751CF57C1900091BF6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Login.strings"; sourceTree = "<group>"; };
 		4C7586201C5F4F7900FC46AD /* filterLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filterLight.png; sourceTree = "<group>"; };
 		4C7586261C5F608100FC46AD /* visibleView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visibleView@2x.png"; sourceTree = "<group>"; };
 		4C7586281C5F618400FC46AD /* visibleView@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visibleView@3x.png"; sourceTree = "<group>"; };
@@ -1339,7 +1341,7 @@
 			children = (
 				4C3722281C7C2CD700382214 /* LoginViewController.h */,
 				4C3722291C7C2CD700382214 /* LoginViewController.m */,
-				4C37222B1C7C385C00382214 /* Login.storyboard */,
+				4C7556711CF57C0A00091BF6 /* Login.storyboard */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -2788,7 +2790,7 @@
 				4C8F16311CE9DBF300412A33 /* connected_check@3x.png in Resources */,
 				4C7833E91C882AAB00EAD2F7 /* me_active@3x.png in Resources */,
 				4C70B4901CB66C4000A3DA53 /* VideoDownloadedCell.xib in Resources */,
-				4C37222C1C7C385C00382214 /* Login.storyboard in Resources */,
+				4C75566F1CF57C0A00091BF6 /* Login.storyboard in Resources */,
 				4CFAA0AD1B01F1990018DF13 /* button_zipai_main@3x.png in Resources */,
 				4C70B4881CB6660400A3DA53 /* Play@2x.png in Resources */,
 				4C6485A81C23F94C005423E1 /* shot_bomb.wav in Resources */,
@@ -3087,6 +3089,16 @@
 				4CCF5EF11CF3FAEB0040DB0C /* zh-Hans */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		4C7556711CF57C0A00091BF6 /* Login.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C7556701CF57C0A00091BF6 /* Base */,
+				4C7556731CF57C1300091BF6 /* en */,
+				4C7556751CF57C1900091BF6 /* zh-Hans */,
+			);
+			name = Login.storyboard;
 			sourceTree = "<group>";
 		};
 		4C8082DE1B42386000BF35A5 /* Main.storyboard */ = {

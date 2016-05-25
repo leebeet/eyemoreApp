@@ -139,7 +139,7 @@
                  self.myProfile.userID = 0;
                  [Config saveProfile:self.myProfile];
                  dispatch_async(dispatch_get_main_queue(), ^(){
-                     [ProgressHUD showSuccess:@"已退出登录"];
+                     [ProgressHUD showSuccess:NSLocalizedString(@"Signed Out", nil)];
                      [self.navigationController popViewControllerAnimated:YES];
                  });
              }

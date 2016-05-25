@@ -114,7 +114,7 @@
 
 - (void)returnOnKeyboard:(UITextField *)sender
 {
-    if ([self.loginButton.titleLabel.text isEqualToString:@"登录"]) {
+    if ([self.loginButton.titleLabel.text isEqualToString:NSLocalizedString(@"Sign in", nil)]) {
         if (sender == self.accountField) {
             [self.passwordField becomeFirstResponder];
         }
@@ -143,7 +143,7 @@
 
 - (IBAction)loginButtonTapped{
     
-    if ([self.loginButton.titleLabel.text isEqualToString:@"登录"]) {
+    if ([self.loginButton.titleLabel.text isEqualToString:NSLocalizedString(@"Sign in", nil)]) {
         
         [self login];
     }
@@ -153,7 +153,7 @@
     
 }
 - (IBAction)registerNewUserButtonTapped:(id)sender {
-    if ([self.registerNewUserButton.titleLabel.text isEqualToString: @"注册新用户"]) {
+    if ([self.registerNewUserButton.titleLabel.text isEqualToString:NSLocalizedString(@"Register", nil)]) {
         [self updateUIToRegister];
     }
     else {
@@ -203,7 +203,7 @@
     [self.loginButton setBackgroundColor:[UIColor grayColor]];
     self.loginButton.titleLabel.font = [UIFont systemFontOfSize:18 weight:3];
     [self.loginButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [self.loginButton setTitle:@"登录" forState:UIControlStateNormal];
+    [self.loginButton setTitle:NSLocalizedString(@"Sign in", nil) forState:UIControlStateNormal];
     [self.loginButton addTarget:self action:@selector(loginButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.loginButton];
     self.loginButton.layer.masksToBounds = YES;
@@ -220,19 +220,19 @@
     [self.registerNewUserButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
     [self.registerNewUserButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [self.registerNewUserButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [self.registerNewUserButton setTitle:@"注册新用户" forState:UIControlStateNormal];
+    [self.registerNewUserButton setTitle:NSLocalizedString(@"Register", nil) forState:UIControlStateNormal];
     [self.registerNewUserButton addTarget:self action:@selector(registerNewUserButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.registerNewUserButton];
 }
 
 - (void)setUpforgetPasswordButton
 {
-    self.forgetPasswordButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 18 - 75, self.loginButton.center.y + 25, 75, 30)];
+    self.forgetPasswordButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 18 - 130, self.loginButton.center.y + 25, 130, 30)];
     self.forgetPasswordButton.titleLabel.font = [UIFont systemFontOfSize:14];
     [self.forgetPasswordButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
     [self.forgetPasswordButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [self.forgetPasswordButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
-    [self.forgetPasswordButton setTitle:@"忘记密码?" forState:UIControlStateNormal];
+    [self.forgetPasswordButton setTitle:NSLocalizedString(@"Forgot Password?", nil) forState:UIControlStateNormal];
     [self.forgetPasswordButton addTarget:self action:@selector(forgetPasswordButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.forgetPasswordButton];
 }
@@ -252,8 +252,8 @@
         
     } completion:^(BOOL finished){
         [UIView animateWithDuration:0.2f delay:0.0f options:UIViewAnimationOptionAllowUserInteraction animations:^(){
-            [self.registerNewUserButton setTitle:@"登录" forState:UIControlStateNormal];
-            [self.loginButton setTitle:@"注册新用户" forState:UIControlStateNormal];
+            [self.registerNewUserButton setTitle:NSLocalizedString(@"Sign in", nil)forState:UIControlStateNormal];
+            [self.loginButton setTitle:NSLocalizedString(@"Register", nil) forState:UIControlStateNormal];
             self.codeField.alpha = 1;
             self.getCodeButton.alpha = 1;
             self.nicknameField.alpha = 1;
@@ -278,8 +278,8 @@
     } completion:^(BOOL finished){
         
         [UIView animateWithDuration:0.3f delay:0.2f options:UIViewAnimationOptionAllowUserInteraction animations:^(){
-            [self.registerNewUserButton setTitle:@"注册新用户" forState:UIControlStateNormal];
-            [self.loginButton setTitle:@"登录" forState:UIControlStateNormal];
+            [self.registerNewUserButton setTitle:NSLocalizedString(@"Register", nil) forState:UIControlStateNormal];
+            [self.loginButton setTitle:NSLocalizedString(@"Sign in", nil) forState:UIControlStateNormal];
             
             self.registerNewUserButton.center = CGPointMake(self.registerNewUserButton.center.x, self.registerNewUserButton.center.y - 100);
             self.forgetPasswordButton.center  = CGPointMake(self.forgetPasswordButton.center.x, self.forgetPasswordButton.center.y - 100);
@@ -297,7 +297,7 @@
 
 - (void)login
 {
-    [ProgressHUD show:@"正在登录" Interaction:YES];
+    [ProgressHUD show:NSLocalizedString(@"Signing in", nil) Interaction:YES];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager POST:[NSString stringWithFormat:@"%@%@", eyemoreAPI_HTTP_PREFIX, eyemoreAPI_ACCOUNT_LOG_IN]
@@ -317,7 +317,7 @@
               }
           }
           failure:^(NSURLSessionDataTask *task, NSError *error){
-              [ProgressHUD showError:@"登录失败" Interaction:YES];
+              [ProgressHUD showError:NSLocalizedString(@"Login Failed", nil) Interaction:YES];
               NSLog(@"login error: %@", error);
         }];
 }
@@ -343,14 +343,14 @@
 //                                            }];
 //                  [Config saveOwnAccount:self.accountField.text andPassword:self.passwordField.text];
                   [self login];
-                  [ProgressHUD showSuccess:@"注册成功" Interaction:YES];
+                  [ProgressHUD showSuccess:NSLocalizedString(@"Registered", nil) Interaction:YES];
               }
               else {
                   [ProgressHUD showError:[NSString stringWithFormat:@"%@",[result objectForKey:@"error"]] Interaction:YES];
               }
           }
           failure:^(NSURLSessionDataTask *task, NSError *error){
-              [ProgressHUD showError:@"注册失败" Interaction:YES];
+              [ProgressHUD showError:NSLocalizedString(@"Register Failed", nil) Interaction:YES];
               NSLog(@"注册失败: %@", error);
           }];
 }
@@ -371,7 +371,7 @@
                  NSLog(@"%@", [result objectForKey:@"results"]);
                  [self renewUserWithDict:result];
                  [Config saveOwnAccount:self.accountField.text andPassword:self.passwordField.text];
-                 [ProgressHUD showSuccess:@"登录成功" Interaction:YES];
+                 [ProgressHUD showSuccess:NSLocalizedString(@"Sign in success", nil) Interaction:YES];
              }
              else {
                  [ProgressHUD showError:[NSString stringWithFormat:@"%@",[result objectForKey:@"error"]] Interaction:YES];
@@ -466,7 +466,7 @@
               NSDictionary *result = (NSDictionary *)responseObject;
               NSInteger status = [[result objectForKey:@"status"] integerValue];
               if (status == 1) {
-                  [ProgressHUD showSuccess:@"发送成功" Interaction:YES];
+                  [ProgressHUD showSuccess:NSLocalizedString(@"Sent", nil) Interaction:YES];
               }
               else {
                   [ProgressHUD showError:[NSString stringWithFormat:@"%@",[result objectForKey:@"error"]] Interaction:YES];
@@ -496,7 +496,7 @@
     static BOOL isPasswordTexted = NO;
     static BOOL isNickNameTexted = NO;
     static BOOL isCodeTexted = NO;
-    if ([self.loginButton.titleLabel.text isEqualToString:@"登录"]) {
+    if ([self.loginButton.titleLabel.text isEqualToString:NSLocalizedString(@"Sign in", nil)]) {
         if (textField == self.accountField) {
             if (self.accountField.text.length > 0) {
                 isAccountTexted = YES;

@@ -13,6 +13,7 @@
 "Save"                            = "Save";
 "Input Comment..."                = "Input Comment...";
 "Send"                            = "Send";
+"Sent"                            = "Sent";
 "Checking Firmware"               = "Checking Firmware";
 "Preparing update"                = "Preparing update";
 "Updating"                        = "Updating";
@@ -76,4 +77,14 @@
 "Following"                       = "Following";
 "Follow"                          = "Follow";
 "Followers"                       = "Followers";
+"Register"                        = "Register";
+"Registered"                      = "Registered";
+"Register Failed"                 = "Register Failed";
+"Sign in"                         = "Sign in";
+"Sign in success"                 = "Sign in success";
+"Signed Out"                      = "Signed Out";
+"Forgot Password?"                = "Forgot Password?";
+"Signing in"                      = "Signing in";
+"Login Failed"                    = "Login Failed";
+
 

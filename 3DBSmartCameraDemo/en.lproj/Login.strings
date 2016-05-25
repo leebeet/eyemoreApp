@@ -1,0 +1,33 @@
+
+/* Class = "UIButton"; normalTitle = "用户服务协议"; ObjectID = "EFS-N1-qjT"; */
+"EFS-N1-qjT.normalTitle" = "User Service";
+
+/* Class = "UILabel"; text = "及"; ObjectID = "OBD-bk-0li"; */
+"OBD-bk-0li.text" = "&";
+
+/* Class = "UITextField"; placeholder = "请输入验证码"; ObjectID = "S7E-wi-txs"; */
+"S7E-wi-txs.placeholder" = "Input ValidCode";
+
+/* Class = "UIButton"; normalTitle = "隐私政策"; ObjectID = "UdM-vz-LaJ"; */
+"UdM-vz-LaJ.normalTitle" = "Privacy";
+
+/* Class = "UILabel"; text = "点击注册新用户，即同意"; ObjectID = "Ufi-sx-hmf"; */
+"Ufi-sx-hmf.text" = "Regitser, means agree";
+
+/* Class = "UIButton"; normalTitle = "获取验证码"; ObjectID = "WaL-P3-qua"; */
+"WaL-P3-qua.normalTitle" = "Get ValidCode";
+
+/* Class = "UITextField"; placeholder = "请输入昵称"; ObjectID = "gFA-hI-Ela"; */
+"gFA-hI-Ela.placeholder" = "Nick Name";
+
+/* Class = "UIButton"; normalTitle = "x"; ObjectID = "iVv-1P-c3K"; */
+"iVv-1P-c3K.normalTitle" = "x";
+
+/* Class = "UIButton"; normalTitle = "忘记密码？"; ObjectID = "knf-Ac-FaS"; */
+"knf-Ac-FaS.normalTitle" = "Forgot Password?";
+
+/* Class = "UITextField"; placeholder = "请输入密码"; ObjectID = "rsp-qV-zBc"; */
+"rsp-qV-zBc.placeholder" = "Password";
+
+/* Class = "UITextField"; placeholder = "请输入手机号码"; ObjectID = "yOC-XF-nHo"; */
+"yOC-XF-nHo.placeholder" = "Phone Number";

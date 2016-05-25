@@ -193,6 +193,7 @@
 		4C74817B1CCA354C003CE115 /* UserListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7481791CCA354C003CE115 /* UserListCell.m */; };
 		4C74817C1CCA354C003CE115 /* UserListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C74817A1CCA354C003CE115 /* UserListCell.xib */; };
 		4C74CF0E1C33C9BD00A0F97B /* BLMovieEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C74CF0D1C33C9BD00A0F97B /* BLMovieEncoder.m */; };
+		4C75566E1CF557D400091BF6 /* DiscoverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C75566D1CF557D400091BF6 /* DiscoverTableViewCell.xib */; };
 		4C7586211C5F4F7900FC46AD /* filterLight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7586201C5F4F7900FC46AD /* filterLight.png */; };
 		4C7586271C5F608100FC46AD /* visibleView@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7586261C5F608100FC46AD /* visibleView@2x.png */; };
 		4C7586291C5F618400FC46AD /* visibleView@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7586281C5F618400FC46AD /* visibleView@3x.png */; };
@@ -336,7 +337,6 @@
 		4CA9C03F1BF2E66A0081F5F8 /* TimeoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA9C03E1BF2E66A0081F5F8 /* TimeoutManager.m */; };
 		4CAAF1801C02F049008487C3 /* ImageRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAF17F1C02F049008487C3 /* ImageRecorder.m */; };
 		4CBFF8491CA395B400CB783F /* DiscoverTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CBFF8481CA395B400CB783F /* DiscoverTableViewCell.m */; };
-		4CBFF8531CA3A28800CB783F /* DiscoverTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CBFF8521CA3A28800CB783F /* DiscoverTableViewCell.xib */; };
 		4CBFF8571CA3A64300CB783F /* like@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBFF8561CA3A64300CB783F /* like@2x.png */; };
 		4CBFF8591CA3A7F800CB783F /* comment@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBFF8581CA3A7F800CB783F /* comment@3x.png */; };
 		4CBFF85B1CA3A80F00CB783F /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CBFF85A1CA3A80F00CB783F /* comment@2x.png */; };
@@ -668,6 +668,7 @@
 		4C74817A1CCA354C003CE115 /* UserListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserListCell.xib; sourceTree = "<group>"; };
 		4C74CF0C1C33C9BD00A0F97B /* BLMovieEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLMovieEncoder.h; sourceTree = "<group>"; };
 		4C74CF0D1C33C9BD00A0F97B /* BLMovieEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLMovieEncoder.m; sourceTree = "<group>"; };
+		4C75566D1CF557D400091BF6 /* DiscoverTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscoverTableViewCell.xib; sourceTree = "<group>"; };
 		4C7586201C5F4F7900FC46AD /* filterLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = filterLight.png; sourceTree = "<group>"; };
 		4C7586261C5F608100FC46AD /* visibleView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visibleView@2x.png"; sourceTree = "<group>"; };
 		4C7586281C5F618400FC46AD /* visibleView@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visibleView@3x.png"; sourceTree = "<group>"; };
@@ -873,7 +874,6 @@
 		4CAAF17F1C02F049008487C3 /* ImageRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageRecorder.m; sourceTree = "<group>"; };
 		4CBFF8471CA395B400CB783F /* DiscoverTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverTableViewCell.h; sourceTree = "<group>"; };
 		4CBFF8481CA395B400CB783F /* DiscoverTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverTableViewCell.m; sourceTree = "<group>"; };
-		4CBFF8521CA3A28800CB783F /* DiscoverTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscoverTableViewCell.xib; sourceTree = "<group>"; };
 		4CBFF8561CA3A64300CB783F /* like@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "like@2x.png"; sourceTree = "<group>"; };
 		4CBFF8581CA3A7F800CB783F /* comment@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment@3x.png"; sourceTree = "<group>"; };
 		4CBFF85A1CA3A80F00CB783F /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment@2x.png"; sourceTree = "<group>"; };
@@ -2265,6 +2265,7 @@
 			children = (
 				4CBFF8471CA395B400CB783F /* DiscoverTableViewCell.h */,
 				4CBFF8481CA395B400CB783F /* DiscoverTableViewCell.m */,
+				4C75566D1CF557D400091BF6 /* DiscoverTableViewCell.xib */,
 			);
 			name = DiscoverCell;
 			sourceTree = "<group>";
@@ -2819,6 +2820,7 @@
 				4C70B48A1CB6660C00A3DA53 /* Play@3x.png in Resources */,
 				4C7B77D31CAA5859008A0398 /* shutter@2x.png in Resources */,
 				4C7833A11C87E9F200EAD2F7 /* 138-Download@2x.png in Resources */,
+				4C75566E1CF557D400091BF6 /* DiscoverTableViewCell.xib in Resources */,
 				4CF9D40A1B0B277500FA336A /* ProgressHUD.bundle in Resources */,
 				4C939D361CAD0A3A00A9EB5B /* downloadBox@2x.png in Resources */,
 				4C6392AE1C16E0720065111A /* Movie@3x.png in Resources */,

@@ -371,24 +371,24 @@
 
 - (void)startUpdating
 {
-    [self updateCamera];
+//    [self updateCamera];
     
-//    FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
-//    if (manager.firmwareFileName && [[manager.latestUpdateURL substringWithRange:NSMakeRange(37 + 13, 14)] isEqualToString:manager.firmwareFileName]) {
-//        [self updateCameraWithFirmwarePath:manager.firmwarePathURL];
-//        NSLog(@"已有更新包，确认上传");
-//    }
-//    else {
-//        self.hintLabel.text = @"正在下载更新包...";
-//        NSLog(@"没有检测到最新更新包，开始下载");
-//        [manager downloadLatestFirmwareWithURL:manager.latestUpdateURL progress:^(NSProgress *downloadProgress){
-//            dispatch_async(dispatch_get_main_queue(), ^(){
-//                self.hintLabel.text = [NSString stringWithFormat:@"正在下载...%.1f％", (downloadProgress.fractionCompleted) * 100];
-//            });
-//        } completeHandler:^(NSURL *filePath, NSError *error){
-//            [self updateCameraWithFirmwarePath:filePath];
-//        }];
-//    }
+    FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
+    if (manager.firmwareFileName && [[manager.latestUpdateURL substringWithRange:NSMakeRange(37 + 13, 14)] isEqualToString:manager.firmwareFileName]) {
+        [self updateCameraWithFirmwarePath:manager.firmwarePathURL];
+        NSLog(@"已有更新包，确认上传");
+    }
+    else {
+        self.hintLabel.text = @"正在下载更新包...";
+        NSLog(@"没有检测到最新更新包，开始下载");
+        [manager downloadLatestFirmwareWithURL:manager.latestUpdateURL progress:^(NSProgress *downloadProgress){
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                self.hintLabel.text = [NSString stringWithFormat:@"正在下载...%.1f％", (downloadProgress.fractionCompleted) * 100];
+            });
+        } completeHandler:^(NSURL *filePath, NSError *error){
+            [self updateCameraWithFirmwarePath:filePath];
+        }];
+    }
 }
 
 #pragma mark - Time out handle delegate

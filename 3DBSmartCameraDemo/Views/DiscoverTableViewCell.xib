@@ -41,20 +41,20 @@
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5q5-8T-ReK">
-                        <rect key="frame" x="89" y="267" width="52" height="25"/>
+                        <rect key="frame" x="72" y="267" width="28" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="KLT-hb-Pav"/>
-                            <constraint firstAttribute="width" constant="52" id="Lc6-Kg-mRZ"/>
+                            <constraint firstAttribute="width" constant="28" id="Lc6-Kg-mRZ"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-4" maxY="0.0"/>
-                        <state key="normal" title="评论" image="comment.png">
+                        <state key="normal" image="comment.png">
                             <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gdg-IS-AuU">
-                        <rect key="frame" x="142" y="269" width="35" height="21"/>
+                        <rect key="frame" x="101" y="269" width="35" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="35" id="GpL-ZL-huP"/>
                             <constraint firstAttribute="height" constant="21" id="aAL-2E-4L6"/>
@@ -64,16 +64,16 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vaW-6i-SbA">
-                        <rect key="frame" x="8" y="267" width="40" height="25"/>
+                        <rect key="frame" x="8" y="267" width="28" height="25"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="40" id="eet-fk-BQf"/>
+                            <constraint firstAttribute="width" constant="28" id="eet-fk-BQf"/>
                             <constraint firstAttribute="height" constant="25" id="fQ3-Qd-R0I"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-5" maxY="0.0"/>
-                        <state key="normal" title="赞" image="like.png">
+                        <state key="normal" image="like.png">
                             <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                     </button>
@@ -133,7 +133,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HS8-aB-LC9">
-                        <rect key="frame" x="52" y="269" width="35" height="21"/>
+                        <rect key="frame" x="35" y="269" width="35" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="35" id="cOu-8e-r2P"/>
                             <constraint firstAttribute="height" constant="21" id="e1N-bi-jRc"/>
@@ -155,7 +155,7 @@
                     <constraint firstAttribute="trailingMargin" secondItem="SXF-B3-hv1" secondAttribute="trailing" constant="-8" id="CeD-Yb-oXU"/>
                     <constraint firstItem="cEU-mI-IuN" firstAttribute="leading" secondItem="iMe-hK-zAC" secondAttribute="leadingMargin" id="Hkb-cZ-T4A"/>
                     <constraint firstItem="cEU-mI-IuN" firstAttribute="top" secondItem="iMe-hK-zAC" secondAttribute="topMargin" id="KTs-EA-mrk"/>
-                    <constraint firstItem="HS8-aB-LC9" firstAttribute="leading" secondItem="vaW-6i-SbA" secondAttribute="trailing" constant="4" id="Qvk-3z-vdI"/>
+                    <constraint firstItem="HS8-aB-LC9" firstAttribute="leading" secondItem="vaW-6i-SbA" secondAttribute="trailing" constant="-1" id="Qvk-3z-vdI"/>
                     <constraint firstItem="SXF-B3-hv1" firstAttribute="top" secondItem="5q5-8T-ReK" secondAttribute="bottom" constant="6" id="RLh-FC-t0i"/>
                     <constraint firstItem="urL-Ra-rKh" firstAttribute="top" secondItem="iMe-hK-zAC" secondAttribute="topMargin" constant="-4" id="Rfn-DC-blz"/>
                     <constraint firstItem="SXF-B3-hv1" firstAttribute="leading" secondItem="iMe-hK-zAC" secondAttribute="leadingMargin" constant="-8" id="U2r-nu-aPO"/>
@@ -186,7 +186,7 @@
                 <outlet property="userAvatarView" destination="cEU-mI-IuN" id="bmd-Bd-Lpn"/>
                 <outlet property="userName" destination="urL-Ra-rKh" id="3SD-34-r7P"/>
             </connections>
-            <point key="canvasLocation" x="509" y="400.5"/>
+            <point key="canvasLocation" x="505" y="405.5"/>
         </tableViewCell>
     </objects>
     <resources>

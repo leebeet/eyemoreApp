@@ -68,8 +68,12 @@
 "Aperture"                        = "A";
 "Polaroid"                        = "Polaroid";
 "Photo"                           = "Photo";
+"Photos"                          = "Photos";
 "Video"                           = "Video";
 "Standard"                        = "Standard";
 "B&W"                             = "B&W";
 "Texture"                         = "Texture";
+"Following"                       = "Following";
+"Follow"                          = "Follow";
+"Followers"                       = "Followers";
 

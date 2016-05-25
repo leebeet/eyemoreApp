@@ -250,7 +250,7 @@
                                                           completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL){
                                                               [self.myProfileView changeStateToLoginWithName:self.myProfile.nickName
                                                                                                        Image:image
-                                                                                                  LeftString:[NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"Followings", nil), followListCount]
+                                                                                                  LeftString:[NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"Following", nil), followListCount]
                                                                                                  RightString:[NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"Followers", nil), fansListCount]];
                                                               [self.navigationItem setTitle:self.myProfile.nickName];
                                                           }];
@@ -258,7 +258,7 @@
         else {
             [self.myProfileView changeStateToLoginWithName:self.myProfile.nickName
                                                      Image:nil
-                                                LeftString:[NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"Followings", nil), followListCount]
+                                                LeftString:[NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"Following", nil), followListCount]
                                                RightString:[NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"Followers", nil), fansListCount]];
             [self.navigationItem setTitle:self.myProfile.nickName];
 

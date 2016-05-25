@@ -158,70 +158,70 @@
     //检查固件更新
     FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
 /* Desperated on R version, but works on beta version updation logic / OTA  */
-    [manager getFirmwareJsonDescriptionSuccess:^(NSArray *descriptions){
-        if (descriptions != nil) {
-            [manager checkingLatestUpdateWithArray:descriptions];
-        }
-        if ([manager checkingCameraShouldUpdateWithCamVer:manager.camVerison]) {
-            if (manager.firmwareFileName && [[manager.latestUpdateURL substringWithRange:NSMakeRange(37 + 13, 14)] isEqualToString:manager.firmwareFileName]) {
-                NSLog(@"已有更新包");
-                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateFirmware) name:@"cameraConnected" object:nil];
-                [self updateFirmware];
-            }
-            else {
-                NSLog(@"没有检测到最新更新包，开始下载");
-                
-                JRMessageView *downloadingMessage = [[JRMessageView alloc] initWithTitle:@"发现新固件"
-                                                                                subTitle:@"正在准备下载...0％"
-                                                                                iconName:@"firmwareiconWhite"
-                                                                             messageType:JRMessageViewTypeCustom
-                                                                         messagePosition:BLMessagePositionAfterStatuBar
-                                                                                 superVC:[self appRootViewController]
-                                                                                duration:100];
-                dispatch_async(dispatch_get_main_queue(), ^(){
-                    [downloadingMessage showMessageView];
-                });
-                [manager downloadLatestFirmwareWithURL:manager.latestUpdateURL
-                                              progress:^(NSProgress *downloadProgress){
-                                                  dispatch_async(dispatch_get_main_queue(), ^(){
-                                                      NSLog(@"download progressing : %.2f", downloadProgress.fractionCompleted * 100);
-                                                      downloadingMessage.subTitleLabel.text = [NSString stringWithFormat:@"正在下载...%.1f％", downloadProgress.fractionCompleted * 100];
-                                                  });
-                                                  
-                                              }
-                                       completeHandler:^(NSURL *filePath, NSError *error){
-                                           if (error) {
-                                               dispatch_async(dispatch_get_main_queue(), ^(){
-                                                   downloadingMessage.subTitleLabel.text = @"下载出错";
-                                                   downloadingMessage.duration = 3.0f;
-                                               });
-                                           }
-                                           
-                                           else {
-                                               dispatch_async(dispatch_get_main_queue(), ^(){
-                                                   downloadingMessage.subTitleLabel.text = @"下载完成";
-                                                   downloadingMessage.duration = 3.0f;
-                                               });
-                                               [manager.downloadingProgress removeObserver:self forKeyPath:@"fractionCompleted"];
-                                               [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateFirmware) name:@"cameraConnected" object:nil];
-                                               [self updateFirmware];
-                                           }
-                                       }];
-            }
-        }
-    }];
-///* R version firmware updation logic / offline */
-//    float     camValue     = [[manager.camVerison substringFromIndex:1] floatValue];
-//    float     updateValue  = [[kFirmwareVersion substringFromIndex:1] floatValue];
-//    NSString *camLetter    = [manager.camVerison substringWithRange:NSMakeRange(0, 1)];
-//    NSString *updateLetter = [kFirmwareVersion substringWithRange:NSMakeRange(0, 1)];
-//    NSComparisonResult result = [camLetter compare:updateLetter];
-//    if (result == NSOrderedSame) {
-//        if (camValue < updateValue) {
-//            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateFirmware) name:@"cameraConnected" object:nil];
-//            [self updateFirmware];
+//    [manager getFirmwareJsonDescriptionSuccess:^(NSArray *descriptions){
+//        if (descriptions != nil) {
+//            [manager checkingLatestUpdateWithArray:descriptions];
 //        }
-//    }
+//        if ([manager checkingCameraShouldUpdateWithCamVer:manager.camVerison]) {
+//            if (manager.firmwareFileName && [[manager.latestUpdateURL substringWithRange:NSMakeRange(37 + 13, 14)] isEqualToString:manager.firmwareFileName]) {
+//                NSLog(@"已有更新包");
+//                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateFirmware) name:@"cameraConnected" object:nil];
+//                [self updateFirmware];
+//            }
+//            else {
+//                NSLog(@"没有检测到最新更新包，开始下载");
+//                
+//                JRMessageView *downloadingMessage = [[JRMessageView alloc] initWithTitle:@"发现新固件"
+//                                                                                subTitle:@"正在准备下载...0％"
+//                                                                                iconName:@"firmwareiconWhite"
+//                                                                             messageType:JRMessageViewTypeCustom
+//                                                                         messagePosition:BLMessagePositionAfterStatuBar
+//                                                                                 superVC:[self appRootViewController]
+//                                                                                duration:100];
+//                dispatch_async(dispatch_get_main_queue(), ^(){
+//                    [downloadingMessage showMessageView];
+//                });
+//                [manager downloadLatestFirmwareWithURL:manager.latestUpdateURL
+//                                              progress:^(NSProgress *downloadProgress){
+//                                                  dispatch_async(dispatch_get_main_queue(), ^(){
+//                                                      NSLog(@"download progressing : %.2f", downloadProgress.fractionCompleted * 100);
+//                                                      downloadingMessage.subTitleLabel.text = [NSString stringWithFormat:@"正在下载...%.1f％", downloadProgress.fractionCompleted * 100];
+//                                                  });
+//                                                  
+//                                              }
+//                                       completeHandler:^(NSURL *filePath, NSError *error){
+//                                           if (error) {
+//                                               dispatch_async(dispatch_get_main_queue(), ^(){
+//                                                   downloadingMessage.subTitleLabel.text = @"下载出错";
+//                                                   downloadingMessage.duration = 3.0f;
+//                                               });
+//                                           }
+//                                           
+//                                           else {
+//                                               dispatch_async(dispatch_get_main_queue(), ^(){
+//                                                   downloadingMessage.subTitleLabel.text = @"下载完成";
+//                                                   downloadingMessage.duration = 3.0f;
+//                                               });
+//                                               [manager.downloadingProgress removeObserver:self forKeyPath:@"fractionCompleted"];
+//                                               [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateFirmware) name:@"cameraConnected" object:nil];
+//                                               [self updateFirmware];
+//                                           }
+//                                       }];
+//            }
+//        }
+//    }];
+/* R version firmware updation logic / offline */
+    float     camValue     = [[manager.camVerison substringFromIndex:1] floatValue];
+    float     updateValue  = [[kFirmwareVersion substringFromIndex:1] floatValue];
+    NSString *camLetter    = [manager.camVerison substringWithRange:NSMakeRange(0, 1)];
+    NSString *updateLetter = [kFirmwareVersion substringWithRange:NSMakeRange(0, 1)];
+    NSComparisonResult result = [camLetter compare:updateLetter];
+    if (result == NSOrderedSame) {
+        if (camValue < updateValue) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateFirmware) name:@"cameraConnected" object:nil];
+            [self updateFirmware];
+        }
+    }
 
 }
 
@@ -235,11 +235,11 @@
             FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
             /* Desperated on R version, but works on beta version updation logic / OTA  */
             //由于在下载固件时不能确定相机和app发生什么操作，所以下载完成后，对比固件版本，确认升级
-            if ([manager checkingCameraShouldUpdateWithCamVer:manager.camVerison]) {
+            //if ([manager checkingCameraShouldUpdateWithCamVer:manager.camVerison]) {
                 UpdateViewController *controller = [[UpdateViewController alloc] init];
                 controller.currentVersion = [[manager.camVerison substringFromIndex:1] floatValue];
-                controller.message = [NSString stringWithFormat:@"您的设备:%@有新固件:%@更新, 是否立即更新？ \n更新说明: \n%@",[[WIFIDetector sharedWIFIDetector] getDeviceSSID], manager.latestUpdate, manager.latestUpdateInfo];
-                //controller.message = [NSString stringWithFormat:@"您的设备:%@有新固件:%@更新, 是否立即更新？ \n",[[WIFIDetector sharedWIFIDetector] getDeviceSSID], kFirmwareVersion];
+//                controller.message = [NSString stringWithFormat:@"您的设备:%@有新固件:%@更新, 是否立即更新？ \n更新说明: \n%@",[[WIFIDetector sharedWIFIDetector] getDeviceSSID], manager.latestUpdate, manager.latestUpdateInfo];
+                controller.message = [NSString stringWithFormat:@"您的设备:%@有新固件:%@更新, 是否立即更新？ \n",[[WIFIDetector sharedWIFIDetector] getDeviceSSID], kFirmwareVersion];
             
                 //让controller以模态视图展现
                 UIViewController *rootVC = [self appRootViewController];
@@ -250,7 +250,7 @@
                     rootVC.modalPresentationStyle     = UIModalPresentationCurrentContext;
                 }
                 [rootVC presentViewController:controller animated:YES completion:nil];
-            }
+            //}
         });
     }
 }

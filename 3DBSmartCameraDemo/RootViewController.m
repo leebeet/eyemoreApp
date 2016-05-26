@@ -204,7 +204,7 @@
         else {
             isUdpChanged = YES;
             [self.rightButton setIconConnected:YES];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"cameraConnected" object:nil];
+            //[[NSNotificationCenter defaultCenter] postNotificationName:@"cameraConnected" object:nil];
             NSLog(@" is udp lost changed");
         }
     }

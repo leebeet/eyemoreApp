@@ -33,6 +33,7 @@
 @property (nonatomic, strong) UILabel *hintLabel;
 @property (nonatomic, assign) TimeoutManager *timeoutManager;
 @property (nonatomic, assign) BOOL reUpdatedFlag;
+@property (nonatomic, strong) UIViewController *lastViewController;
 
 
 @end
@@ -49,6 +50,8 @@
 //    UIVisualEffectView *blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
 //    blurView.frame = self.view.frame;
 //    [self.view addSubview:blurView];
+    self.lastViewController = self.presentingViewController;
+    NSLog(@"appRootViewController %@", self.presentingViewController);
 
 }
 
@@ -153,7 +156,7 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^(){
         [self dismissViewControllerAnimated:YES completion:^(){
-            [TCPSocketManager sharedTCPSocketManager].delegate = (id)self.presentingViewController;
+            [TCPSocketManager sharedTCPSocketManager].delegate = (id)self.lastViewController;
         }];
     });
 }

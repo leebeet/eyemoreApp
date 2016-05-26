@@ -23,4 +23,6 @@
 + (NSString *)decodeLensValueWith:(int)iris;
 + (NSString *)decodePowerOffTimeValueWith:(int)value;
 
++(int)decodeStateOfCharge:(unsigned short)state;
+
 @end

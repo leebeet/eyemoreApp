@@ -1541,6 +1541,7 @@
     FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
     manager.camVerison = [NSString stringWithString:camVer];
     [manager saveFirmware];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"cameraConnected" object:nil];
     [self.socketManager receiveMessageWithTimeOut:-1];
     [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetDebugInfo];
 }

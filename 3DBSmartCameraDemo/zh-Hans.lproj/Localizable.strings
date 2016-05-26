@@ -34,7 +34,11 @@
 "Re-verified"                     = "重校验成功";
 "Re-verify Failed"                = "重校验失败，准备重更新";
 "Restarting"                      = "更新完毕, 正在重启";
-"Connection Lost"                 = "失去连接，请重新启动app后再试一次";
+"Restore Camera"                  = "恢复相机？";
+"Restore Camera Detail"           = "恢复您的相机系统，但是照片和视频依然存在";
+"Clear Camera"                    = "清空相机？";
+"Clear Camera Detail"             = "相机清空后，相机内所有照片会被删除";
+"Connection Lost"                 = "失去连接，请检查相机网络后再试一次";
 "Update Camera"                   = "更新相机";
 "Cancel"                          = "取消";
 "Yes"                             = "确定";

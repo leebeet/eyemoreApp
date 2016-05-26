@@ -14,6 +14,7 @@
 #import "MeTableViewController.h"
 #import "ImageClient.h"
 #import "UpdateViewController.h"
+#import "CamParasConverter.h"
 
 @interface SettingCamTableViewController ()<TCPSocketManagerDelegate, UITableViewDelegate, UIAlertViewDelegate>
 
@@ -484,7 +485,7 @@
 - (void)didReceiveDebugInfo:(DEBUG_INFO)info
 {
     dispatch_async(dispatch_get_main_queue(), ^(){
-        self.batteryLabel.text = [NSString stringWithFormat:@"%d％",info.StateOfCharge];
+        self.batteryLabel.text = [NSString stringWithFormat:@"%d％",[CamParasConverter decodeStateOfCharge:info.StateOfCharge]];
     });
 }
 
@@ -649,27 +650,27 @@
 
     if (indexPath.section == 3 && indexPath.row == 0) {
         if (!self.socketManager.isLost) {
-        self.formattingAlert = [[UIAlertView alloc] initWithTitle:@"清空相机？"
-                                                          message:@"相机清空后，相机内所有照片会被删除"
+        self.formattingAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Clear Camera", nil)
+                                                          message:NSLocalizedString(@"Clear Camera Detail", nil)
                                                          delegate:self
-                                                cancelButtonTitle:@"取消"
-                                                otherButtonTitles:@"确定", nil];
+                                                cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
         [self.formattingAlert show];
         }
-        else [ProgressHUD showError:@"连接已断开, 请连接相机后再试一次！" Interaction:NO];
+        else [ProgressHUD showError:NSLocalizedString(@"Connection Lost", nil) Interaction:NO];
     }
     if (indexPath.section == 3 && indexPath.row == 1) {
         if (!self.socketManager.isLost) {
             
-            self.updateAlert = [[UIAlertView alloc] initWithTitle:@"恢复相机？"
-                                                          message:@"恢复您的相机系统，但是照片和视频依然存在"
+            self.updateAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Restore Camera", nil)
+                                                          message:NSLocalizedString(@"Restore Camera Detail", nil)
                                                          delegate:self
-                                                cancelButtonTitle:@"取消"
-                                                otherButtonTitles:@"恢复",nil];
+                                                cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                otherButtonTitles:NSLocalizedString(@"Yes", nil),nil];
             
             [self.updateAlert show];
         }
-        else [ProgressHUD showError:@"连接已断开, 请连接相机后再试一次！" Interaction:NO];
+        else [ProgressHUD showError:NSLocalizedString(@"Connection Lost", nil) Interaction:NO];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

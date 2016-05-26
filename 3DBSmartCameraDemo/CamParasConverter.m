@@ -467,5 +467,19 @@
     }
 }
 
++(int)decodeStateOfCharge:(unsigned short)state
+{
+    /*
+     mDebugInfo.StateOfCharge
+     bit15: 1-> 充电中，0->未充电
+     bit14:1->红色，0->绿色
+     bit[7:0] :电量 0~100%
+     */
+    unsigned short stateCopy = state;
+    NSData *data = [[NSData alloc] initWithBytes:(&stateCopy) length:1];
+    int battery;
+    [data getBytes:&battery length:sizeof(battery)];
+    return battery;
+}
 
 @end

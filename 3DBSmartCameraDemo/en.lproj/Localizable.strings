@@ -34,6 +34,10 @@
 "Re-verified"                     = "Double Verified";
 "Re-verify Failed"                = "Verify Failed, Re-updating";
 "Restarting"                      = "Now Restarting";
+"Restore Camera"                  = "Restore Camera";
+"Restore Camera Detail"           = "Restore camera firmware to original version (photos & videos still exist)";
+"Clear Camera"                    = "Clear Camera";
+"Clear Camera Detail"             = "Clear all camera medias (photos & videos)";
 "Connection Lost"                 = "Connection Lost";
 "Update Camera"                   = "Updated Camera";
 "Cancel"                          = "Cancel";

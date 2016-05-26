@@ -108,7 +108,7 @@ typedef enum _downloadButtonStatus{
     static int oneTimeDownloadNoti = 0;
     if (oneTimeDownloadNoti == 0 && self.socketManager.fileList.paramn[0] > 0) {
         oneTimeDownloadNoti= 0;
-        [self downloadButtonTapped];
+        [self checkDownloading];
     }
     else {
         [self unSetUpItemBadgeValue];
@@ -494,19 +494,9 @@ typedef enum _downloadButtonStatus{
 - (IBAction)downloadButtonTapped {
     
     NSLog(@"download button did tap");
-    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetFileList];
-    
-    _finishDate = nil;
-    self.progressView.progress = 0;
-
-    if (self.socketManager.isLost) {
-        //[ProgressHUD showError:@"连接已断开, 请连接相机后再试一次！" Interaction:NO];
-        [self.wifiMessageFail showMessageView];
-    }
-    [self.hintLabel setHidden:YES];
+    [self checkDownloading];
     [self menuButtonTapped];
 }
-
 - (void)saveBarItemTapped
 {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Save All", nil) message:NSLocalizedString(@"Save All Detail", nil) preferredStyle:UIAlertControllerStyleAlert];
@@ -688,6 +678,18 @@ typedef enum _downloadButtonStatus{
 
 
 #pragma mark - Downloading & Progress Manage Methods
+
+- (void)checkDownloading
+{
+    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetFileList];
+    _finishDate = nil;
+    self.progressView.progress = 0;
+    if (self.socketManager.isLost) {
+        //[ProgressHUD showError:@"连接已断开, 请连接相机后再试一次！" Interaction:NO];
+        [self.wifiMessageFail showMessageView];
+    }
+    [self.hintLabel setHidden:YES];
+}
 
 - (void)startDownloading
 {
@@ -1129,6 +1131,7 @@ typedef enum _downloadButtonStatus{
     if (ACK.cmd == SDB_SET_RECV_OK_ACK) {
         [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetFileList];
     }
+    [self.socketManager receiveMessageWithTimeOut:-1];
 }
 
 - (void)didFinishConnectToHost
@@ -1156,7 +1159,7 @@ typedef enum _downloadButtonStatus{
                 });
             }
             else {
-                [self downloadButtonTapped];
+                [self checkDownloading];
             }
         });
     }

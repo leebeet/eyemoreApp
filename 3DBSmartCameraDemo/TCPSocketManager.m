@@ -40,7 +40,7 @@
 #define kCameraFilePath                  "path/name"
 #define kBatchNumber                     4
 
-#define kSupportSocketState              1.80f
+#define kSupportSocketState              1.04
 
 @interface TCPSocketManager ()
 
@@ -342,14 +342,15 @@
 
 - (void)checkDataSocketState:(DEV_INFO)devInfo
 {
-    float ver = [[[FirmwareManager sharedFirmwareManager].camVerison substringFromIndex:1] floatValue];
+    //float ver = [[[FirmwareManager sharedFirmwareManager].camVerison substringFromIndex:1] floatValue];
     static int count = 0;
-    if (devInfo.datasocketstatus == 0 && ver > kSupportSocketState) {
+    //if (devInfo.datasocketstatus == 0 && ver > kSupportSocketState) {
+    if (devInfo.datasocketstatus == 0 ) {
         count++;
         NSLog(@"tcp data socket error, reconnect count :%d", count);
         
     }
-    if (count == 3) {
+    if (count > 3) {
         NSLog(@"tcp data socket error, reconnect now");
         [self sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDOpenDataChannel];
         count = 0;

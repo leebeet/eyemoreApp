@@ -1047,9 +1047,9 @@
         }
         
         if (self.shootMode == HD_RECORDING_MODE) {
-            [self hideCanvas];
-            [self showLiveViewWindow];
-            [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
+            //[self hideCanvas];
+            //[self showLiveViewWindow];
+            //[self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
             [self updateUIWithMode:LIVEVIEW_MODE];
         }
         self.shootMode = LIVEVIEW_MODE;
@@ -1131,14 +1131,9 @@
         
         if (self.shootMode == LIVEVIEW_MODE) {
             [self updateUIWithMode:HD_RECORDING_MODE];
-            //[self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
-            //[self.liveViewRecorder stopLiveViewing];
-            //[self hideLiveWindow];
         }
         
         if (self.shootMode == RECORDING_MOVIE_MODE) {
-            //[self.liveViewRecorder stopLiveViewing];
-            //[self hideLiveWindow];
             //3.00 modified
             [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
         }
@@ -1220,7 +1215,7 @@
         //封装视频
         [self.videoManager composeCompleteMovieFileWithEyemoreVideo:self.sampleVideoInfo withCallBackBlock:^(BOOL success){
             if (success) {
-                NSLog(@"，封装视频成功");
+                NSLog(@"封装视频成功");
                 //[self.sampleVideoInfo removeAllObjects];
                 dispatch_async(dispatch_get_main_queue(), ^(){
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"EyemoreVideosUpdated" object:nil];

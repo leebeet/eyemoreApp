@@ -13,5 +13,6 @@
 
 + (UIViewController *)currentRootViewController;
 + (NSString*)deviceVersion;
++ (void)redirectNSlogToDocumentFolder;
 
 @end

@@ -95,8 +95,6 @@
     [MRoundedButtonAppearanceManager registerAppearanceProxy:appearanceProxy4 forIdentifier:@"4"];
     [MRoundedButtonAppearanceManager registerAppearanceProxy:appearanceProxy5 forIdentifier:@"5"];
     
-    //[self redirectNSlogToDocumentFolder];
-    
     //指定初始加载控制器
     UIStoryboard * storyBoard = [UIStoryboard storyboardWithName:@"eyemoreLaunchScreen" bundle:nil];
     self.window.rootViewController = [storyBoard instantiateInitialViewController];
@@ -296,27 +294,6 @@
         topVC = topVC.presentedViewController;
     }
     return topVC;
-}
-
-- (void)redirectNSlogToDocumentFolder
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    
-    NSString *documentDirectory = [paths objectAtIndex:0];
-    NSString *fileName = [NSString stringWithFormat:@"MrNSLog.txt"];// 注意不是NSData!
-    
-    NSString *logFilePath = [documentDirectory stringByAppendingPathComponent:fileName];
-    // 先删除已经存在的文件
-    NSFileManager *defaultManager = [NSFileManager defaultManager];
-    [defaultManager removeItemAtPath:logFilePath error:nil];
-    
-    
-    // 将log输入到文件
-    
-    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stdout);
-    
-    freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stderr);
-    
 }
 
 @end

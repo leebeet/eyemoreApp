@@ -530,6 +530,7 @@ static CGFloat   kfixedPartHeight = 123.0;
                                                             options:0
                                                            progress:nil
                                                           completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL){
+                                                              cell.imageURLString = [images firstObject];
                                                               [cell.postImage setImage:image];
                                                               //[self reloadVisibleCellsFortableView:tableView];
                                                               
@@ -671,11 +672,8 @@ static CGFloat   kfixedPartHeight = 123.0;
 {
     // Create image info
     JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
-#if TRY_AN_ANIMATED_GIF == 1
-    imageInfo.imageURL = [NSURL URLWithString:@"http://media.giphy.com/media/O3QpFiN97YjJu/giphy.gif"];
-#else
+    imageInfo.imageURL = [NSURL URLWithString:cell.imageURLString];
     imageInfo.image = cell.postImage.image;
-#endif
     imageInfo.referenceRect = cell.postImage.frame;
     imageInfo.referenceView = cell.postImage.superview;
     imageInfo.referenceContentMode = cell.postImage.contentMode;
@@ -696,10 +694,10 @@ static CGFloat   kfixedPartHeight = 123.0;
 
 - (void)imageViewerDidLongPress:(JTSImageViewController *)imageViewer atRect:(CGRect)rect
 {
-    [self presentActionsForItem:imageViewer.imageInfo.image OnController:imageViewer];
+    [self presentActionsForItem:imageViewer.imageInfo.imageURL OnController:imageViewer];
 }
 
-- (void)presentActionsForItem:(UIImage *)image OnController:(JTSImageViewController *)controller
+- (void)presentActionsForItem:(NSURL *)imageURL OnController:(JTSImageViewController *)controller
 {
     if (self.actionSheet == nil) {
         JGActionSheetSection *section1 = [JGActionSheetSection sectionWithTitle:@"" message:@"" buttonTitles:@[@"保存"] buttonStyle:JGActionSheetButtonStyleCustomer];
@@ -711,33 +709,44 @@ static CGFloat   kfixedPartHeight = 123.0;
     
     ImageAlbumManager *albumManager = [ImageAlbumManager sharedImageAlbumManager];
     __weak JGActionSheet *weakSelfAction = self.actionSheet;
-    
     [self.actionSheet setOutsidePressBlock:^(JGActionSheet *sheet){
         [weakSelfAction dismissAnimated:YES];
     }];
     [self.actionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *sheetIndexPath) {
         if (sheetIndexPath.section == 0 && sheetIndexPath.row == 0) {
             
-            //dispatch_async(dispatch_get_global_queue(0, 0), ^(){
-            [albumManager saveToAlbumWithMetadata:nil
-                                        imageData:UIImagePNGRepresentation(image)
-                                  customAlbumName:@"eyemore Album"
-                                  completionBlock:^{}
-                                     failureBlock:^(NSError *error)
-             {
-                 //处理添加失败的方法显示alert让它回到主线程执行，不然那个框框死活不肯弹出来
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     //添加失败一般是由用户不允许应用访问相册造成的，这边可以取出这种情况加以判断一下
-                     if([error.localizedDescription rangeOfString:@"User denied access"].location != NSNotFound ||[error.localizedDescription rangeOfString:@"用户拒绝访问"].location!=NSNotFound){
-                         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:error.localizedDescription
-                                                                      message:error.localizedFailureReason
-                                                                     delegate:nil
-                                                            cancelButtonTitle:NSLocalizedString(@"ok", nil)
-                                                            otherButtonTitles: nil];
-                         [alert show];
-                     }
-                 });
-             }];
+            [ProgressHUD show:NSLocalizedString(@"Saving", nil) Interaction:NO];
+            [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:imageURL
+                                                                  options:SDWebImageDownloaderLowPriority
+                                                                 progress:nil
+                                                                completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
+                                                                    if (error) {
+                                                                        [ProgressHUD showError:NSLocalizedString(@"Save Failed", nil)];
+                                                                    }
+                                                                    [albumManager saveToAlbumWithMetadata:nil
+                                                                                                imageData:data
+                                                                                          customAlbumName:@"eyemore Album"
+                                                                                          completionBlock:^{
+                                                                                              dispatch_async(dispatch_get_main_queue(), ^(){
+                                                                                                  [ProgressHUD showSuccess:NSLocalizedString(@"Saved", nil)];
+                                                                                              });
+                                                                                          }
+                                                                                             failureBlock:^(NSError *error)
+                                                                     {
+                                                                         //处理添加失败的方法显示alert让它回到主线程执行，不然那个框框死活不肯弹出来
+                                                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                                                             //添加失败一般是由用户不允许应用访问相册造成的，这边可以取出这种情况加以判断一下
+                                                                             if([error.localizedDescription rangeOfString:@"User denied access"].location != NSNotFound ||[error.localizedDescription rangeOfString:@"用户拒绝访问"].location!=NSNotFound){
+                                                                                 UIAlertView *alert=[[UIAlertView alloc]initWithTitle:error.localizedDescription
+                                                                                                                              message:error.localizedFailureReason
+                                                                                                                             delegate:nil
+                                                                                                                    cancelButtonTitle:NSLocalizedString(@"ok", nil)
+                                                                                                                    otherButtonTitles: nil];
+                                                                                 [alert show];
+                                                                             }
+                                                                         });
+                                                                     }];
+                                                                }];
         }
         [weakSelfAction dismissAnimated:YES];
     }];
@@ -745,6 +754,7 @@ static CGFloat   kfixedPartHeight = 123.0;
         [self.actionSheet showInView:controller.view animated:YES];
     }
 }
+
 
 /*
 #pragma mark - Navigation

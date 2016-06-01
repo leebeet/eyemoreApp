@@ -1236,7 +1236,9 @@ typedef enum _downloadButtonStatus{
                 dispatch_async(dispatch_get_main_queue(), ^(){
                     
                     if (self.socketManager.fileList.paramn[0] == 0 && self.progressView.progress == 0) {
-                        [ProgressHUD showError:NSLocalizedString(@"No Sync", nil) Interaction:YES];
+                        if (self.menuBar) {
+                            [ProgressHUD showError:NSLocalizedString(@"No Sync", nil) Interaction:YES];
+                        }
                     }
                     else if (self.socketManager.fileList.paramn[0] != 0) {
                         
@@ -1252,7 +1254,6 @@ typedef enum _downloadButtonStatus{
                         [self setUpItemBadgeValueWithNumber:[NSNumber numberWithInt:self.socketManager.fileList.paramn[0]]];
                     }
                 });
-
             }
             
             break;

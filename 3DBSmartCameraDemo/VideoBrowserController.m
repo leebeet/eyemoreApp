@@ -20,9 +20,12 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "MJRefresh.h"
 #import "BLUIkitTool.h"
+#import "CamParasConverter.h"
 
 @interface VideoBrowserController ()<UICollectionViewDelegate, UICollectionViewDataSource, TCPSocketManagerDelegate, VideoRecorderDelegate>
-
+{
+    BOOL _shouldStopQueue;
+}
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) VideoConfig *undownloadConfig;
 @property (nonatomic, strong) VideoConfig *downloadedConfig;
@@ -34,6 +37,8 @@
 @property (nonatomic, strong) MPMoviePlayerViewController *moviePlayer;
 
 @property (assign, nonatomic) BOOL shouldRefresh;
+@property (strong, nonatomic) NSMutableArray *undownloadVideos;
+@property (strong, nonatomic) NSMutableArray *undownloadCells;
 
 @end
 
@@ -69,10 +74,33 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    _shouldStopQueue = YES;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (NSMutableArray *)undownloadVideos
+{
+    if (!_undownloadVideos) {
+        _undownloadVideos = [NSMutableArray new];
+    }
+    return _undownloadVideos;
+}
+
+- (NSMutableArray *)undownloadCells
+{
+    if (!_undownloadCells) {
+        _undownloadCells = [NSMutableArray new];
+    }
+    return _undownloadCells;
+}
+
 - (void)setCameraWorkingState
 {
     self.socketManager = [TCPSocketManager sharedTCPSocketManager];
@@ -297,35 +325,18 @@
     });
 }
 
-#pragma mark - unit convert
-
-- (NSString *)stringForTimeScaleValue:(NSInteger)scale
-{
-    int minute,second;
-        scale = scale / 600;
-    NSLog(@"timescale: %ld", (long)scale);
-
-    if (scale >= 60) {
-        minute = (int)(scale / 60.0);
-        second = (int)(scale - minute * 60);
-    }
-    else {
-        minute = 0;
-        second = (int)scale;
-    }
-    return [NSString stringWithFormat:@"%.2d:%.2d",minute, second];
-}
-
 #pragma mark - Data Reloading
 
 - (void)reloadDownloadedSection
 {
     [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+    
 }
 
 - (void)reloadUndownloadedSection
 {
     [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:1]];
+    
 }
 
 - (void)shouldUpdateVideoList
@@ -358,8 +369,10 @@
         return [VideoConfig sharedVideoConfig].videoList.count;
     }
     else if (section == 1) {
-        NSLog(@"self.undownloadConfig.videoList.count refresh: %lu",(unsigned long)[VideoConfig sharedVideoConfig].videoList.count);
-        return self.undownloadConfig.videoList.count;
+        if (self.socketManager.isLost) {
+            return 0;
+        }
+        else return self.undownloadConfig.videoList.count;
     }
     else return 1;
 }
@@ -368,7 +381,7 @@
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     if (self.socketManager.isLost) {
-        return 1;
+        return 2;
     }
     else {
         return 2; 
@@ -388,7 +401,7 @@
         dispatch_async(dispatch_get_global_queue(0, 0), ^(){
             UIImage *image = [self.videoClient getThumbnailImageWithEyemoeVideo:video];
             dispatch_async(dispatch_get_main_queue(), ^(){
-                cell.lengthLabel.text = [self stringForTimeScaleValue:video.timeScale];
+                cell.lengthLabel.text = [CamParasConverter stringForTimeScaleValue:video.timeScale];
                 if ([video.videoType isEqualToString:@"HD_RECORDING"]) {
                    //[cell.HDLabel setHidden:NO];
                     [cell.HDLabel setHidden:YES];
@@ -405,24 +418,57 @@
     }
     else {
         VideoUndownloadCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:UndownloadCellIdentifier forIndexPath:indexPath];
-        UIImageView *cellImage = [[UIImageView alloc] initWithFrame:cell.contentView.frame];
-        cellImage.contentMode = UIViewContentModeScaleAspectFit;
+        //UIImageView *cellImage = [[UIImageView alloc] initWithFrame:cell.contentView.frame];
+        //cellImage.contentMode = UIViewContentModeScaleAspectFit;
         cell.backgroundColor = [UIColor colorWithRed:30/255.0 green:30/255.0 blue:34/255.0 alpha:1];
-        cellImage.alpha = 0;
+        //cellImage.alpha = 0;
         NSLog(@"undownload items");
         
-        dispatch_async(dispatch_get_global_queue(0, 0), ^(){
-            EyemoreVideo *video = [self.undownloadConfig myEyemoreVideoAtIndex:indexPath.row];
-            dispatch_async(dispatch_get_main_queue(), ^(){
-                cell.lengthLabel.text = [NSString stringWithFormat:@"%.2fM", (float)video.fileSize / 1024.0 / 1024.0];
+        EyemoreVideo *video = [self.undownloadConfig myEyemoreVideoAtIndex:indexPath.row];
+        //cell.lengthLabel.text = [NSString stringWithFormat:@"%.2fM", (float)video.fileSize / 1024.0 / 1024.0];
+        cell.lengthLabel.text = [CamParasConverter stringForFrameCountValue:video.frameCount];
+        
+        [self.undownloadVideos addObject:video];
+        [self.undownloadCells addObject:cell];
+        
+        if (self.undownloadVideos.count == self.undownloadConfig.videoList.count) {
+            dispatch_async(dispatch_get_global_queue(0, 0), ^(){
+                _shouldStopQueue = NO;
+                [self requestDownloadThumbnailQueue];
             });
-        });
+        }
         
         return cell;
     }
     return nil;
 }
 
+- (void)requestDownloadThumbnailQueue
+{
+    NSLog(@"self.undownload videos: %@", self.undownloadVideos);
+    if (!_shouldStopQueue) {
+        if (self.undownloadVideos.count) {
+            [self.videoRecorder downloadFirstFrameWithEyemoreVideo:self.undownloadVideos[0] completeBlock:^(NSData *imageData){
+                VideoUndownloadCell *cell = self.undownloadCells[0];
+                
+                dispatch_sync(dispatch_get_main_queue(), ^(){
+                    cell.backgroundImageView.alpha = 0;
+                    [UIView animateWithDuration:0.3f delay:0.2f options:UIViewAnimationOptionAllowAnimatedContent animations:^(){
+                        cell.backgroundImageView.alpha = 1;
+                        [cell.backgroundImageView setImage:[UIImage imageWithData:imageData]];
+                    } completion:nil];
+                    
+                });
+                [self.undownloadCells  removeObjectAtIndex:0];
+                [self.undownloadVideos removeObjectAtIndex:0];
+            }];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_global_queue(0, 0), ^(){
+                [self requestDownloadThumbnailQueue];
+            });
+        }
+    }
+}
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
@@ -602,6 +648,7 @@
 - (void)videoRecorder:(VideoRecorder *)recorder didGetVideoDesList:(VideoConfig *)config
 {
     self.undownloadConfig = config;
+    [self.undownloadConfig.videoList removeObjectAtIndex:0];
     dispatch_async(dispatch_get_main_queue(), ^(){
         //[self refreshCollectionView];
         [self reloadUndownloadedSection];
@@ -635,7 +682,9 @@
 - (void)didFinishConnectToHost
 {}
 - (void)didDisconnectSocket
-{}
+{
+    _shouldStopQueue = YES;
+}
 - (void)didReceiveDevInfo:(DEV_INFO)decInfo
 {}
 - (void)didFinishSingleFileDownloadingWithImageData:(NSData *)imageData

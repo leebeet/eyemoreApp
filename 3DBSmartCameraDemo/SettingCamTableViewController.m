@@ -485,7 +485,7 @@
 - (void)didReceiveDebugInfo:(DEBUG_INFO)info
 {
     dispatch_async(dispatch_get_main_queue(), ^(){
-        self.batteryLabel.text = [NSString stringWithFormat:@"%d％",[CamParasConverter decodeStateOfCharge:info.StateOfCharge]];
+        self.batteryLabel.text = [NSString stringWithFormat:@"%d％",[CamParasConverter decodeStateOfCharge:&info.StateOfCharge]];
     });
 }
 

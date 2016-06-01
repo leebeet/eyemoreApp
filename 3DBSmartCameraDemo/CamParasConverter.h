@@ -23,6 +23,8 @@
 + (NSString *)decodeLensValueWith:(int)iris;
 + (NSString *)decodePowerOffTimeValueWith:(int)value;
 
-+(int)decodeStateOfCharge:(unsigned short)state;
++(int)decodeStateOfCharge:(const void *)state;
++ (NSString *)stringForTimeScaleValue:(NSInteger)scale;
++ (NSString *)stringForFrameCountValue:(NSInteger)frameCount;
 
 @end

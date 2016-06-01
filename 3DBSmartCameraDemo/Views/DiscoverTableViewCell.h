@@ -34,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *postedDateLabel;
 @property (assign, nonatomic) NSInteger blogID;
 @property (assign, nonatomic) NSInteger userID;
+@property (strong, nonatomic) NSString *imageURLString;
 
 
 + (instancetype)instantiateFromNib;

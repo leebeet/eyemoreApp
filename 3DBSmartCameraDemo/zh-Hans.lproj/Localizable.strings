@@ -24,7 +24,7 @@
 "Verify Failed"                   = "校验失败,准备重更新";
 "Saving"                          = "正在保存...";
 "Saved"                           = "保存成功";
-"Save Failed"                     = "保存失败，准备重更新";
+"Save Failed"                     = "保存失败";
 "Save All"                        = "保存全部照片";
 "Save All Detail"                 = "确定保存所有照片至相册，同时清空app内的所有照片";
 "Delete All"                      = "删除全部照片";

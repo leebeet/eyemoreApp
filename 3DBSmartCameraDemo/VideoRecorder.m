@@ -344,9 +344,13 @@ typedef enum _VideoRecorderMode {
     
     if (CMD.cmd == SDB_GET_FIRST_FRAME_ACK) {
         //[self.delegate videoRecorder:self didGetFirstFrame:recordData forEyemoreVideo:self.sampleVideo];
+        NSArray *firstFrameArray = [NSArray new];
+        firstFrameArray = [self.videoManager decodeFrameData:recordData withStartFrame:0 withFrameCount:1];
+        
         if (self.firstFrameBlock) {
-            self.firstFrameBlock(recordData);
+            self.firstFrameBlock(firstFrameArray[1]);
         }
+        [self.socketManager receiveMessageWithTimeOut:-1];
     }
     if (CMD.cmd == SDB_GET_FRAME_ACK) {
         

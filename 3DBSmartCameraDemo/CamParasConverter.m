@@ -467,7 +467,8 @@
     }
 }
 
-+(int)decodeStateOfCharge:(unsigned short)state
+//修改为传指针，解决debug版本和release版本返回结果不同的问题
++(int)decodeStateOfCharge:(const void *)state
 {
     /*
      mDebugInfo.StateOfCharge
@@ -475,11 +476,43 @@
      bit14:1->红色，0->绿色
      bit[7:0] :电量 0~100%
      */
-    unsigned short stateCopy = state;
-    NSData *data = [[NSData alloc] initWithBytes:(&stateCopy) length:1];
+    //unsigned short stateCopy = state;
+    NSData *data = [[NSData alloc] initWithBytes:state length:1];
     int battery;
     [data getBytes:&battery length:sizeof(battery)];
     return battery;
 }
 
++ (NSString *)stringForTimeScaleValue:(NSInteger)scale
+{
+    int minute,second;
+    scale = scale / 600;
+    NSLog(@"timescale: %ld", (long)scale);
+    
+    if (scale >= 60) {
+        minute = (int)(scale / 60.0);
+        second = (int)(scale - minute * 60);
+    }
+    else {
+        minute = 0;
+        second = (int)scale;
+    }
+    return [NSString stringWithFormat:@"%.2d:%.2d",minute, second];
+}
+
++ (NSString *)stringForFrameCountValue:(NSInteger)frameCount
+{
+    int minute,second, seconds;
+    seconds = frameCount / 12.5;
+    
+    if (seconds >= 60) {
+        minute = (int)(seconds / 60.0);
+        second = (int)(seconds - minute * 60);
+    }
+    else {
+        minute = 0;
+        second = (int)seconds;
+    }
+    return [NSString stringWithFormat:@"%.2d:%.2d",minute, second];
+}
 @end

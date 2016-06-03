@@ -146,6 +146,8 @@
 		4C69FFAE1CEEE2F200CBBC6C /* screen_normal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C69FFAA1CEEE2F200CBBC6C /* screen_normal@3x.png */; };
 		4C6A048E1CCF417E002C068C /* myUser@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6A048D1CCF417E002C068C /* myUser@3x.png */; };
 		4C6A04901CCF4188002C068C /* myUser@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6A048F1CCF4188002C068C /* myUser@2x.png */; };
+		4C6B53A41D01599500964FA2 /* rotating@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6B53A21D01599500964FA2 /* rotating@2x.png */; };
+		4C6B53A51D01599500964FA2 /* rotating@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6B53A31D01599500964FA2 /* rotating@3x.png */; };
 		4C6C052B1C1574F700899F42 /* CameraSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C05291C1574F700899F42 /* CameraSoundPlayer.m */; };
 		4C6C05351C15755200899F42 /* JBParallaxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C052E1C15755200899F42 /* JBParallaxCell.m */; };
 		4C6C05371C15755200899F42 /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C05321C15755200899F42 /* MGSwipeButton.m */; };
@@ -598,6 +600,8 @@
 		4C69FFAA1CEEE2F200CBBC6C /* screen_normal@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screen_normal@3x.png"; sourceTree = "<group>"; };
 		4C6A048D1CCF417E002C068C /* myUser@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myUser@3x.png"; sourceTree = "<group>"; };
 		4C6A048F1CCF4188002C068C /* myUser@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myUser@2x.png"; sourceTree = "<group>"; };
+		4C6B53A21D01599500964FA2 /* rotating@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rotating@2x.png"; sourceTree = "<group>"; };
+		4C6B53A31D01599500964FA2 /* rotating@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rotating@3x.png"; sourceTree = "<group>"; };
 		4C6C05281C1574F700899F42 /* CameraSoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraSoundPlayer.h; sourceTree = "<group>"; };
 		4C6C05291C1574F700899F42 /* CameraSoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraSoundPlayer.m; sourceTree = "<group>"; };
 		4C6C052D1C15755200899F42 /* JBParallaxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBParallaxCell.h; sourceTree = "<group>"; };
@@ -977,6 +981,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CA50F731B0D8DE000A71AAF /* ImageIO.framework in Frameworks */,
 				4C61712F1C0EC6FE007915B5 /* CoreMedia.framework in Frameworks */,
 				4C61712D1C0EC6E2007915B5 /* CoreVideo.framework in Frameworks */,
 				4C61712B1C0EC6DB007915B5 /* AVFoundation.framework in Frameworks */,
@@ -985,7 +990,6 @@
 				4CEF974F1B81F3A40098A6C0 /* MediaPlayer.framework in Frameworks */,
 				4CA50F771B0D8E2600A71AAF /* QuartzCore.framework in Frameworks */,
 				4CA50F751B0D8E0600A71AAF /* Accelerate.framework in Frameworks */,
-				4CA50F731B0D8DE000A71AAF /* ImageIO.framework in Frameworks */,
 				4CA50F711B0D8DD700A71AAF /* CoreImage.framework in Frameworks */,
 				4CE1E4641AC3A08A002B4990 /* AssetsLibrary.framework in Frameworks */,
 				040FBD5D1AC057A700181A25 /* CoreGraphics.framework in Frameworks */,
@@ -1019,6 +1023,8 @@
 		4C05B3381ADE47C500B6F36F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4C6B53A21D01599500964FA2 /* rotating@2x.png */,
+				4C6B53A31D01599500964FA2 /* rotating@3x.png */,
 				4C69FFA71CEEE2F200CBBC6C /* screen_full@2x.png */,
 				4C69FFA81CEEE2F200CBBC6C /* screen_full@3x.png */,
 				4C69FFA91CEEE2F200CBBC6C /* screen_normal@2x.png */,
@@ -2686,6 +2692,7 @@
 				4C7B77D91CAA5A56008A0398 /* firmwareicon@3x.png in Resources */,
 				4C0A17B21B0C332D00D73A0A /* tab3@2x.png in Resources */,
 				4C69FF8D1CEEACB200CBBC6C /* cmd_close@2x.png in Resources */,
+				4C6B53A41D01599500964FA2 /* rotating@2x.png in Resources */,
 				4CA75E0C1C58DEB700F73819 /* filterBW.png in Resources */,
 				4C7B9C351C2293C90045AD6B /* shot_classic.wav in Resources */,
 				4C0A7C631BABFB9200418C7A /* 6-wrench-screwdriver@2x.png in Resources */,
@@ -2722,6 +2729,7 @@
 				4C69FFA01CEEB5F100CBBC6C /* flit_recon@3x.png in Resources */,
 				4C0A17CB1B0C337800D73A0A /* tab1_active@3x.png in Resources */,
 				4C939D2C1CAD08F100A9EB5B /* formatting@2x.png in Resources */,
+				4C6B53A51D01599500964FA2 /* rotating@3x.png in Resources */,
 				4C6485A31C23ED08005423E1 /* begin_startwin.wav in Resources */,
 				4C6272AF1C291E31007DC815 /* fullScreen@3x.png in Resources */,
 				4C74817C1CCA354C003CE115 /* UserListCell.xib in Resources */,

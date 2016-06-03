@@ -8,6 +8,8 @@
 
 #import "BLUIkitTool.h"
 #import "sys/utsname.h"
+#import <ImageIO/ImageIO.h>
+#import <MobileCoreServices/UTType.h>
 
 @implementation BLUIkitTool
 
@@ -110,6 +112,31 @@
     freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stdout);
     freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding], "a+", stderr);
     
+}
+
++ (NSData *)dataFromImage:(UIImage *)image metadata:(NSDictionary *)metadata mimetype:(NSString *)mimetype
+{
+    NSMutableData *imageData = [NSMutableData data];
+    CFStringRef uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef)mimetype, NULL);
+    CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)imageData, uti, 1, NULL);
+    
+    if (imageDestination == NULL)
+    {
+        NSLog(@"Failed to create image destination");
+        imageData = nil;
+    }
+    else
+    {
+        CGImageDestinationAddImage(imageDestination, image.CGImage, (__bridge CFDictionaryRef)metadata);
+        if (CGImageDestinationFinalize(imageDestination) == NO)
+        {
+            NSLog(@"Failed to finalise");
+            imageData = nil;
+        }
+        CFRelease(imageDestination);
+    }
+    CFRelease(uti);
+    return imageData;
 }
 
 @end

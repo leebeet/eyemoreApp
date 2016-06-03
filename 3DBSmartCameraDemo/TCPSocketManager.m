@@ -184,7 +184,7 @@
     
     NSData   *dataStream  = [[NSData alloc] initWithBytes:&HBPack length:sizeof(HBPack)];
     
-    [self.wakeUpSocket sendData:dataStream toHost:@"192.168.1.1" port:65001 withTimeout:-1 tag:ksendWakeupPacket];
+    [self.wakeUpSocket sendData:dataStream toHost:@"192.168.1.1" port:SERVER_WAPEUP_PORT withTimeout:-1 tag:ksendWakeupPacket];
     [self.wakeUpSocket beginReceiving:nil];
     //[self.HBSocket sendData:dataStream withTimeout:-1 tag:ksendHBpacket];
 }

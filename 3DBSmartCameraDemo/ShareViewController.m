@@ -12,8 +12,14 @@
 #import "eyemoreAPI.h"
 #import "eyemoreUser.h"
 #import "ProgressHUD.h"
+#import "BLUIkitTool.h"
+#import "BLImageRotation.h"
 
 @interface ShareViewController ()
+
+@property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UIButton *rotateButton;
+@property (assign, nonatomic) UIImageOrientation imageOrientation;
 
 @end
 
@@ -34,9 +40,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.uploadImageView setImage:[UIImage imageWithData:self.uploadData]];
+    [self setUpImageView];
+    [self setUpRotateButton];
+    //[self.uploadImageView setImage:[UIImage imageWithData:self.uploadData]];
     [self.imageIntroField becomeFirstResponder];
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyBoard:)]];
+    self.imageOrientation = UIImageOrientationRight;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,15 +53,58 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setUpImageView
+{
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 74, 100, 100)];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [self.imageView setImage:[UIImage imageWithData:self.uploadData]];
+    [self.view addSubview:self.imageView];
+}
+
+- (void)setUpRotateButton
+{
+    self.rotateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+    [self.rotateButton setImage:[UIImage imageNamed:@"rotating.png"] forState:UIControlStateNormal];
+    self.rotateButton.center = CGPointMake(self.imageView.center.x, self.imageView.center.y + 75);
+    //self.rotateButton.backgroundColor = [[UIColor clearColor] colorWithAlphaComponent:1];
+    self.rotateButton.layer.masksToBounds = YES;
+    self.rotateButton.layer.cornerRadius = 5;
+    self.rotateButton.layer.shadowOffset = CGSizeMake(0, 0);
+    [self.rotateButton addTarget:self action:@selector(rotateButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.rotateButton];
+}
 
 - (void)hideKeyBoard:(id)sender
 {
     [self.imageIntroField resignFirstResponder];
 }
 
+- (void)rotateButtonTapped
+{
+    CGAffineTransform rotation;
+    [self.rotateButton setEnabled:NO];
+    if (self.imageOrientation == UIImageOrientationRight) {
+        self.imageOrientation = UIImageOrientationUp;
+        rotation = CGAffineTransformMakeRotation(-M_PI/2.0f);
+    }
+    else {
+        self.imageOrientation = UIImageOrientationRight;
+        rotation = CGAffineTransformMakeRotation(0);
+    }
+    
+    [UIView animateWithDuration:0.3f delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [self.imageView setTransform:rotation];
+    } completion:^(BOOL finished){
+        [self.rotateButton setEnabled:YES];
+    }];
+}
+
 - (IBAction)uploadButtonTapped:(id)sender
 {
     [ProgressHUD show:@"正在发布" Interaction:NO];
+    if (self.imageOrientation == UIImageOrientationUp) {
+        self.uploadData = [BLUIkitTool dataFromImage:[BLImageRotation SetRotation:UIImageOrientationLeft withImageData:self.uploadData] metadata:nil mimetype:@"image/jpeg"];
+    }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[Config myAccessToken]] forHTTPHeaderField:@"Authorization"];
     [manager POST:[NSString stringWithFormat:@"%@%@", eyemoreAPI_HTTP_PREFIX, eyemoreAPI_ACCOUNT_UPLOAD]

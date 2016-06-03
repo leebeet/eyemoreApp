@@ -533,6 +533,10 @@ static CGFloat   kfixedPartHeight = 123.0;
                                                               cell.imageURLString = [images firstObject];
                                                               [cell.postImage setImage:image];
                                                               //[self reloadVisibleCellsFortableView:tableView];
+                                                              if (cell.postImage.image.size.width < cell.postImage.image.size.height) {
+                                                                  cell.postImage.contentMode = UIViewContentModeScaleAspectFill;
+                                                                  cell.postImage.layer.masksToBounds = YES;
+                                                              }
                                                               
                                                           }
              ];

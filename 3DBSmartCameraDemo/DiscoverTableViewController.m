@@ -120,6 +120,10 @@ static CGFloat   kfixedPartHeight = 123.0;
                                                       [cell.postImage setImage:image];
                                                       cell.imageURLString = [images firstObject];
                                                       //[self reloadVisibleCellsFortableView:tableView];
+                                                      if (cell.postImage.image.size.width < cell.postImage.image.size.height) {
+                                                          cell.postImage.contentMode = UIViewContentModeScaleAspectFill;
+                                                          cell.postImage.layer.masksToBounds = YES;
+                                                      }
                                                       
                                                 }
      ];
@@ -142,7 +146,10 @@ static CGFloat   kfixedPartHeight = 123.0;
 //    NSArray *cells = [tableView visibleCells];
 //    NSMutableArray *array = [NSMutableArray new];
 //    for (DiscoverTableViewCell *cell in cells) {
-//        [array addObject:[tableView indexPathForCell:cell]];
+//        if (cell.postImage.image.size.width < cell.postImage.image.size.height) {
+//            [array addObject:[tableView indexPathForCell:cell]];
+//        }
+//        //[array addObject:[tableView indexPathForCell:cell]];
 //    }
 //    NSLog(@"%@", array);
 //    [tableView reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationFade];
@@ -158,6 +165,9 @@ static CGFloat   kfixedPartHeight = 123.0;
         //cell.imageTitleLabel.center = CGPointMake(cell.imageTitleLabel.center.x, cell.postImage.center.y + cell.postImage.image.size.height / 2 + cell.imageTitleLabel.frame.size.height / 2 + 8);
         //flexiblePartHeight = cell.postImage.image.size.height * self.view.frame.size.width / cell.postImage.image.size.width;
         //flexiblePartHeight = flexiblePartHeight + cell.imageTitleLabel.frame.size.height;
+        if (cell.postImage.image.size.width < cell.postImage.image.size.height) {
+            return kfixedPartHeight + 1920 * (self.view.frame.size.width) / 1080 - 120;
+        }
     }
     return kfixedPartHeight + 1080 * self.view.frame.size.width / 1920 + flexiblePartHeight;
     

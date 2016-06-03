@@ -14,5 +14,6 @@
 + (UIViewController *)currentRootViewController;
 + (NSString*)deviceVersion;
 + (void)redirectNSlogToDocumentFolder;
++ (NSData *)dataFromImage:(UIImage *)image metadata:(NSDictionary *)metadata mimetype:(NSString *)mimetype;
 
 @end

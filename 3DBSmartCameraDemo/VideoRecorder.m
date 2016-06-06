@@ -86,7 +86,7 @@ typedef enum _VideoRecorderMode {
 
 - (void)startHDRecording
 {
-    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDBeginRecordConifg(RESOLUTION_960_540, 125)];
+    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDBeginRecordConifg(RESOLUTION_960_540, 250)];
 }
 
 - (void)startLDRecordingWithEyemoreVideo:(EyemoreVideo *)dict
@@ -350,6 +350,7 @@ typedef enum _VideoRecorderMode {
         if (self.firstFrameBlock) {
             self.firstFrameBlock(firstFrameArray[1]);
         }
+        [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDReceiveOInMode(2)];
         [self.socketManager receiveMessageWithTimeOut:-1];
     }
     if (CMD.cmd == SDB_GET_FRAME_ACK) {

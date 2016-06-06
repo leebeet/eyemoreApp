@@ -13,7 +13,7 @@
 #import "BLMovieEncoder.h"
 
 #define k10SecondFrameCount 750
-#define kHDRecordingFrameCount 375
+#define kHDRecordingFrameCount 750
 #define kFPS 25
 #define kHDFPS 25 //scale = 2, actual fps = (2, 25) = 12.5fps
 
@@ -337,7 +337,10 @@
                 //audioData = [frameData subdataWithRange:NSMakeRange(4, 4)];
                 audioData = [@"NoData" dataUsingEncoding:NSUTF8StringEncoding];
             }
-            else audioData= [frameData subdataWithRange:NSMakeRange(t + 4 + 4 + jpgSize + 4, audioSize)];
+            else {
+                audioData= [frameData subdataWithRange:NSMakeRange(t + 4 + 4 + jpgSize + 4, audioSize)];
+                NSLog(@"audio audioData is :%lu",(unsigned long)[audioData length]);
+            }
         }
         
         [dataArray addObject:[NSString stringWithFormat:@"%u", frameIndex]];
@@ -534,7 +537,7 @@
     
     if ([videoType isEqualToString:@"HD_RECORDING"]) {
         
-        BLMovieEncoder *encoder = [[BLMovieEncoder alloc] initWithEncodec:AVVideoCodecH264 FPS:CMTimeMake(2, kHDFPS) Width:960 Height:540 OutputFileURL:furl];
+        BLMovieEncoder *encoder = [[BLMovieEncoder alloc] initWithEncodec:AVVideoCodecH264 FPS:CMTimeMake(1, kFPS) Width:960 Height:540 OutputFileURL:furl];
         [encoder encodeMovieWithImages:self.arrayOfImages withCompletion:^(NSURL *fileURL){
             
             NSLog(@"file url :%@",fileURL);
@@ -853,7 +856,7 @@
 //    }
 //    return data;
 //}
-- (NSMutableData *)appendFrameAudioDataWithEyemoreVideo:(EyemoreVideo *)eyemoreVideo
+- (NSData *)appendFrameAudioDataWithEyemoreVideo:(EyemoreVideo *)eyemoreVideo
 {
     NSMutableData *data = [[NSMutableData alloc] init];
     NSString *videoType = eyemoreVideo.videoType;
@@ -872,15 +875,17 @@
         //NSLog(@"开始载入帧声音入内存: %d", i);
         if ([eyemoreVideo.videoMaterial objectForKey:[NSString stringWithFormat:@"AudioNo.%ld",i]]) {
             NSData *audioData = [NSData dataWithData:[self getFrameAudioDataWithEyemoreVideo:eyemoreVideo withIndex:i]];
-            if (![[[NSString alloc] initWithData:audioData encoding:NSUTF8StringEncoding] isEqualToString:@"NoData"]) {
+            //([audioData length] > 4)用于去除产生的4字节多余文件（具体产生原因仍需查询）
+            if (![[[NSString alloc] initWithData:audioData encoding:NSUTF8StringEncoding] isEqualToString:@"NoData"] && ([audioData length] > 4)) {
                 [data appendData:audioData];
                 count++;
                 NSLog(@"audio frame data appending count: %d", count);
             }
         }
     }
-    NSLog(@"audio data lenth: %lu, %f", (unsigned long)[data length], (float)[data length] / 96000.0);
-    return data;
+    //NSLog(@"audio data lenth: %lu, %f", (unsigned long)[data length], (float)[data length] / 96000.0);
+    //去除播放开始的渣音
+    return [data subdataWithRange:NSMakeRange(40000, [data length] - 40000)];
 }
 
 //- (void)storeVideoAudioData:(NSMutableData *)data withVideoDict:(NSMutableDictionary *)dict

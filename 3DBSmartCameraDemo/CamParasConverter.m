@@ -503,7 +503,7 @@
 + (NSString *)stringForFrameCountValue:(NSInteger)frameCount
 {
     int minute,second, seconds;
-    seconds = frameCount / 12.5;
+    seconds = frameCount / 25.0;
     
     if (seconds >= 60) {
         minute = (int)(seconds / 60.0);

@@ -11,6 +11,7 @@
 
 @protocol BLEdittingViewDeledate <NSObject>
 - (void)BLEdittingView:(BLEdittingView *)edittingView didActionForTextContent:(NSString *)content;
+- (void)BLEdittingView:(BLEdittingView *)edittingView didHideKeyBoardWithContent:(NSString *)content;
 @end
 
 @interface BLEdittingView : UIView <UITextViewDelegate>

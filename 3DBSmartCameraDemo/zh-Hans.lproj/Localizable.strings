@@ -27,6 +27,7 @@
 "Save Failed"                     = "保存失败";
 "Save All"                        = "保存全部照片";
 "Save All Detail"                 = "确定保存所有照片至相册，同时清空app内的所有照片";
+"Delete"                          = "删除";
 "Delete All"                      = "删除全部照片";
 "Delete All Detail"               = "清空app内的所有照片";
 "Deleted"                         = "已删除";
@@ -90,3 +91,8 @@
 "Forgot Password?"                = "忘记密码?";
 "Signing in"                      = "正在登录";
 "Login Failed"                    = "登录失败";
+"Share with Wechat friends"       = "分享至微信好友";
+"Share with Wechat time line"     = "分享至微信朋友圈";
+"Share with QQ friends"           = "分享至QQ好友";
+"Wrong number"                    = "请输入正确的号码";
+"reply"                           = "回复";

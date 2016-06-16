@@ -51,7 +51,11 @@
 //    blurView.frame = self.view.frame;
 //    [self.view addSubview:blurView];
     self.lastViewController = self.presentingViewController;
-    NSLog(@"appRootViewController %@", self.presentingViewController);
+    
+    if ([self.lastViewController isKindOfClass:[UINavigationController class]]) {
+        self.lastViewController = self.lastViewController.childViewControllers[0];
+    }
+    NSLog(@"presenting ViewController %@", self.lastViewController);
 
 }
 

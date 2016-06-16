@@ -7,7 +7,7 @@
 //
 
 #import "DownloadViewController.h"
-#import "ASProgressPopUpView.h"
+
 #import "ImageClient.h"
 #import "SDWebImageManager.h"
 #import "RootScrollViewController.h"
@@ -36,7 +36,7 @@ typedef enum _downloadButtonStatus{
 
 }downloadButtonStatus;
 
-@interface DownloadViewController ()<ASProgressPopUpViewDataSource,SDWebImageManagerDelegate,imageClientDelegate, TCPSocketManagerDelegate, UIAlertViewDelegate, MMPopLabelDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface DownloadViewController ()<SDWebImageManagerDelegate,imageClientDelegate, TCPSocketManagerDelegate, UIAlertViewDelegate, MMPopLabelDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 {
     NSData *_imageData;
     NSDate *_finishDate;
@@ -46,7 +46,6 @@ typedef enum _downloadButtonStatus{
     float _progressValueUnit;
 }
 
-@property (weak,   nonatomic) IBOutlet ASProgressPopUpView *progressView;
 @property (strong, nonatomic)          ProgressHUD         *progressHUD;
 @property (strong, nonatomic)          UIAlertView         *alertView;
 
@@ -158,10 +157,6 @@ typedef enum _downloadButtonStatus{
 //    [self.view addSubview:self.imageButton];
 //    [self.saveAllButton setHidden:YES];
     
-    self.progressView.font                    = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:16];
-    self.progressView.popUpViewAnimatedColors = @[[UIColor colorWithRed:65/255.0 green:190/255.0 blue:217/255.0 alpha:1], [UIColor colorWithRed:251/255.0 green:36/255.0 blue:7/255.0 alpha:1]];
-    self.progressView.dataSource              = self;
-    [self.progressView hidePopUpViewAnimated:YES];
     
 //    self.downloadTimer.timerType = MZTimerLabelTypeStopWatch;
 //    self.downloadTimer.timeFormat = @"HH:mm:ss SS";
@@ -683,7 +678,6 @@ typedef enum _downloadButtonStatus{
 {
     [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDGetFileList];
     _finishDate = nil;
-    self.progressView.progress = 0;
     if (self.socketManager.isLost) {
         //[ProgressHUD showError:@"连接已断开, 请连接相机后再试一次！" Interaction:NO];
         [self.wifiMessageFail showMessageView];
@@ -994,33 +988,6 @@ typedef enum _downloadButtonStatus{
     }
 }
 
-#pragma mark - ASProgressPopUpView dataSource
-
-// <ASProgressPopUpViewDataSource> is entirely optional
-// it allows you to supply custom NSStrings to ASProgressPopUpView
-- (NSString *)progressView:(ASProgressPopUpView *)progressView stringForProgress:(float)progress
-{
-    NSString *s;
-    if (progress < 0.2) {
-        s = @"Just starting";
-    } else if (progress > 0.4 && progress < 0.6) {
-        s = @"About halfway";
-    } else if (progress > 0.75 && progress < 1.0) {
-        s = @"Nearly there";
-    } else if (progress >= 1.0) {
-        s = @"Complete";
-    }
-    return s;
-}
-
-// by default ASProgressPopUpView precalculates the largest popUpView size needed
-// it then uses this size for all values and maintains a consistent size
-// if you want the popUpView size to adapt as values change then return 'NO'
-- (BOOL)progressViewShouldPreCalculatePopUpViewSize:(ASProgressPopUpView *)progressView;
-{
-    return NO;
-}
-
 //- (void)displayImages
 //{
 //    static int i = 0;
@@ -1235,7 +1202,7 @@ typedef enum _downloadButtonStatus{
             if (cammode == NORMALMODE && command.cmd == SDB_GET_NORMAL_PHOTO_COUNT_ACK) {
                 dispatch_async(dispatch_get_main_queue(), ^(){
                     
-                    if (self.socketManager.fileList.paramn[0] == 0 && self.progressView.progress == 0) {
+                    if (self.socketManager.fileList.paramn[0] == 0) {
                         if (self.menuBar) {
                             [ProgressHUD showError:NSLocalizedString(@"No Sync", nil) Interaction:YES];
                         }

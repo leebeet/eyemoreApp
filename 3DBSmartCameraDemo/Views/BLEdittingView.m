@@ -67,12 +67,13 @@
 {
     [self.delegate  BLEdittingView:self didActionForTextContent:self.textView.text];
     //[self setUpHintLabel];
-    [self hideKeyBoard];
+    [self.textView resignFirstResponder];
 }
 
 - (void)hideKeyBoard
 {
     [self.textView resignFirstResponder];
+    [self.delegate BLEdittingView:self didHideKeyBoardWithContent:self.textView.text];
 }
 
 - (void)becomeEditting

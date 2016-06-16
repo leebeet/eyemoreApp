@@ -27,7 +27,7 @@
 "knf-Ac-FaS.normalTitle" = "忘记密码？";
 
 /* Class = "UITextField"; placeholder = "请输入密码"; ObjectID = "rsp-qV-zBc"; */
-"rsp-qV-zBc.placeholder" = "请输入密码";
+"rsp-qV-zBc.placeholder" = "  请输入密码";
 
 /* Class = "UITextField"; placeholder = "请输入手机号码"; ObjectID = "yOC-XF-nHo"; */
-"yOC-XF-nHo.placeholder" = "请输入手机号码";
+"yOC-XF-nHo.placeholder" = "  请输入手机号码";

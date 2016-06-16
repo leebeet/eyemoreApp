@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="seY-bA-BJx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="seY-bA-BJx">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -1312,9 +1312,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vMZ-zM-cGv" customClass="ASProgressPopUpView">
-                                <rect key="frame" x="0.0" y="-2" width="150" height="2"/>
-                            </progressView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已同步" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rd0-cc-xnm">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1343,58 +1340,35 @@
                             <constraint firstItem="Ic1-HA-3I7" firstAttribute="leading" secondItem="rd0-cc-xnm" secondAttribute="trailing" constant="-3" id="KDi-AR-hPE">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
-                            <constraint firstItem="rd0-cc-xnm" firstAttribute="top" secondItem="vMZ-zM-cGv" secondAttribute="bottom" constant="8" id="L0X-RI-Qfy"/>
-                            <constraint firstItem="Ic1-HA-3I7" firstAttribute="top" secondItem="vMZ-zM-cGv" secondAttribute="bottom" constant="8" id="fqz-K9-i2D"/>
-                            <constraint firstItem="J7o-4m-YrA" firstAttribute="top" secondItem="vMZ-zM-cGv" secondAttribute="bottom" constant="8" id="gZM-v0-OGu"/>
-                            <constraint firstItem="vMZ-zM-cGv" firstAttribute="leading" secondItem="ctu-1t-mUv" secondAttribute="leadingMargin" id="mxm-uC-iRY"/>
-                            <constraint firstItem="vMZ-zM-cGv" firstAttribute="trailing" secondItem="ctu-1t-mUv" secondAttribute="trailingMargin" id="qZk-Vb-7iD"/>
-                            <constraint firstItem="vMZ-zM-cGv" firstAttribute="top" secondItem="WhN-MD-UYZ" secondAttribute="bottom" constant="135" id="zoR-fd-tIc">
-                                <variation key="heightClass=regular-widthClass=compact" constant="25"/>
-                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="vMZ-zM-cGv"/>
                                 <exclude reference="rd0-cc-xnm"/>
                                 <exclude reference="Ic1-HA-3I7"/>
                                 <exclude reference="J7o-4m-YrA"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="KDi-AR-hPE"/>
-                                <exclude reference="fqz-K9-i2D"/>
                                 <exclude reference="0BN-UX-8Z6"/>
                                 <exclude reference="4Ps-cQ-fcB"/>
-                                <exclude reference="gZM-v0-OGu"/>
-                                <exclude reference="L0X-RI-Qfy"/>
-                                <exclude reference="mxm-uC-iRY"/>
-                                <exclude reference="qZk-Vb-7iD"/>
-                                <exclude reference="zoR-fd-tIc"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
-                                <include reference="vMZ-zM-cGv"/>
                                 <include reference="rd0-cc-xnm"/>
                                 <include reference="Ic1-HA-3I7"/>
                                 <include reference="J7o-4m-YrA"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="KDi-AR-hPE"/>
-                                <include reference="fqz-K9-i2D"/>
                                 <include reference="0BN-UX-8Z6"/>
                                 <include reference="4Ps-cQ-fcB"/>
-                                <include reference="gZM-v0-OGu"/>
-                                <include reference="L0X-RI-Qfy"/>
-                                <include reference="mxm-uC-iRY"/>
-                                <include reference="qZk-Vb-7iD"/>
-                                <include reference="zoR-fd-tIc"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="同步" id="hQx-BV-FvI"/>
                     <connections>
                         <outlet property="currentImageLabel" destination="Ic1-HA-3I7" id="bhE-NM-ZJb"/>
-                        <outlet property="progressView" destination="vMZ-zM-cGv" id="0V1-Aj-kY9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="97N-98-p6f" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3239,7 +3213,7 @@
                     <navigationItem key="navigationItem" id="s9c-yx-rXE">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="Mw6-wJ-syn">
-                            <rect key="frame" x="-60" y="-14" width="121" height="29"/>
+                            <rect key="frame" x="240" y="8" width="121" height="29"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Photos"/>

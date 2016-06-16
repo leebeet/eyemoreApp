@@ -7,19 +7,30 @@
 //
 
 #import "AppDelegate.h"
-#import "TCPSocketManager.h"
-#import "ProgressHUD.h"
-#import "ImageClient.h"
-#import "SaveLoadInfoManager.h"
-#import "MRoundedButton.h"
 #import "CMDManager.h"
+#import "FirmwareManager.h"
+#import "ImageClient.h"
+#import "JRMessageView.h"
+#import "ProgressHUD.h"
+#import "SaveLoadInfoManager.h"
+#import "TCPSocketManager.h"
+#import "MRoundedButton.h"
 #import "WIFIDetector.h"
 #import "VideoClient.h"
-#import "FirmwareManager.h"
 #import "UpdateViewController.h"
-#import "JRMessageView.h"
+
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>
+
+//腾讯SDK头文件
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+
+//微信SDK头文件
+#import "WXApi.h"
 
 @interface AppDelegate ()<TCPSocketManagerDelegate, UIAlertViewDelegate>
+
 @end
 
 @implementation AppDelegate
@@ -40,10 +51,42 @@
     VideoClient *videoClient = [VideoClient sharedVideoClient];
     videoClient.videoList = [SaveLoadInfoManager loadAppInfoWithVideoClient].videoList;
     
-//    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-//    self.window.backgroundColor = [UIColor whiteColor];
-    
-    
+    //注册第三方平台账号
+    [ShareSDK registerApp:@"13914b4cec136"
+          activePlatforms:@[@(SSDKPlatformTypeWechat), @(SSDKPlatformTypeQQ)]
+                 onImport:^(SSDKPlatformType platformType)
+     {
+         switch (platformType)
+         {
+             case SSDKPlatformTypeWechat:
+                 [ShareSDKConnector connectWeChat:[WXApi class]];
+                 break;
+             case SSDKPlatformTypeQQ:
+                 [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
+                 break;
+
+             default:
+                 break;
+         }
+     }
+          onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
+              
+        switch (platformType)
+        {
+            case SSDKPlatformTypeWechat:
+                //设置wechat应用信息
+                [appInfo SSDKSetupWeChatByAppId:@"wx4823851a8f67a499" appSecret:@"59b0f55228055f6de23fecec6cd1ae45"];
+                break;
+                //设置qq应用信息
+            case SSDKPlatformTypeQQ:
+                [appInfo SSDKSetupQQByAppId:@"1105453260" appKey:@"LfBmdQn5UfPzWerT" authType:SSDKAuthTypeBoth];
+                break;
+                
+            default:
+                break;
+        }
+    }];
+    //注册MRoundedButton外观
     NSDictionary *appearanceProxy1 = @{kMRoundedButtonCornerRadius : @40,
                                        kMRoundedButtonBorderWidth  : @3,
                                        kMRoundedButtonBorderColor  : [[UIColor whiteColor] colorWithAlphaComponent:0.8],

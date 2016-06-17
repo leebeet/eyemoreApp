@@ -20,16 +20,18 @@
 {
     NSArray *views = [[NSBundle mainBundle] loadNibNamed:[NSString stringWithFormat:@"%@", [self class]] owner:nil options:nil];
     DiscoverTableViewCell *cell = [views firstObject];
-    [cell.likeButton addTarget:self action:@selector(likeButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [cell.likeButton    addTarget:self action:@selector(likeButtonTapped)    forControlEvents:UIControlEventTouchUpInside];
     [cell.commentButton addTarget:self action:@selector(commentButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
 }
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    [self.likeButton addTarget:self action:@selector(likeButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.likeButton    addTarget:self action:@selector(likeButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.commentButton addTarget:self action:@selector(commentButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.moreButton    addTarget:self action:@selector(moreButtonTapped)    forControlEvents:UIControlEventTouchUpInside];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarAction)];
     self.userAvatar.userInteractionEnabled = YES;
     [self.userAvatar addGestureRecognizer:tap];
@@ -54,6 +56,11 @@
     [self.delegate didTappedCommentButtonOnCell:self];
 }
 
+- (void)moreButtonTapped
+{
+    [self.delegate didTappedMoreButtonOnCell:self];
+}
+
 - (void)avatarAction
 {
     [self.delegate didActionAvatarViewOnCell:self];
@@ -63,6 +70,8 @@
 {
     [self.delegate didActionPostImageOnCell:self];
 }
+
+
 //- (void)setUpUserAvatar
 //{
 //    self.userAvatar = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];

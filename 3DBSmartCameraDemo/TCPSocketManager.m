@@ -603,7 +603,7 @@
     else {
         
         // 心跳包正常，保持tcp连接，若已经关闭，重新连接tcp
-       // NSLog(@"total1 second: %d, total2 second: %d, %d, 网络连接正常",    total1Second, total2Second, abs(total1Second - total2Second));
+        // NSLog(@"total1 second: %d, total2 second: %d, %d, 网络连接正常",    total1Second, total2Second, abs(total1Second - total2Second));
         NSLog(@"Total1:%f, Total2: %f, difference: %ld, 网络连接正常", total1Interval, total2Interval, (long)timeDifference);
         return NO;
     }

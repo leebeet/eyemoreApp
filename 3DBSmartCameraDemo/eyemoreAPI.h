@@ -9,9 +9,10 @@
 #ifndef eyemoreAPI_h
 #define eyemoreAPI_h
 
-#define eyemoreAPI_ValidCode                @"http://120.25.219.198:8081/api/code?mobile="
-#define eyemoreAPI_HTTP_PREFIX              @"http://120.25.219.198:8081/"
+#define eyemoreAPI_ValidCode                @"http://120.25.163.59:8081/api/code?mobile="
+#define eyemoreAPI_HTTP_PREFIX              @"http://120.25.163.59:8081/" //official:120.25.219.198 beta:120.25.163.59
 
+//eyemore api 1.0
 #define eyemoreAPI_ACCOUNT_REGISTER         @"account/register"
 #define eyemoreAPI_ACCOUNT_LOG_IN           @"account/login"
 #define eyemoreAPI_ACCOUNT_RESET_PASSWORD   @"account/password"
@@ -31,5 +32,11 @@
 #define eyemoreAPI_ACCOUNT_FOLLOWLIST       @"account/follows"
 #define eyemoreAPI_ACCOUNT_FANSLIST         @"account/fans"
 #define eyemoreAPI_ACCOUNT_BLOGS            @"account/blogs"
+
+//eyemore api 2.0
+#define eyemoreAPI_V2_BLOGS                 @"v2/blog/list"
+#define eyemoreAPI_V2_DELETE_BLOG           @"v2/blog/delete"
+#define eyemoreAPI_V2_COMMENT               @"v2/blog/comment"
+#define eyemoreAPI_V2_OAUTH_LOGIN           @"v2/oauth/login"
 
 #endif /* eyemoreAPI_h */

@@ -952,6 +952,11 @@
 - (void)didReceiveDevInfo:(DEV_INFO)decInfo
 {
 }
+
+- (void)didReceiveDebugInfo:(DEBUG_INFO)info
+{
+}
+
 - (void)didReceiveLensStatus
 {
 }

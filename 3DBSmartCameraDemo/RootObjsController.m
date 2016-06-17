@@ -9,6 +9,7 @@
 #import "RootObjsController.h"
 #import "ProgressHUD.h"
 #import "LogViewController.h"
+#import "eyemoreNotificaitions.h"
 
 @interface RootObjsController ()
 
@@ -200,7 +201,8 @@
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
     LogViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    [self presentViewController:loginVC animated:YES completion:nil];
+    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    [self presentViewController:navi animated:YES completion:nil];
 }
 //#pragma mark - Table view data source
 //

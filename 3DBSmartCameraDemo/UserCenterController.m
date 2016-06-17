@@ -22,6 +22,7 @@
 #import "JGActionSheet.h"
 #import "ImageAlbumManager.h"
 #import "JTSImageViewController.h"
+#import "SocialRequestAssistant.h"
 
 static NSString *kNewsCellID = @"NewsCell";
 static NSString *kFollowCellID = @"FollowersCell";
@@ -518,7 +519,8 @@ static CGFloat   kfixedPartHeight = 123.0;
             NSString *dateString = [self.objects[indexPath.row] objectForKey:@"create_at"];
             NSDate   *postedDate = [NSDate dateWithTimeIntervalSince1970:[dateString integerValue]];
             
-            cell.blogID = [[self.objects[indexPath.row] objectForKey:@"id"] integerValue];
+            cell.userID = [[self.objects[indexPath.row] objectForKey:@"uid"] integerValue];
+            cell.blogID = [[self.objects[indexPath.row] objectForKey:@"id"]  integerValue];
             cell.imageTitleLabel.text  = [self.objects[indexPath.row] objectForKey:@"title"];
             cell.likeLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)likes.count];
             cell.commentCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)comments.count];
@@ -644,28 +646,62 @@ static CGFloat   kfixedPartHeight = 123.0;
 - (void)didTappedLikeButtonOnCell:(DiscoverTableViewCell *)cell
 {
     NSLog(@"tapped cell.blogid :%ld", (long)cell.blogID);
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[Config myAccessToken]] forHTTPHeaderField:@"Authorization"];
-    [manager POST:[NSString stringWithFormat:@"%@%@", eyemoreAPI_HTTP_PREFIX, eyemoreAPI_ACCOUNT_LIKE]
-       parameters:@{@"bid": [NSString stringWithFormat:@"%ld", (long)cell.blogID]}
-         progress:nil
-          success:^(NSURLSessionDataTask *task, id responseObject){
-              
-              NSDictionary *result = (NSDictionary *)responseObject;
-              NSLog(@"like result: %@", result);
-              NSInteger status = [[result objectForKey:@"status"] integerValue];
-              if (status == 1) {
-                  cell.likeLabel.text = [NSString stringWithFormat:@"%ld", [cell.likeLabel.text integerValue] + 1];
-              }
-              else {
-                  [ProgressHUD showSuccess:NSLocalizedString(@"Liked", nil) Interaction:YES];
-              }
-          }
-          failure:^(NSURLSessionDataTask *task, NSError *error){
-              [ProgressHUD showError:NSLocalizedString(@"Like Error", nil) Interaction:YES];
-              NSLog(@"点赞失败: %@", error);
-          }];
+    [SocialRequestAssistant requestLikeBlogWithID:cell.blogID
+                                          success:^(NSURLSessionDataTask *task, id responseObject){
+                                              cell.likeLabel.text = [NSString stringWithFormat:@"%ld", [cell.likeLabel.text integerValue] + 1];}
+                                          failure:nil];
 }
+
+- (void)didTappedMoreButtonOnCell:(DiscoverTableViewCell *)cell
+{
+    NSArray *array = [[NSArray alloc] init];
+    if (cell.userID == [Config getOwnID]) {
+        array = @[NSLocalizedString(@"Share with Wechat friends", nil),
+                  NSLocalizedString(@"Share with Wechat time line", nil),
+                  NSLocalizedString(@"Share with QQ friends", nil),
+                  NSLocalizedString(@"Delete", nil)];
+    }
+    else{
+        array = @[NSLocalizedString(@"Share with Wechat friends", nil),
+                  NSLocalizedString(@"Share with Wechat time line", nil),
+                  NSLocalizedString(@"Share with QQ friends", nil),];
+    }
+    JGActionSheetSection *section1 = [JGActionSheetSection sectionWithTitle:@"" message:@"" buttonTitles:array buttonStyle:JGActionSheetButtonStyleCustomer];
+    NSLog(@"array section: %@", array);
+    JGActionSheetSection *cancelSection = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"取消"] buttonStyle:JGActionSheetButtonStyleCustomer];
+    NSArray *sections = @[section1, cancelSection];
+    JGActionSheet *actionSheet = [JGActionSheet actionSheetWithSections:sections];
+    
+    __weak JGActionSheet *weakSelfAction = actionSheet;
+    [actionSheet setOutsidePressBlock:^(JGActionSheet *sheet){
+        [weakSelfAction dismissAnimated:YES];
+    }];
+    [actionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *sheetIndexPath) {
+        if (sheetIndexPath.section == 0 && sheetIndexPath.row == 0) {
+            NSLog(@"sharing with wechat friend tapped");
+            [SocialRequestAssistant shareImage:cell.postImage.image onPlatForm:SSDKPlatformSubTypeWechatSession];
+        }
+        else if (sheetIndexPath.section == 0 && sheetIndexPath.row == 1) {
+            [SocialRequestAssistant shareImage:cell.postImage.image onPlatForm:SSDKPlatformSubTypeWechatTimeline];
+        }
+        
+        else if (sheetIndexPath.section == 0 && sheetIndexPath.row == 2) {
+            [SocialRequestAssistant shareImage:cell.postImage.image onPlatForm:SSDKPlatformSubTypeQQFriend];
+        }
+        
+        if (sheetIndexPath.section == 0 && sheetIndexPath.row == 3) {
+            [SocialRequestAssistant requestDeleteBlogWithID:cell.blogID
+                                                    success:^(NSURLSessionDataTask *task, id responseObject){
+                                                        [self.navigationController popViewControllerAnimated:YES];
+                                                        [[NSNotificationCenter defaultCenter] postNotificationName:eyemoreDeleteBlogNoti object:nil];
+                                                    }
+                                                    failure:nil];
+        }
+        [weakSelfAction dismissAnimated:YES];
+    }];
+    if (!actionSheet.isVisible) {
+        [actionSheet showInView:self.view animated:YES];
+    }}
 
 - (void)didActionAvatarViewOnCell:(DiscoverTableViewCell *)cell
 {
@@ -758,7 +794,6 @@ static CGFloat   kfixedPartHeight = 123.0;
         [self.actionSheet showInView:controller.view animated:YES];
     }
 }
-
 
 /*
 #pragma mark - Navigation

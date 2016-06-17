@@ -321,8 +321,9 @@
 {
     if ([Config getOwnID] == 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        [self presentViewController:loginVC animated:YES completion:nil];
+        LogViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:loginVC];
+        [self presentViewController:navi animated:YES completion:nil];
     } else {
 
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"UserCenterController" bundle:nil];
@@ -401,8 +402,9 @@
         
         if ([Config getOwnID] == 0) {
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-            [self presentViewController:loginVC animated:YES completion:nil];
+            LogViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:loginVC];
+            [self presentViewController:navi animated:YES completion:nil];
         }
         else {
         MyProfileTableController  *VC = [self.storyboard instantiateViewControllerWithIdentifier:@"MyProfileTableController"];

@@ -27,6 +27,7 @@
 "Save Failed"                     = "Save Failed, Re-updating";
 "Save All"                        = "Save All Photos";
 "Save All Detail"                 = "All Photos would be saved, then clear them in app";
+"Delete"                          = "Delete";
 "Delete All"                      = "Delete All Photos";
 "Delete All Detail"               = "All Photos would be deleted";
 "Deleted"                         = "Deleted";
@@ -90,4 +91,9 @@
 "Forgot Password?"                = "Forgot Password?";
 "Signing in"                      = "Signing in";
 "Login Failed"                    = "Login Failed";
+"Share with Wechat friends"       = "Share with Wechat friends";
+"Share with Wechat time line"     = "Share with Wechat time line";
+"Share with QQ friends"           = "Share with QQ friends";
+"Wrong number"                    = "Wrong number";
+"reply"                           = "reply";
 

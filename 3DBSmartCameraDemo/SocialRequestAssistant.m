@@ -161,16 +161,20 @@
                          failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure
 {
     NSString *tuid;
+    NSDictionary *paramdDict;
+    
     if (uid == 0) {
         tuid = nil;
+        paramdDict = @{@"bid": blogID, @"comment": content};
     }
     else {
         tuid = [NSString stringWithFormat:@"%ld",uid];
+        paramdDict = @{@"bid": blogID, @"tuid":tuid, @"comment": content};
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",[Config myAccessToken]] forHTTPHeaderField:@"Authorization"];
     [manager POST:[NSString stringWithFormat:@"%@%@", eyemoreAPI_HTTP_PREFIX, eyemoreAPI_V2_COMMENT]
-       parameters:@{@"bid": blogID, @"tuid":tuid, @"comment": content}
+       parameters:paramdDict
          progress:nil
           success:^(NSURLSessionDataTask *task, id responseObject){
               
@@ -209,11 +213,11 @@
     
     if (imageArray) {
         
-        [shareParams SSDKSetupShareParamsByText:@""
+        [shareParams SSDKSetupShareParamsByText:@"分享至eyemore"
                                          images:imageArray
                                             url:nil
-                                          title:@""
-                                           type:SSDKContentTypeImage];
+                                          title:@"eyemore"
+                                           type:SSDKContentTypeAuto];
                 
         //进行分享
         [ShareSDK share:platFormtype

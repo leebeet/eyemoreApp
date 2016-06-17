@@ -196,7 +196,7 @@ static CGFloat   kfixedPartHeight = 123.0;
     NSLog(@"tapped cell.blogid :%ld", (long)cell.blogID);
     [SocialRequestAssistant requestLikeBlogWithID:cell.blogID
                                           success:^(NSURLSessionDataTask *task, id responseObject){
-                                              cell.likeLabel.text = [NSString stringWithFormat:@"%d", [cell.likeLabel.text integerValue] + 1];}
+                                              cell.likeLabel.text = [NSString stringWithFormat:@"%ld", [cell.likeLabel.text integerValue] + 1];}
                                           failure:nil];
 }
 

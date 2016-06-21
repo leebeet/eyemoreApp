@@ -268,6 +268,8 @@
 		4C7FB8501CD0635B0005B552 /* focus_classic.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4C7FB84F1CD0635B0005B552 /* focus_classic.wav */; };
 		4C8082E01B42386000BF35A5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C8082DE1B42386000BF35A5 /* Main.storyboard */; };
 		4C8082E21B42811F00BF35A5 /* ImageClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8082E11B42811F00BF35A5 /* ImageClient.m */; };
+		4C813A411D1927D90057840B /* share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C813A3F1D1927D90057840B /* share@2x.png */; };
+		4C813A421D1927D90057840B /* share@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C813A401D1927D90057840B /* share@3x.png */; };
 		4C837E041BF9DAF600C1056F /* playImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C837E031BF9DAF600C1056F /* playImageViewController.m */; };
 		4C85FDAF1C55C6BD008134A4 /* BLFocusingIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C85FDAE1C55C6BD008134A4 /* BLFocusingIndicator.m */; };
 		4C863E691C9FC996005CFFB0 /* MyProfileTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C863E681C9FC996005CFFB0 /* MyProfileTableController.m */; };
@@ -800,6 +802,8 @@
 		4C7FB84F1CD0635B0005B552 /* focus_classic.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = focus_classic.wav; sourceTree = "<group>"; };
 		4C8082DF1B42386000BF35A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4C8082E11B42811F00BF35A5 /* ImageClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageClient.m; sourceTree = "<group>"; };
+		4C813A3F1D1927D90057840B /* share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share@2x.png"; sourceTree = "<group>"; };
+		4C813A401D1927D90057840B /* share@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share@3x.png"; sourceTree = "<group>"; };
 		4C837E021BF9DAF600C1056F /* playImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playImageViewController.h; sourceTree = "<group>"; };
 		4C837E031BF9DAF600C1056F /* playImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = playImageViewController.m; sourceTree = "<group>"; };
 		4C85FDAD1C55C6BD008134A4 /* BLFocusingIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLFocusingIndicator.h; sourceTree = "<group>"; };
@@ -1107,6 +1111,8 @@
 		4C05B3381ADE47C500B6F36F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4C813A3F1D1927D90057840B /* share@2x.png */,
+				4C813A401D1927D90057840B /* share@3x.png */,
 				4C9A7A2D1D08232600AB6C71 /* dialPad@3x.png */,
 				4C9A7A2B1D08232300AB6C71 /* dialPad@2x.png */,
 				4C9A7A231D08158E00AB6C71 /* qq@2x.png */,
@@ -2999,6 +3005,7 @@
 				4C69FFAC1CEEE2F200CBBC6C /* screen_full@3x.png in Resources */,
 				4CBFF8571CA3A64300CB783F /* like@2x.png in Resources */,
 				4C70BD541CE474BE00450BCD /* syncIcon@3x.png in Resources */,
+				4C813A421D1927D90057840B /* share@3x.png in Resources */,
 				4C8F16311CE9DBF300412A33 /* connected_check@3x.png in Resources */,
 				4C7833E91C882AAB00EAD2F7 /* me_active@3x.png in Resources */,
 				4C70B4901CB66C4000A3DA53 /* VideoDownloadedCell.xib in Resources */,
@@ -3027,6 +3034,7 @@
 				4C6485A01C23BA12005423E1 /* shootGun.wav in Resources */,
 				4C7B77D51CAA585F008A0398 /* shutter@3x.png in Resources */,
 				4C693A1A1C9AC2ED006F9188 /* discover_active@2x.png in Resources */,
+				4C813A411D1927D90057840B /* share@2x.png in Resources */,
 				4C70BD561CE474CC00450BCD /* syncIcon@2x.png in Resources */,
 				4C0A7C671BABFCCB00418C7A /* 79-circle-load-left@2x.png in Resources */,
 				4C0A7C641BABFB9200418C7A /* 6-wrench-screwdriver@3x.png in Resources */,

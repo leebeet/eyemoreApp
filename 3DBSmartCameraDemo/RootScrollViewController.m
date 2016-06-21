@@ -233,16 +233,14 @@
     
     UIButton *saveBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
     [saveBtn setImage:[UIImage imageNamed:@"save"] forState:UIControlStateNormal];
-    //[saveBtn setTitle:@"保存" forState:UIControlStateNormal];
     [saveBtn addTarget:self action:@selector(saveButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     
-//    UIButton *DeleBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 70, 30)];
-//    [DeleBtn setImage:[UIImage imageNamed:@"deleteTrash"] forState:UIControlStateNormal];
-//    [DeleBtn setTitle:@"删除" forState:UIControlStateNormal];
-//    [DeleBtn addTarget:self action:@selector(removeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *shareBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+    [shareBtn setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
+    [shareBtn addTarget:self action:@selector(shareButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *btn1 = [[UIBarButtonItem alloc] initWithCustomView:saveBtn];
-    UIBarButtonItem *btn3 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareButtonTapped:)];
+    UIBarButtonItem *btn3 = [[UIBarButtonItem alloc] initWithCustomView:shareBtn];
     UIBarButtonItem *btn2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     UIBarButtonItem *btn4 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(removeButtonTapped:)];
     //UIBarButtonItem *btn4 = [[UIBarButtonItem alloc] initWithCustomView:DeleBtn];

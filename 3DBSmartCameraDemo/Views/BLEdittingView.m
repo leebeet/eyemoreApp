@@ -160,7 +160,7 @@
         [self.textView addSubview:self.placeHolder];
         self.placeHolder.font = [UIFont systemFontOfSize:14.0];
     }
-    [self.placeHolder setText:NSLocalizedString(@"input comment...", nil)];
+    [self.placeHolder setText:NSLocalizedString(@"Input Comment...", nil)];
 }
 
 - (void)unSetUpHintLabel

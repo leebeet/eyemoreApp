@@ -41,6 +41,7 @@
 #import "ConnectionStatusView.h"
 #import "SettingCamTableViewController.h"
 #import "RootNavigationController.h"
+#import "CamParasConverter.h"
 
 #define kscanShootTimeInterval 0.2
 #define kLanscapeDirection CGAffineTransformMakeRotation(- M_PI / 2);
@@ -158,14 +159,15 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self rotationObservingEnable];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     NSLog(@"view will disappear , stop timer, set camera mode to download mode");
+    [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     self.imgClient.syncLeavingFlag = self.imgClient.lastImageIndex;
-    //[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
     if (self.shootMode == LIVEVIEW_MODE || self.shootMode == RECORDING_MOVIE_MODE || self.shootMode == HD_RECORDING_MODE || self.shootMode == SELFIE_MODE) {
         [self.liveViewRecorder stopLiveViewing];
     }
@@ -203,11 +205,11 @@
     //初始化底部工具条
     [self setUpBottomBar];
     
-    //初始化滤镜bar
-    [self setUpDisplayToolView];
-    
     //初始化相机设置控件
     [self setUpParamsToolView];
+    
+    //初始化滤镜bar
+    [self setUpDisplayToolView];
 
     //初始化连接状态控件
     [self setUpStatusView];
@@ -451,6 +453,11 @@
     if (shouldExtend) {
         [UIView animateWithDuration:0.35f delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^(){
             self.menuToolButton.enabled = NO;
+            if (self.isFullScreen) {
+                self.paramsToolView.alpha = 1;
+                self.bottomBar.backgroundColor = [UIColor colorWithRed:20/255. green:20/255. blue:24/255. alpha:1];
+            }
+
             offsetY = self.displayToolView.frame.origin.y;
             self.toolBar.center = CGPointMake(self.toolBar.center.x, self.toolBar.center.y - offsetY);
             self.statusView.center = CGPointMake(self.statusView.center.x, self.statusView.center.y - offsetY);
@@ -463,6 +470,10 @@
     }
     else {
         [UIView animateWithDuration:0.35f delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^(){
+            if (self.isFullScreen) {
+                self.paramsToolView.alpha = 0;
+                self.bottomBar.backgroundColor = [UIColor colorWithRed:20/255. green:20/255. blue:24/255. alpha:0.3];
+            }
             self.menuToolButton.enabled = NO;
             self.toolBar.center = CGPointMake(self.toolBar.center.x, self.toolBar.center.y + offsetY);
             self.statusView.center = CGPointMake(self.statusView.center.x, self.statusView.center.y + offsetY);
@@ -482,7 +493,7 @@
     [self.liveViewRecorder startLiveViewing];
 }
 
-- (void)fullScreenButtonTapped:(id)sender
+- (void)fullScreenButtonTapped
 {
     if (self.isFullScreen) {
         [self updateUIWithPortait];
@@ -1494,7 +1505,7 @@
     if (lensStatus.iris_min_value && lensStatus.iris_max_value) {
         NSMutableArray *array = [[NSMutableArray alloc] init];
         for (int i = lensStatus.iris_min_value; i <= lensStatus.iris_max_value - 10; i ++) {
-            [array addObject:[self decodeLensValueWith:i]];
+            [array addObject:[CamParasConverter decodeLensValueWith:i]];
         }
         self.irisArray = array;
         self.irisMinValue = (NSUInteger)lensStatus.iris_min_value;
@@ -1608,8 +1619,7 @@
     self.wavePulser = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 3, 100)];
     self.wavePulser.backgroundColor = [UIColor clearColor];
     //CGPoint viewCenter = CGPointMake(self.displayToolView.frame.size.width / 2, (self.scrollSegmentView.frame.origin.y) / 2);
-    CGPoint viewCenter = CGPointMake(self.displayToolView.frame.size.width / 2, (self.segment.frame.origin.y) / 2 + 10);
-    self.wavePulser.center = viewCenter;
+    self.wavePulser.center = CGPointMake(self.displayToolView.frame.size.width / 2, self.displayToolView.frame.size.height / 2 + 10);;
     self.wavePulser.layer.cornerRadius = 50;//self.wavePulser.layer.bounds.size.width / 2;
     self.wavePulser.layer.borderColor = [[UIColor greenColor] CGColor];
     
@@ -1617,7 +1627,8 @@
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [imageView setImage:[UIImage imageNamed:@"logo_mid.png"]];
     [self.wavePulser addSubview:imageView];
-    [self.displayToolView insertSubview:self.wavePulser belowSubview:self.filterBar];
+    //[self.displayToolView insertSubview:self.wavePulser belowSubview:self.filterBar];
+    [self.displayToolView addSubview:self.wavePulser];
     
     self.animation = [JTWavePulser animationWithView:self.wavePulser];
     self.animation.pulseAnimationDuration = 1.0f;
@@ -1689,7 +1700,7 @@
 
 - (void)setUpStatusView
 {
-    float statusViewHeight = self.view.frame.size.height - self.toolBar.frame.size.height - self.displayToolView.frame.size.height - self.bottomBar.frame.size.height;
+    float statusViewHeight = self.view.frame.size.height - self.toolBar.frame.size.height - self.displayToolView.frame.size.height - self.bottomBar.frame.size.height - self.filterBar.frame.size.height - self.segment.frame.size.height;
     self.statusView = [[ConnectionStatusView alloc] initWithFrame:CGRectMake(0, self.toolBar.frame.size.height, self.view.frame.size.width, statusViewHeight)];
 //    __weak PulseWaveController *weakSelf = self;
 //    self.statusView.settingButtonTappedHandler = ^(BOOL isTapped){
@@ -1698,7 +1709,33 @@
 //        RootNavigationController *navi = [[RootNavigationController alloc] initWithRootViewController:controller];
 //        [weakSelf presentViewController:navi animated:YES completion:nil];
 //    };
-    [self.view addSubview:self.statusView];
+    [self.view insertSubview:self.statusView belowSubview:self.displayToolView];
+}
+
+
+- (void)setUpDisplayToolView
+{
+//    [self setUpScrollSegmentControl];
+//    //[self setUpSegmentControl];
+//    [self setUpFilterBar];
+    
+    //float paramsToolHeight = self.filterBar.frame.size.height + kLiveViewHeight + self.scrollSegmentView.frame.size.height;
+    //float paramsToolHeight = self.filterBar.frame.size.height + kLiveViewHeight + self.segment.frame.size.height;
+    float paramsToolHeight = kLiveViewHeight;
+    float paramsToolWidth  = self.view.frame.size.width;
+    
+    self.displayToolView = [[UIView alloc] initWithFrame:CGRectMake(0, self.paramsToolView.frame.origin.y - paramsToolHeight , paramsToolWidth, paramsToolHeight)];
+    self.displayToolView.backgroundColor = [UIColor colorWithRed:22/255. green:22/255. blue:26/255. alpha:1.0];
+    //self.scrollSegmentView.center = CGPointMake(paramsToolWidth / 2, kLiveViewHeight + self.scrollSegmentView.frame.size.height / 2);
+    //self.segment.center = CGPointMake(paramsToolWidth / 2, kLiveViewHeight + self.segment.frame.size.height / 2);
+    //[self.displayToolView addSubview:self.scrollSegmentView];
+    //[self.displayToolView addSubview:self.segment];
+    //self.filterBar.center = CGPointMake(paramsToolWidth / 2, paramsToolHeight - self.filterBar.frame.size.height / 2);
+    //[self.displayToolView addSubview:self.filterBar];
+    
+    [self setUpWavePulser];
+    [self.view insertSubview:self.displayToolView belowSubview:self.paramsToolView];
+    
 }
 
 - (void)setUpParamsToolView
@@ -1813,16 +1850,28 @@
         [irisLabel     setFont:[UIFont fontWithName:@"Trebuchet MS" size:17]];
     }
     
-    float paramsToolHeight = self.view.frame.size.height -  self.displayToolView.frame.size.height - self.bottomBar.frame.size.height;
-    float paramsToolWidth  = self.view.frame.size.width;
+    [self setUpScrollSegmentControl];
+    [self setUpFilterBar];
     
-    self.paramsToolView = [[UIView alloc] initWithFrame:CGRectMake(0, self.bottomBar.frame.origin.y , paramsToolWidth, paramsToolHeight)];
+    float paramsToolHeight = self.view.frame.size.height -  kLiveViewHeight - self.bottomBar.frame.size.height;
+    float paramsToolWidth  = self.view.frame.size.width;
+    float paramsToolHeightForHead = (self.filterBar.frame.size.height + self.segment.frame.size.height);
+    float paramsToolHeightForBody = paramsToolHeight - paramsToolHeightForHead;
+    
+    self.paramsToolView = [[UIView alloc] initWithFrame:CGRectMake(0, self.bottomBar.frame.origin.y - paramsToolHeightForHead , paramsToolWidth, paramsToolHeight)];
+    self.paramsToolView.backgroundColor = [UIColor colorWithRed:26/255. green:26/255. blue:30/255. alpha:1];
+    [self.paramsToolView addSubview:self.segment];
+    self.segment.center = CGPointMake(self.segment.center.x, self.segment.frame.size.height / 2);
+    [self.paramsToolView addSubview:self.filterBar];
+    self.filterBar.center = CGPointMake(self.filterBar.center.x, self.segment.frame.size.height + self.filterBar.frame.size.height / 2 );
+    
     [self.paramsToolView addSubview:frame];
-    frame.center  = CGPointMake(paramsToolWidth / 2, paramsToolHeight / 4 - 10);
+    frame.center  = CGPointMake(paramsToolWidth / 2, paramsToolHeightForHead + (paramsToolHeightForBody / 4 - 10));
     [self.paramsToolView addSubview:frame1];
-    frame1.center = CGPointMake(paramsToolWidth / 2, paramsToolHeight / 4 * 2);
+    frame1.center = CGPointMake(paramsToolWidth / 2, paramsToolHeightForHead + (paramsToolHeightForBody / 4 * 2));
     [self.paramsToolView addSubview:frame2];
-    frame2.center = CGPointMake(paramsToolWidth / 2, paramsToolHeight / 4 * 3 + 10);
+    frame2.center = CGPointMake(paramsToolWidth / 2, paramsToolHeightForHead + (paramsToolHeightForBody / 4 * 3 + 10));
+    
     [self.view insertSubview:self.paramsToolView belowSubview:self.bottomBar];
     
 }
@@ -2002,7 +2051,6 @@
             }
             self.debouncingFlag = 1;
         }
-        
     }];
 }
 
@@ -2014,8 +2062,6 @@
         CGAffineTransform at = kLanscapeDirection;
         [self.recordProgressBar setTransform:at];
         self.recordProgressBar.center = CGPointMake(1, self.view.frame.size.height / 2);
-        
-
     }
     self.recordProgressBar.progressViewStyle = UIProgressViewStyleDefault;
     self.recordProgressBar.progressTintColor = [UIColor redColor];
@@ -2070,13 +2116,13 @@
         [self.focusingCoordinateView addGestureRecognizer:tap];
         NSLog(@"gesturer : %@", tap);
     }
-//    if (self.fullScreenButton == nil) {
-//        self.fullScreenButton = [[UIButton alloc] initWithFrame:CGRectMake(self.focusingCoordinateView.frame.size.width - 30, 15, 30, 30)];
-//        self.fullScreenButton.alpha = 0.8;
-//        [self.fullScreenButton setImage:[UIImage imageNamed:@"screen_full.png"] forState:UIControlStateNormal];
-//        [self.fullScreenButton addTarget:self action:@selector(fullScreenButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-//    }
-//    [self.focusingCoordinateView addSubview:self.fullScreenButton];
+    if (self.fullScreenButton == nil) {
+        self.fullScreenButton = [[UIButton alloc] initWithFrame:CGRectMake(200, 200, 30, 30)];
+        self.fullScreenButton.alpha = 0.8;
+        [self.fullScreenButton setImage:[UIImage imageNamed:@"screen_full.png"] forState:UIControlStateNormal];
+        [self.fullScreenButton addTarget:self action:@selector(fullScreenButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    }
+    //[self.focusingCoordinateView addSubview:self.fullScreenButton];
 }
 
 - (void)setUpFocusingIndicator
@@ -2170,41 +2216,11 @@
     [self.filterBar setItems:arr1 animated:YES];
 }
 
-- (void)setUpDisplayToolView
-{
-    [self setUpScrollSegmentControl];
-    //[self setUpSegmentControl];
-    [self setUpFilterBar];
-    
-    //float paramsToolHeight = self.filterBar.frame.size.height + kLiveViewHeight + self.scrollSegmentView.frame.size.height;
-    float paramsToolHeight = self.filterBar.frame.size.height + kLiveViewHeight + self.segment.frame.size.height;
-    float paramsToolWidth  = self.view.frame.size.width;
-    
-    self.displayToolView = [[UIView alloc] initWithFrame:CGRectMake(0, self.bottomBar.frame.origin.y - paramsToolHeight , paramsToolWidth, paramsToolHeight)];
-    self.displayToolView.backgroundColor = [UIColor colorWithRed:22/255. green:22/255. blue:26/255. alpha:1.0];
-    //self.scrollSegmentView.center = CGPointMake(paramsToolWidth / 2, kLiveViewHeight + self.scrollSegmentView.frame.size.height / 2);
-    self.segment.center = CGPointMake(paramsToolWidth / 2, kLiveViewHeight + self.segment.frame.size.height / 2);
-    //[self.displayToolView addSubview:self.scrollSegmentView];
-    [self.displayToolView addSubview:self.segment];
-    self.filterBar.center = CGPointMake(paramsToolWidth / 2, paramsToolHeight - self.filterBar.frame.size.height / 2);
-    [self.displayToolView addSubview:self.filterBar];
-    
-    [self setUpWavePulser];
-    [self.view addSubview:self.displayToolView];
-
-}
-
 - (void)setUpSelectedFrameOnView:(UIView *)view
 {
     [self.selectedFrame removeFromSuperview];
     if (self.selectedFrame == nil) {
         self.selectedFrame = [[UIView alloc] initWithFrame:CGRectMake(0, view.frame.size.height - view.frame.size.height / 2.8, view.frame.size.width, view.frame.size.height / 2.8)];
-        //[self.selectedFrame.layer setCornerRadius:1];
-        //[self.selectedFrame.layer setBorderWidth:2];
-        //[self.selectedFrame.layer setBorderColor:[UIColor redColor].CGColor];
-        //[self setUpShadowWithView:self.selectedFrame];
-        //self.selectedFrame.layer.masksToBounds = YES;
-        //self.selectedFrame.clipsToBounds = YES;
         self.selectedFrame.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.9];
     }
     [view insertSubview:self.selectedFrame atIndex:1];
@@ -2267,18 +2283,18 @@
 
 - (void)setUpHideButton
 {
-    if (self.hideButton == nil) {
-        self.hideButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-        self.hideButton.center = CGPointMake(20, self.view.frame.size.height / 2);
-        self.hideButton.alpha = 0.7;
-        self.hideButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
-        [self setUpShadowWithView:self.hideButton];
-        [self.hideButton setImage:[UIImage imageNamed:@"visibleView"] forState:UIControlStateNormal];
-        [self.hideButton addTarget:self action:@selector(updateUIWithHiden) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:self.hideButton];
-        CGAffineTransform at = kLanscapeDirection;
-        [self.hideButton setTransform:at];
-    }
+//    if (self.hideButton == nil) {
+//        self.hideButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+//        self.hideButton.center = CGPointMake(20, self.view.frame.size.height / 2);
+//        self.hideButton.alpha = 0.7;
+//        self.hideButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
+//        [self setUpShadowWithView:self.hideButton];
+//        [self.hideButton setImage:[UIImage imageNamed:@"visibleView"] forState:UIControlStateNormal];
+//        [self.hideButton addTarget:self action:@selector(updateUIWithHiden) forControlEvents:UIControlEventTouchUpInside];
+//        [self.view addSubview:self.hideButton];
+//        CGAffineTransform at = kLanscapeDirection;
+//        [self.hideButton setTransform:at];
+//    }
 }
 
 - (void)showCanvasAnimation
@@ -2290,12 +2306,14 @@
         CGAffineTransform at = kLanscapeDirection;
         [self.canvas setTransform:at];
         self.canvas.frame = self.view.frame;
-        
+        [self.view addSubview:self.canvas];
     }
-    else self.canvas.frame = CGRectMake(self.liveView.frame.origin.x, self.liveView.frame.origin.y, self.view.bounds.size.width, kLiveViewHeight);
+    else {
+        self.canvas.frame = CGRectMake(self.liveView.frame.origin.x, self.liveView.frame.origin.y, self.view.bounds.size.width, kLiveViewHeight);
+        [self.displayToolView addSubview:self.canvas];
+    }
     
     self.canvas.alpha = 0.0;
-    [self.displayToolView addSubview:self.canvas];
     [BLAnimation revealView:self.canvas WithBLAnimation:BLEffectFadeIn completion:^(BOOL finish){
         [BLAnimation revealView:self.canvas WithBLAnimation:BLEffectFadeOut completion:^(BOOL finish){
             [self.canvas removeFromSuperview];
@@ -2658,10 +2676,13 @@
                          //[self.toolBar setTransform:at];
                          //self.toolBar.center = CGPointMake(26, self.view.frame.size.height / 2);
                          [self.fullScreenButton setImage:[UIImage imageNamed:@"screen_normal.png"] forState:UIControlStateNormal];
+                         
                          self.toolBar.alpha = 1;
                          self.toolBar.backgroundColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:0.3];
-                         self.bottomBar.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:0.3];
+                         self.paramsToolView.alpha = 0;
+                         self.bottomBar.backgroundColor = [UIColor colorWithRed:20/255. green:20/255. blue:24/255. alpha:0.3];
                          
+                         [self.view insertSubview:self.liveView belowSubview:self.paramsToolView];
                          [self.liveView setTransform:at];
                          self.liveView.center = self.view.center;
                          self.liveView.frame = self.view.frame;
@@ -2686,8 +2707,8 @@
                          //[self.view bringSubviewToFront:self.takeButton];
                          //[self.view bringSubviewToFront:self.toolBar];
                          [self.view bringSubviewToFront:self.bottomBar];
-                         [self.view insertSubview:self.liveView belowSubview:self.bottomBar];
-                         [self.view insertSubview:self.focusingCoordinateView belowSubview:self.bottomBar];
+                         //[self.view insertSubview:self.liveView belowSubview:self.bottomBar];
+                         [self.view insertSubview:self.focusingCoordinateView belowSubview:self.paramsToolView];
                          [self.view insertSubview:self.toolBar belowSubview:self.bottomBar];
                          
                          
@@ -2716,17 +2737,19 @@
                          [self.fullScreenButton setImage:[UIImage imageNamed:@"screen_full.png"] forState:UIControlStateNormal];
                          self.toolBar.alpha = 1;
                          self.toolBar.backgroundColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1];
-                         self.bottomBar.backgroundColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
+                         self.paramsToolView.alpha = 1;
+                         self.bottomBar.backgroundColor = [UIColor colorWithRed:20/255. green:20/255. blue:24/255. alpha:1];
                          
+                         [self.displayToolView addSubview:self.liveView];
                          [self.liveView setTransform:at];
-                         self.liveView.center = self.view.center;
-                         self.liveView.frame = CGRectMake(0, 42, self.view.bounds.size.width, self.view.frame.size.height / 3 * 1 );
+                         self.liveView.frame = CGRectMake(0, 0, self.view.bounds.size.width, kLiveViewHeight);
                          self.liveView.alpha = 1;
                          
+                         [self.displayToolView addSubview:self.focusingCoordinateView];
                          [self.focusingIndicator setTransform:at];
                          [self.focusingCoordinateView setTransform:at];
                          self.focusingCoordinateView.center = self.view.center;
-                         self.focusingCoordinateView.frame = CGRectMake(0, 42, self.view.bounds.size.width, self.view.frame.size.height / 3 * 1 );
+                         self.focusingCoordinateView.frame = CGRectMake(self.liveView.frame.origin.x, self.liveView.frame.origin.y, self.view.bounds.size.width, kLiveViewHeight);
 
                          //self.detailButton.center = CGPointMake(self.view.frame.size.width / 6.5 * 1, self.view.frame.size.height / 10 * 9.4);
                          [self.detailButton setTransform:at];
@@ -2866,13 +2889,70 @@
 }
 #pragma mark - Rotation Setting
 
+- (void)rotationObservingEnable
+{
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:@"UIDeviceOrientationDidChangeNotification" object:nil];
+    [self deviceOrientationDidChange];    
+}
+
+- (void)deviceOrientationDidChange
+{
+    switch ([UIDevice currentDevice].orientation) {
+        case UIDeviceOrientationFaceUp:
+            NSLog(@"螢幕朝上平躺");
+            if (self.view.center.x > self.view.center.y) {
+                if (self.shootMode == LIVEVIEW_MODE) {
+                     [self updateUIWithLanscape];
+                }
+            }
+            break;
+            
+        case UIDeviceOrientationFaceDown:
+            NSLog(@"螢幕朝下平躺");
+            break;
+            
+            //系統無法判斷目前Device的方向，有可能是斜置
+        case UIDeviceOrientationUnknown:
+            NSLog(@"未知方向");
+            break;
+            
+        case UIDeviceOrientationLandscapeLeft:
+            NSLog(@"螢幕向左橫置");
+            break;
+            
+        case UIDeviceOrientationLandscapeRight:
+            NSLog(@"螢幕向右橫置");
+            if (self.shootMode == LIVEVIEW_MODE) {
+                [self updateUIWithLanscape];
+            }
+            break;
+            
+        case UIDeviceOrientationPortrait:
+            NSLog(@"螢幕直立");
+            if (self.shootMode == LIVEVIEW_MODE) {
+                [self updateUIWithPortait];
+            }
+            break;
+            
+        case UIDeviceOrientationPortraitUpsideDown:
+            NSLog(@"螢幕直立，上下顛倒");
+            break;
+            
+        default:
+            NSLog(@"無法辨識");
+            break;
+    }
+}
+
+
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
 
     return UIInterfaceOrientationMaskPortrait;
 }
 - (BOOL)shouldAutorotate
 {
-    return NO;
+    return YES;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
@@ -3196,302 +3276,5 @@
     if (value == self.irisMinValue + 7 * 2) return -6;
     else return 1;
 }
-#pragma mark - recode value
-
-- (LENS_EXPOSURE_VALUE)recodeLensExposureValueWith:(NSString *)string
-{
-    if ([string isEqualToString:@"-5.0"]) return 0;
-    
-    if ([string isEqualToString:@"-4.0"]) return 1;
-    
-    if ([string isEqualToString:@"-3.0"]) return 2;
-    
-    if ([string isEqualToString:@"-2.0"]) return 3;
-    
-    if ([string isEqualToString:@"-1.0"]) return 4;
-    
-    if ([string isEqualToString:@"0.0"]) return 5;
-    
-    if ([string isEqualToString:@"1.0"]) return 6;
-    
-    if ([string isEqualToString:@"2.0"]) return 7;
-    
-    if ([string isEqualToString:@"3.0"]) return 8;
-    
-    if ([string isEqualToString:@"4.0"]) return 9;
-    
-    if ([string isEqualToString:@"5.0"]) return 10;
-    
-    else return 11;
-    
-}
-
-
-- (LENS_SHUTTER_VALUE)recodeLensShutterValue:(NSString *)string
-{
-    if ([string isEqualToString:@"1/25"]) return 1;
-    
-    if ([string isEqualToString:@"1/50"]) return 2;
-    
-    if ([string isEqualToString:@"1/75"]) return 3;
-    
-    if ([string isEqualToString:@"1/100"]) return 4;
-    
-    if ([string isEqualToString:@"1/125"]) return 5;
-    
-    if ([string isEqualToString:@"1/150"]) return 6;
-    
-    if ([string isEqualToString:@"1/200"]) return 7;
-    
-    if ([string isEqualToString:@"1/500"]) return 8;
-    
-    if ([string isEqualToString:@"1/1000"]) return 9;
-    
-    if ([string isEqualToString:@"1/2000"]) return 10;
-    
-    if ([string isEqualToString:@"1/4000"]) return 11;
-    
-    if ([string isEqualToString:@"1/8000"]) return 12;
-    
-    else return 0;
-}
-
-- (LENS_IRIS_VALE)recodeLensValueWith:(NSString *)string
-{
-    if ([string isEqualToString:@"F1.2"])   return 0;
-    
-    if ([string isEqualToString:@"F1.4"])   return 1;
-    
-    if ([string isEqualToString:@"F1.7"])   return 2;
-    
-    if ([string isEqualToString:@"F1.8"])   return 3;
-    
-    if ([string isEqualToString:@"F2.0"])   return 4;
-    
-    if ([string isEqualToString:@"F2.2"])   return 5;
-    
-    if ([string isEqualToString:@"F2.5"])   return 6;
-    
-    if ([string isEqualToString:@"F2.8"])   return 7;
-    
-    if ([string isEqualToString:@"F3.2"])   return 8;
-    
-    if ([string isEqualToString:@"F3.5"])   return 9;
-    
-    if ([string isEqualToString:@"F4.0"])   return 10;
-    
-    if ([string isEqualToString:@"F4.5"])   return 11;
-    
-    if ([string isEqualToString:@"F5.0"])   return 12;
-    
-    if ([string isEqualToString:@"F5.6"])   return 13;
-    
-    if ([string isEqualToString:@"F6.3"])   return 14;
-    
-    if ([string isEqualToString:@"F7.1"])   return 15;
-    
-    if ([string isEqualToString:@"F8.0"])   return 16;
-    
-    if ([string isEqualToString:@"F9.0"])   return 17;
-    
-    if ([string isEqualToString:@"F10.0"])  return 18;
-    
-    if ([string isEqualToString:@"F11.0"])  return 19;
-    
-    if ([string isEqualToString:@"F13.0"])  return 20;
-    
-    if ([string isEqualToString:@"F14.0"])  return 21;
-    
-    if ([string isEqualToString:@"F16.0"])  return 22;
-    
-    if ([string isEqualToString:@"F18.0"])  return 23;
-    
-    if ([string isEqualToString:@"F20.0"])  return 24;
-    
-    if ([string isEqualToString:@"F22.0"])  return 25;
-    
-    else return 26;
-    
-}
-
-- (NSString *)decodeLensShutterValueWith:(int)shutter
-{
-    switch (shutter) {
-        case 1:
-            return @"1/25";
-            break;
-        case 2:
-            return @"1/50";
-            break;
-        case 3:
-            return @"1/75";
-            break;
-        case 4:
-            return @"1/100";
-            break;
-        case 5:
-            return @"1/125";
-            break;
-        case 6:
-            return @"1/150";
-            break;
-        case 7:
-            return @"1/200";
-            break;
-        case 8:
-            return @"1/500";
-            break;
-        case 9:
-            return @"1/1000";
-            break;
-        case 10:
-            return @"1/2000";
-            break;
-        case 11:
-            return @"1/4000";
-            break;
-        case 12:
-            return @"1/8000";
-            break;
-            
-        default:
-            return @"unknow";
-            break;
-    }
-}
-
-- (NSString *)decodeLensExposureValueWith:(int)exposure
-{
-    switch (exposure) {
-        case 0:
-            return @"-5.0";
-            break;
-        case 1:
-            return @"-4.0";
-            break;
-        case 2:
-            return @"-3.0";
-            break;
-        case 3:
-            return @"-2.0";
-            break;
-        case 4:
-            return @"-1.0";
-            break;
-        case 5:
-            return @"0.0";
-            break;
-        case 6:
-            return @"1.0";
-            break;
-        case 7:
-            return @"2.0";
-            break;
-        case 8:
-            return @"3.0";
-            break;
-        case 9:
-            return @"4.0";
-            break;
-        case 10:
-            return @"5.0";
-            break;
-            
-        default:
-            return @"unknown";
-            break;
-    }
-}
-
-
-- (NSString *)decodeLensValueWith:(int)iris
-{
-    switch (iris) {
-            
-        case 0:
-            return @"F1.2";
-            break;
-        case 1:
-            return @"F1.4";
-            break;
-        case 2:
-            return @"F1.7";
-            break;
-        case 3:
-            return @"F1.8";
-            break;
-        case 4:
-            return @"F2.0";
-            break;
-        case 5:
-            return @"F2.2";
-            break;
-        case 6:
-            return @"F2.5";
-            break;
-        case 7:
-            return @"F2.8";
-            break;
-        case 8:
-            return @"F3.2";
-            break;
-        case 9:
-            return @"F3.5";
-            break;
-        case 10:
-            return @"F4.0";
-            break;
-        case 11:
-            return @"F4.5";
-            break;
-        case 12:
-            return @"F5.0";
-            break;
-        case 13:
-            return @"F5.6";
-            break;
-        case 14:
-            return @"F6.3";
-            break;
-        case 15:
-            return @"F7.1";
-            break;
-        case 16:
-            return @"F8.0";
-            break;
-        case 17:
-            return @"F9.0";
-            break;
-        case 18:
-            return @"F10.0";
-            break;
-        case 19:
-            return @"F11.0";
-            break;
-        case 20:
-            return @"F13.0";
-            break;
-        case 21:
-            return @"F14.0";
-            break;
-        case 22:
-            return @"F16.0";
-            break;
-        case 23:
-            return @"F18.0";
-            break;
-        case 24:
-            return @"F20.0";
-            break;
-        case 25:
-            return @"F22.0";
-            break;
-            
-        default:
-            return @"unknown";
-            break;
-    }
-}
-
 
 @end

@@ -584,6 +584,10 @@
 //定义每个Item 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    //iPad界面优化
+    if ([[UIScreen mainScreen] bounds].size.width == 768) {
+        return CGSizeMake(150, 150);
+    }
     //6p,6sp界面优化
     if ([[UIScreen mainScreen] bounds].size.width == 414) {
         return CGSizeMake(102, 102);

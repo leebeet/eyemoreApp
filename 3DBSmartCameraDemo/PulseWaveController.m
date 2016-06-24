@@ -1616,14 +1616,20 @@
 - (void)setUpWavePulser
 {
     //初始化wave动画效果
-    self.wavePulser = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 3, 100)];
+    //6p,6sp界面优化
+    if ([[UIScreen mainScreen] bounds].size.width == 768) {
+        self.wavePulser = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 3, 65)];
+    }
+    else {
+        self.wavePulser = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 3, 100)];
+    }
     self.wavePulser.backgroundColor = [UIColor clearColor];
     //CGPoint viewCenter = CGPointMake(self.displayToolView.frame.size.width / 2, (self.scrollSegmentView.frame.origin.y) / 2);
     self.wavePulser.center = CGPointMake(self.displayToolView.frame.size.width / 2, self.displayToolView.frame.size.height / 2 + 10);;
     self.wavePulser.layer.cornerRadius = 50;//self.wavePulser.layer.bounds.size.width / 2;
     self.wavePulser.layer.borderColor = [[UIColor greenColor] CGColor];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 3, 100)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.wavePulser.frame.size.width, self.wavePulser.frame.size.height)];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [imageView setImage:[UIImage imageNamed:@"logo_mid.png"]];
     [self.wavePulser addSubview:imageView];
@@ -1827,6 +1833,14 @@
     self.irisSlider.maxLabelColour  = [UIColor redColor];
     self.irisSlider.tintColor       = [UIColor redColor];
     [frame2 addSubview:self.irisSlider];
+    
+    //iPAD界面优化
+    if ([[UIScreen mainScreen] bounds].size.width == 768) {
+        self.exposureSlider.frame = CGRectMake(self.exposureSlider.frame.origin.x, self.exposureSlider.frame.origin.y, frame.frame.size.width - 120, 70);
+        self.shutterSlider.frame = CGRectMake(self.shutterSlider.frame.origin.x, self.shutterSlider.frame.origin.y, frame.frame.size.width - 120, 70);
+        self.irisSlider.frame = CGRectMake(self.irisSlider.frame.origin.x, self.irisSlider.frame.origin.y, frame.frame.size.width - 120, 70);
+        
+    }
     
     //6p,6sp界面优化
     if ([[UIScreen mainScreen] bounds].size.width == 414) {
@@ -2136,6 +2150,10 @@
 {
     float filterbarItmeWidth = self.view.frame.size.width / 3 - 2;
     float filterbarHeight= 0.651 * filterbarItmeWidth;
+    //iPad界面优化
+    if ([[UIScreen mainScreen] bounds].size.width == 768) {
+        filterbarHeight= 0.6 * filterbarItmeWidth;
+    }
     self.filterBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, filterbarHeight)];
     [self.filterBar setTranslucent:NO];
     self.filterBar.barTintColor = [UIColor colorWithRed:20/255.0 green:20/255.0 blue:24/255.0 alpha:1];
@@ -2194,6 +2212,15 @@
 //    [presetsSecondFilter addTarget:self action:@selector(filterBarItemTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *fixedCenter = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    
+    //iPad界面优化
+    if ([[UIScreen mainScreen] bounds].size.width == 768) {
+        fixedCenter.width = - 20;
+        defaultFilter.titleLabel.font = [UIFont systemFontOfSize:15];
+        BWFilter.titleLabel.font = [UIFont systemFontOfSize:15];
+        presetFilter.titleLabel.font = [UIFont systemFontOfSize:15];
+    }
+    
     //6p,6sp界面优化
     if ([[UIScreen mainScreen] bounds].size.width == 414) {
         fixedCenter.width = - 20;
@@ -2254,6 +2281,12 @@
         }
         //6,6s界面优化
         if ([[UIScreen mainScreen] bounds].size.width == 375) {
+            fixedCenter.width = 0;
+            //初始化底部工具条
+            self.bottomBar = [[CustomedToolBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height / 10 * 9 - 35, self.view.frame.size.width, self.view.frame.size.height / 10 * 1.0 + 35)];
+        }
+        //iPad界面优化
+        if ([[UIScreen mainScreen] bounds].size.width == 768) {
             fixedCenter.width = 0;
             //初始化底部工具条
             self.bottomBar = [[CustomedToolBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height / 10 * 9 - 35, self.view.frame.size.width, self.view.frame.size.height / 10 * 1.0 + 35)];

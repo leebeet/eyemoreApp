@@ -27,6 +27,19 @@
         float iconWidth = frame.size.width;
         float iconHeight = frame.size.height;
         
+        
+        self.connectState = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        self.connectState.center = CGPointMake(frame.size.width / 2, frame.size.height / 4 * 2.71);
+        self.connectState.contentMode = UIViewContentModeScaleAspectFit;
+        [self.connectState setImage:[UIImage imageNamed:@"connected_check"]];
+        
+        //iPad界面优化
+        if ([[UIScreen mainScreen] bounds].size.width == 768) {
+            iconWidth = frame.size.width - 120;
+            iconHeight = frame.size.height - 60;
+            self.connectState.center = CGPointMake(frame.size.width / 2, frame.size.height / 4 * 3.35);
+        }
+        
 //        self.deviceIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, iconWidth, iconHeight)];
 //        self.deviceIcon.center = CGPointMake(iconWidth + iconWidth / 2, frame.size.height / 2);
 //        self.deviceIcon.contentMode = UIViewContentModeScaleAspectFit;
@@ -57,13 +70,10 @@
         self.connectionChartView.center = CGPointMake(frame.size.width / 2, frame.size.height / 2 - 22);
         self.connectionChartView.contentMode = UIViewContentModeScaleAspectFill;
         [self.connectionChartView setImage:[UIImage imageNamed:@"img_connect.png"]];
-        [self addSubview:self.connectionChartView];
         
-        self.connectState = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        self.connectState.center = CGPointMake(frame.size.width / 2, frame.size.height / 4 * 2.71);
-        self.connectState.contentMode = UIViewContentModeScaleAspectFit;
-        [self.connectState setImage:[UIImage imageNamed:@"connected_check"]];
+        [self addSubview:self.connectionChartView];
         [self addSubview:self.connectState];
+
         
 //        self.battIndicator = [[BLBatteryView alloc] initWithFrame:CGRectMake(0, 0, 30, 15)];
 //        CGAffineTransform rotate = CGAffineTransformMakeRotation(-M_PI/2.0f);

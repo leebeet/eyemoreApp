@@ -84,7 +84,7 @@
                             </navigationBar>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ImH-bl-Oqy">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.094117647060000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="1hE-pX-Cwl">
                                         <variation key="heightClass=regular-widthClass=compact" constant="210"/>
@@ -105,7 +105,7 @@
                                 </variation>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" red="0.078431372549019607" green="0.078431372549019607" blue="0.094117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.10196078431372549" green="0.10196078431372549" blue="0.11764705882352941" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="xrX-3b-cVg" firstAttribute="top" secondItem="vwB-CH-Ilf" secondAttribute="bottom" id="3Qb-N7-9Xc"/>
                             <constraint firstItem="ImH-bl-Oqy" firstAttribute="top" secondItem="pPD-oy-SOQ" secondAttribute="bottom" constant="8" id="AbO-Nm-C2D"/>

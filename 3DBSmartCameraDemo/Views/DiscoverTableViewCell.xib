@@ -25,17 +25,6 @@
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wPf-l8-2F9">
-                        <rect key="frame" x="282" y="12" width="30" height="28"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="28" id="csj-f5-7JL"/>
-                            <constraint firstAttribute="width" constant="30" id="xRS-lA-AAy"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <state key="normal" title="•••">
-                            <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
-                        </state>
-                    </button>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h4p-Wp-HBd">
                         <rect key="frame" x="0.0" y="52" width="320" height="181"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -48,8 +37,9 @@
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-2"/>
                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-4" maxY="0.0"/>
-                        <state key="normal" image="comment.png">
+                        <state key="normal" image="commentBlog.png">
                             <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                     </button>
@@ -73,7 +63,7 @@
                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
                         <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-5" maxY="0.0"/>
-                        <state key="normal" image="like.png">
+                        <state key="normal" image="likeBlog.png">
                             <color key="titleColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                     </button>
@@ -142,12 +132,22 @@
                         <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wPf-l8-2F9">
+                        <rect key="frame" x="144" y="267" width="28" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="F1q-a2-CIu"/>
+                            <constraint firstAttribute="width" constant="28" id="S96-5E-Ogi"/>
+                        </constraints>
+                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <state key="normal" image="shareBlog.png"/>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="PvC-Dx-t0a" secondAttribute="trailing" constant="7" id="07a-8j-9gA"/>
                     <constraint firstItem="h4p-Wp-HBd" firstAttribute="top" secondItem="cEU-mI-IuN" secondAttribute="bottom" constant="8" id="1s7-y5-aot"/>
                     <constraint firstItem="SXF-B3-hv1" firstAttribute="top" secondItem="Gdg-IS-AuU" secondAttribute="bottom" constant="8" id="3tO-sm-HQw"/>
                     <constraint firstItem="urL-Ra-rKh" firstAttribute="leading" secondItem="cEU-mI-IuN" secondAttribute="trailing" constant="8" id="6Yo-ev-7yx"/>
+                    <constraint firstItem="wPf-l8-2F9" firstAttribute="leading" secondItem="Gdg-IS-AuU" secondAttribute="trailing" constant="8" id="6bG-ju-0JS"/>
                     <constraint firstItem="HS8-aB-LC9" firstAttribute="top" secondItem="PvC-Dx-t0a" secondAttribute="bottom" constant="1" id="6yU-aP-sjC"/>
                     <constraint firstAttribute="bottomMargin" secondItem="SXF-B3-hv1" secondAttribute="bottom" constant="-9" id="BWv-zG-h8B"/>
                     <constraint firstItem="KWa-CD-yY7" firstAttribute="leading" secondItem="cEU-mI-IuN" secondAttribute="trailing" constant="8" id="CSq-gh-pAl"/>
@@ -162,9 +162,8 @@
                     <constraint firstItem="PvC-Dx-t0a" firstAttribute="top" secondItem="h4p-Wp-HBd" secondAttribute="bottom" constant="8" id="UvH-zt-3xn"/>
                     <constraint firstItem="PvC-Dx-t0a" firstAttribute="leading" secondItem="iMe-hK-zAC" secondAttribute="leadingMargin" constant="7" id="Zq4-Wi-LY6"/>
                     <constraint firstItem="KWa-CD-yY7" firstAttribute="top" secondItem="iMe-hK-zAC" secondAttribute="topMargin" constant="12" id="a41-LP-iaG"/>
-                    <constraint firstItem="wPf-l8-2F9" firstAttribute="top" secondItem="iMe-hK-zAC" secondAttribute="topMargin" constant="4" id="ftX-BH-fYo"/>
                     <constraint firstAttribute="bottomMargin" secondItem="vaW-6i-SbA" secondAttribute="bottom" constant="4" id="ibN-9U-35M"/>
-                    <constraint firstItem="wPf-l8-2F9" firstAttribute="trailing" secondItem="iMe-hK-zAC" secondAttribute="trailingMargin" id="jwh-7e-Wqe"/>
+                    <constraint firstItem="SXF-B3-hv1" firstAttribute="top" secondItem="wPf-l8-2F9" secondAttribute="bottom" constant="6" id="jWa-gW-Lyg"/>
                     <constraint firstItem="Gdg-IS-AuU" firstAttribute="leading" secondItem="5q5-8T-ReK" secondAttribute="trailing" constant="1" id="lfC-OY-Hwa"/>
                     <constraint firstItem="5q5-8T-ReK" firstAttribute="leading" secondItem="HS8-aB-LC9" secondAttribute="trailing" constant="2" id="q57-cS-jPf"/>
                     <constraint firstItem="h4p-Wp-HBd" firstAttribute="leading" secondItem="iMe-hK-zAC" secondAttribute="leadingMargin" constant="-8" id="vPg-FP-49E"/>
@@ -190,8 +189,9 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="comment.png" width="12" height="12"/>
-        <image name="like.png" width="12" height="12"/>
+        <image name="commentBlog.png" width="16" height="14"/>
+        <image name="likeBlog.png" width="16" height="16"/>
+        <image name="shareBlog.png" width="16" height="14"/>
         <image name="user_male.png" width="256" height="256"/>
     </resources>
 </document>

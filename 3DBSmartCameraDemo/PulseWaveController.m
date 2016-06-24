@@ -2693,21 +2693,14 @@
                          self.focusingCoordinateView.center = self.view.center;
                          self.focusingCoordinateView.frame = self.view.frame;
                          
-                         //self.detailButton.center = CGPointMake(self.view.frame.size.width / 6.5 * 1, self.view.frame.size.height / 10 * 9.2);
                          [self.detailButton setTransform:at];
                          self.detailButton.alpha = 1;
                          [self.menuToolButton setTransform:at];
                          self.menuToolButton.alpha = 1;
-                         //self.borderButton.alpha = 1;
                          self.takeButton.alpha = 1;
                          
-                         //[self.view bringSubviewToFront:self.detailButton];
-                         //[self.view bringSubviewToFront:self.resetButton];
-                         [self.view bringSubviewToFront:self.borderButton];
-                         //[self.view bringSubviewToFront:self.takeButton];
-                         //[self.view bringSubviewToFront:self.toolBar];
+                         [self.view bringSubviewToFront:self.borderButton];;
                          [self.view bringSubviewToFront:self.bottomBar];
-                         //[self.view insertSubview:self.liveView belowSubview:self.bottomBar];
                          [self.view insertSubview:self.focusingCoordinateView belowSubview:self.paramsToolView];
                          [self.view insertSubview:self.toolBar belowSubview:self.bottomBar];
                          
@@ -2919,6 +2912,9 @@
             
         case UIDeviceOrientationLandscapeLeft:
             NSLog(@"螢幕向左橫置");
+            if (self.shootMode == LIVEVIEW_MODE) {
+                [self updateUIWithLanscape];
+            }
             break;
             
         case UIDeviceOrientationLandscapeRight:
@@ -2930,7 +2926,7 @@
             
         case UIDeviceOrientationPortrait:
             NSLog(@"螢幕直立");
-            if (self.shootMode == LIVEVIEW_MODE) {
+            if (self.isFullScreen == YES) {
                 [self updateUIWithPortait];
             }
             break;

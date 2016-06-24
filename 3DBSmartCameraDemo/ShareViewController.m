@@ -28,13 +28,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+    //[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
 }
 
 - (void)viewDidLoad {
@@ -55,7 +55,7 @@
 
 - (void)setUpImageView
 {
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 74, 100, 100)];
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 54, 100, 100)];
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.imageView setImage:[UIImage imageWithData:self.uploadData]];
     [self.view addSubview:self.imageView];

@@ -15,6 +15,7 @@
 #import "AFNetworking.h"
 #import "JGActionSheet.h"
 #import "SocialRequestAssistant.h"
+#import "ActionSheetHelper.h"
 
 static NSString *kNewsCellID = @"NewsCell";
 static NSString *kCommentCellID = @"CommentCell";

@@ -325,7 +325,6 @@
         result = nextResponder;
     else
         result = window.rootViewController;
-    
     return result;
 }
 

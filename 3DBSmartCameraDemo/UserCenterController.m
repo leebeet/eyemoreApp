@@ -23,6 +23,7 @@
 #import "ImageAlbumManager.h"
 #import "JTSImageViewController.h"
 #import "SocialRequestAssistant.h"
+#import "ActionSheetHelper.h"
 
 static NSString *kNewsCellID = @"NewsCell";
 static NSString *kFollowCellID = @"FollowersCell";
@@ -654,54 +655,56 @@ static CGFloat   kfixedPartHeight = 123.0;
 
 - (void)didTappedMoreButtonOnCell:(DiscoverTableViewCell *)cell
 {
-    NSArray *array = [[NSArray alloc] init];
-    if (cell.userID == [Config getOwnID]) {
-        array = @[NSLocalizedString(@"Share with Wechat friends", nil),
-                  NSLocalizedString(@"Share with Wechat time line", nil),
-                  NSLocalizedString(@"Share with QQ friends", nil),
-                  NSLocalizedString(@"Delete", nil)];
-    }
-    else{
-        array = @[NSLocalizedString(@"Share with Wechat friends", nil),
-                  NSLocalizedString(@"Share with Wechat time line", nil),
-                  NSLocalizedString(@"Share with QQ friends", nil),];
-    }
-    JGActionSheetSection *section1 = [JGActionSheetSection sectionWithTitle:@"" message:@"" buttonTitles:array buttonStyle:JGActionSheetButtonStyleCustomer];
-    NSLog(@"array section: %@", array);
-    JGActionSheetSection *cancelSection = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"取消"] buttonStyle:JGActionSheetButtonStyleCustomer];
-    NSArray *sections = @[section1, cancelSection];
-    JGActionSheet *actionSheet = [JGActionSheet actionSheetWithSections:sections];
-    
-    __weak JGActionSheet *weakSelfAction = actionSheet;
-    [actionSheet setOutsidePressBlock:^(JGActionSheet *sheet){
-        [weakSelfAction dismissAnimated:YES];
-    }];
-    [actionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *sheetIndexPath) {
-        if (sheetIndexPath.section == 0 && sheetIndexPath.row == 0) {
-            NSLog(@"sharing with wechat friend tapped");
-            [SocialRequestAssistant shareImage:cell.postImage.image onPlatForm:SSDKPlatformSubTypeWechatSession];
-        }
-        else if (sheetIndexPath.section == 0 && sheetIndexPath.row == 1) {
-            [SocialRequestAssistant shareImage:cell.postImage.image onPlatForm:SSDKPlatformSubTypeWechatTimeline];
-        }
-        
-        else if (sheetIndexPath.section == 0 && sheetIndexPath.row == 2) {
-            [SocialRequestAssistant shareImage:cell.postImage.image onPlatForm:SSDKPlatformSubTypeQQFriend];
-        }
-        
-        if (sheetIndexPath.section == 0 && sheetIndexPath.row == 3) {
-            [SocialRequestAssistant requestDeleteBlogWithID:cell.blogID
-                                                    success:^(NSURLSessionDataTask *task, id responseObject){
-                                                        [self.navigationController popViewControllerAnimated:YES];
-                                                        [[NSNotificationCenter defaultCenter] postNotificationName:eyemoreDeleteBlogNoti object:nil];
-                                                    }
-                                                    failure:nil];
-        }
-        [weakSelfAction dismissAnimated:YES];
-    }];
-    if (!actionSheet.isVisible) {
-        [actionSheet showInView:self.view animated:YES];
-    }}
+//    NSArray *array = [[NSArray alloc] init];
+//    if (cell.userID == [Config getOwnID]) {
+//        array = @[NSLocalizedString(@"Share with Wechat friends", nil),
+//                  NSLocalizedString(@"Share with Wechat time line", nil),
+//                  NSLocalizedString(@"Share with QQ friends", nil),
+//                  NSLocalizedString(@"Delete", nil)];
+//    }
+//    else{
+//        array = @[NSLocalizedString(@"Share with Wechat friends", nil),
+//                  NSLocalizedString(@"Share with Wechat time line", nil),
+//                  NSLocalizedString(@"Share with QQ friends", nil),];
+//    }
+//    JGActionSheetSection *section1 = [JGActionSheetSection sectionWithTitle:@"" message:@"" buttonTitles:array buttonStyle:JGActionSheetButtonStyleCustomer];
+//    NSLog(@"array section: %@", array);
+//    JGActionSheetSection *cancelSection = [JGActionSheetSection sectionWithTitle:nil message:nil buttonTitles:@[@"取消"] buttonStyle:JGActionSheetButtonStyleCustomer];
+//    NSArray *sections = @[section1, cancelSection];
+//    JGActionSheet *actionSheet = [JGActionSheet actionSheetWithSections:sections];
+//    
+//    __weak JGActionSheet *weakSelfAction = actionSheet;
+//    [actionSheet setOutsidePressBlock:^(JGActionSheet *sheet){
+//        [weakSelfAction dismissAnimated:YES];
+//    }];
+//    [actionSheet setButtonPressedBlock:^(JGActionSheet *sheet, NSIndexPath *sheetIndexPath) {
+//        if (sheetIndexPath.section == 0 && sheetIndexPath.row == 0) {
+//            NSLog(@"sharing with wechat friend tapped");
+//            [SocialRequestAssistant shareImage:cell.postImage.image onPlatForm:SSDKPlatformSubTypeWechatSession];
+//        }
+//        else if (sheetIndexPath.section == 0 && sheetIndexPath.row == 1) {
+//            [SocialRequestAssistant shareImage:cell.postImage.image onPlatForm:SSDKPlatformSubTypeWechatTimeline];
+//        }
+//        
+//        else if (sheetIndexPath.section == 0 && sheetIndexPath.row == 2) {
+//            [SocialRequestAssistant shareImage:cell.postImage.image onPlatForm:SSDKPlatformSubTypeQQFriend];
+//        }
+//        
+//        if (sheetIndexPath.section == 0 && sheetIndexPath.row == 3) {
+//            [SocialRequestAssistant requestDeleteBlogWithID:cell.blogID
+//                                                    success:^(NSURLSessionDataTask *task, id responseObject){
+//                                                        [self.navigationController popViewControllerAnimated:YES];
+//                                                        [[NSNotificationCenter defaultCenter] postNotificationName:eyemoreDeleteBlogNoti object:nil];
+//                                                    }
+//                                                    failure:nil];
+//        }
+//        [weakSelfAction dismissAnimated:YES];
+//    }];
+//    if (!actionSheet.isVisible) {
+//        [actionSheet showInView:self.tabBarController.view animated:YES];
+//    }
+    [ActionSheetHelper actionShareSheetWithUserID:cell.userID blogID:cell.blogID image:cell.postImage.image inView:self.tabBarController.view];
+}
 
 - (void)didActionAvatarViewOnCell:(DiscoverTableViewCell *)cell
 {

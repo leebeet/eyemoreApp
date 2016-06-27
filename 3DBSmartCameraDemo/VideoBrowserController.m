@@ -586,7 +586,7 @@
 {
     //iPad界面优化
     if ([[UIScreen mainScreen] bounds].size.width == 768) {
-        return CGSizeMake(150, 150);
+        return CGSizeMake(151, 151);
     }
     //6p,6sp界面优化
     if ([[UIScreen mainScreen] bounds].size.width == 414) {

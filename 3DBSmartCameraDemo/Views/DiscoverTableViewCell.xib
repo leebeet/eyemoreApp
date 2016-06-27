@@ -27,7 +27,7 @@
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h4p-Wp-HBd">
                         <rect key="frame" x="0.0" y="52" width="320" height="181"/>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.13333333333333333" green="0.13333333333333333" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5q5-8T-ReK">
                         <rect key="frame" x="72" y="267" width="28" height="25"/>
@@ -142,6 +142,7 @@
                         <state key="normal" image="shareBlog.png"/>
                     </button>
                 </subviews>
+                <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="PvC-Dx-t0a" secondAttribute="trailing" constant="7" id="07a-8j-9gA"/>
                     <constraint firstItem="h4p-Wp-HBd" firstAttribute="top" secondItem="cEU-mI-IuN" secondAttribute="bottom" constant="8" id="1s7-y5-aot"/>

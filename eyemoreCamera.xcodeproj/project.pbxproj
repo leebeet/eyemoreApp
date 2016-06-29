@@ -3355,7 +3355,7 @@
 					"$(PROJECT_DIR)/3DBSmartCameraDemo/Ultilities/ShareSDK/Support/PlatformSDK/SinaWeiboSDK",
 					"$(PROJECT_DIR)/3DBSmartCameraDemo/Ultilities/ShareSDK/Support/PlatformSDK/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.3db.SmartCameraBetaSelf;
+				PRODUCT_BUNDLE_IDENTIFIER = com.3db.SmartCameraEnterprise;
 				PRODUCT_NAME = eyemoreCamera;
 				PROVISIONING_PROFILE = "";
 			};
@@ -3383,7 +3383,7 @@
 					"$(PROJECT_DIR)/3DBSmartCameraDemo/Ultilities/ShareSDK/Support/PlatformSDK/SinaWeiboSDK",
 					"$(PROJECT_DIR)/3DBSmartCameraDemo/Ultilities/ShareSDK/Support/PlatformSDK/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.3db.SmartCameraBetaSelf;
+				PRODUCT_BUNDLE_IDENTIFIER = com.3db.SmartCameraEnterprise;
 				PRODUCT_NAME = eyemoreCamera;
 				PROVISIONING_PROFILE = "";
 			};

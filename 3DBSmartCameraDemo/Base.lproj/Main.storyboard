@@ -4388,12 +4388,10 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="Bgo-Nr-2Za" firstAttribute="centerY" secondItem="VYd-bm-vv8" secondAttribute="centerY" id="44h-Pu-D4C"/>
                                                 <constraint firstItem="vcU-jC-66T" firstAttribute="leading" secondItem="VYd-bm-vv8" secondAttribute="leadingMargin" constant="-8" id="CsR-Ap-nQt"/>
-                                                <constraint firstItem="Bgo-Nr-2Za" firstAttribute="leading" secondItem="VYd-bm-vv8" secondAttribute="leadingMargin" constant="11" id="GIb-4Z-irC">
-                                                    <variation key="heightClass=regular-widthClass=compact" constant="157"/>
-                                                </constraint>
+                                                <constraint firstItem="Bgo-Nr-2Za" firstAttribute="centerX" secondItem="VYd-bm-vv8" secondAttribute="centerX" id="MO7-ne-m03"/>
                                                 <constraint firstAttribute="bottom" secondItem="vcU-jC-66T" secondAttribute="bottom" id="ckn-3Q-mfo"/>
-                                                <constraint firstItem="Bgo-Nr-2Za" firstAttribute="top" secondItem="VYd-bm-vv8" secondAttribute="topMargin" constant="10" id="fH3-bZ-oKb"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="vcU-jC-66T" secondAttribute="trailing" constant="-8" id="sEN-10-Q95"/>
                                             </constraints>
                                             <variation key="default">
@@ -4402,8 +4400,8 @@
                                                     <exclude reference="Bgo-Nr-2Za"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="GIb-4Z-irC"/>
-                                                    <exclude reference="fH3-bZ-oKb"/>
+                                                    <exclude reference="44h-Pu-D4C"/>
+                                                    <exclude reference="MO7-ne-m03"/>
                                                     <exclude reference="CsR-Ap-nQt"/>
                                                     <exclude reference="ckn-3Q-mfo"/>
                                                     <exclude reference="sEN-10-Q95"/>
@@ -4415,8 +4413,8 @@
                                                     <include reference="Bgo-Nr-2Za"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="GIb-4Z-irC"/>
-                                                    <include reference="fH3-bZ-oKb"/>
+                                                    <include reference="44h-Pu-D4C"/>
+                                                    <include reference="MO7-ne-m03"/>
                                                     <include reference="CsR-Ap-nQt"/>
                                                     <include reference="ckn-3Q-mfo"/>
                                                     <include reference="sEN-10-Q95"/>

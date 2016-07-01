@@ -159,7 +159,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self rotationObservingEnable];
+    //[self rotationObservingEnable];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -496,9 +496,19 @@
 - (void)fullScreenButtonTapped
 {
     if (self.isFullScreen) {
-        [self updateUIWithPortait];
+        if (self.shootMode == LIVEVIEW_MODE) {
+            [self.reloadButton setImage:[UIImage imageNamed:@"screen_normal.png"]];
+            [self updateUIWithPortait];
+        }
+        
     }
-    else [self updateUIWithLanscape];
+    else {
+        if (self.shootMode == LIVEVIEW_MODE) {
+            [self.reloadButton setImage:[UIImage imageNamed:@"screen_full.png"]];
+            [self updateUIWithLanscape];
+        }
+        
+    }
 }
 
 - (void)filterBarItemTapped:(id)sender
@@ -1298,7 +1308,7 @@
 {
 
     dispatch_async(dispatch_get_main_queue(), ^(){
-        [self.reloadButton setEnabled:NO];
+        //[self.reloadButton setEnabled:NO];
         [self.liveView setImage:[UIImage imageWithData:data[1]]];
     });
     
@@ -1335,7 +1345,7 @@
     NSLog(@"live view offline type: %d", type);
     if (self.shootMode == LIVEVIEW_MODE || self.shootMode == RECORDING_MOVIE_MODE || self.shootMode == HD_RECORDING_MODE || self.shootMode == SELFIE_MODE) {
         dispatch_async(dispatch_get_main_queue(), ^(){
-            [self.reloadButton setEnabled:YES];
+            //[self.reloadButton setEnabled:YES];
             
         });
         //若为相机断开连接，则自动重连取景
@@ -1887,8 +1897,8 @@
         UIBarButtonItem *btn1  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cmd_close.png"] style:UIBarButtonItemStylePlain target:self action:@selector(doubleDismiss)];
         UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
         UIBarButtonItem *btn2  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cmd_setup.png"] style:UIBarButtonItemStylePlain target:self action:@selector(setUpButtonTapped:)];
-        self.reloadButton      = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cmd_refresh.png"] style:UIBarButtonItemStyleDone target:self action:@selector(reloadButtonTapped)];
-        [self.reloadButton setEnabled:NO];
+        self.reloadButton      = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"screen_full.png"] style:UIBarButtonItemStyleDone target:self action:@selector(fullScreenButtonTapped)];
+        //[self.reloadButton setEnabled:NO];
         NSArray *arr1=[[NSArray alloc]initWithObjects:btn1, space, btn2, space, self.reloadButton, nil];
         [self.toolBar setItems:arr1 animated:YES];
     }
@@ -2682,6 +2692,8 @@
                          self.paramsToolView.alpha = 0;
                          self.bottomBar.backgroundColor = [UIColor colorWithRed:20/255. green:20/255. blue:24/255. alpha:0.3];
                          
+                         self.segment.alpha = 0;
+                         
                          [self.view insertSubview:self.liveView belowSubview:self.paramsToolView];
                          [self.liveView setTransform:at];
                          self.liveView.center = self.view.center;
@@ -2732,6 +2744,8 @@
                          self.toolBar.backgroundColor = [UIColor colorWithRed:26/255.0 green:26/255.0 blue:30/255.0 alpha:1];
                          self.paramsToolView.alpha = 1;
                          self.bottomBar.backgroundColor = [UIColor colorWithRed:20/255. green:20/255. blue:24/255. alpha:1];
+                         
+                         self.segment.alpha = 1;
                          
                          [self.displayToolView addSubview:self.liveView];
                          [self.liveView setTransform:at];

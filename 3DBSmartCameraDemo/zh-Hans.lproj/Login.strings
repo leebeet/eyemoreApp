@@ -1,33 +1,18 @@
 
-/* Class = "UIButton"; normalTitle = "用户服务协议"; ObjectID = "EFS-N1-qjT"; */
-"EFS-N1-qjT.normalTitle" = "用户服务协议";
+/* Class = "UILabel"; text = "或"; ObjectID = "PDM-gJ-n0b"; */
+"PDM-gJ-n0b.text" = "或";
 
-/* Class = "UILabel"; text = "及"; ObjectID = "OBD-bk-0li"; */
-"OBD-bk-0li.text" = "及";
+/* Class = "UIButton"; normalTitle = "登录"; ObjectID = "YcG-9B-eCS"; */
+"YcG-9B-eCS.normalTitle" = "登录";
 
-/* Class = "UITextField"; placeholder = "请输入验证码"; ObjectID = "S7E-wi-txs"; */
-"S7E-wi-txs.placeholder" = "请输入验证码";
+/* Class = "UIButton"; normalTitle = "使用QQ登陆"; ObjectID = "aoR-Xh-xyr"; */
+"aoR-Xh-xyr.normalTitle" = "使用QQ登陆";
 
-/* Class = "UIButton"; normalTitle = "隐私政策"; ObjectID = "UdM-vz-LaJ"; */
-"UdM-vz-LaJ.normalTitle" = "隐私政策";
+/* Class = "UIButton"; normalTitle = "使用微信登陆"; ObjectID = "ciS-ne-eK3"; */
+"ciS-ne-eK3.normalTitle" = "使用微信登陆";
 
-/* Class = "UILabel"; text = "点击注册新用户，即同意"; ObjectID = "Ufi-sx-hmf"; */
-"Ufi-sx-hmf.text" = "点击注册新用户，即同意";
-
-/* Class = "UIButton"; normalTitle = "获取验证码"; ObjectID = "WaL-P3-qua"; */
-"WaL-P3-qua.normalTitle" = "获取验证码";
-
-/* Class = "UITextField"; placeholder = "请输入昵称"; ObjectID = "gFA-hI-Ela"; */
-"gFA-hI-Ela.placeholder" = "请输入昵称";
-
-/* Class = "UIButton"; normalTitle = "x"; ObjectID = "iVv-1P-c3K"; */
-"iVv-1P-c3K.normalTitle" = "x";
-
-/* Class = "UIButton"; normalTitle = "忘记密码？"; ObjectID = "knf-Ac-FaS"; */
-"knf-Ac-FaS.normalTitle" = "忘记密码？";
-
-/* Class = "UITextField"; placeholder = "请输入密码"; ObjectID = "rsp-qV-zBc"; */
+/* Class = "UITextField"; placeholder = "  请输入密码"; ObjectID = "rsp-qV-zBc"; */
 "rsp-qV-zBc.placeholder" = "  请输入密码";
 
-/* Class = "UITextField"; placeholder = "请输入手机号码"; ObjectID = "yOC-XF-nHo"; */
+/* Class = "UITextField"; placeholder = "  请输入手机号码"; ObjectID = "yOC-XF-nHo"; */
 "yOC-XF-nHo.placeholder" = "  请输入手机号码";

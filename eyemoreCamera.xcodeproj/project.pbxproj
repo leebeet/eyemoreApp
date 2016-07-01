@@ -181,6 +181,7 @@
 		4C76BE461BD76542000E6505 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C76BE431BD76542000E6505 /* GCDAsyncSocket.m */; };
 		4C76BE471BD76542000E6505 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C76BE451BD76542000E6505 /* GCDAsyncUdpSocket.m */; };
 		4C7750D01C8432E500A66178 /* CustomedToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7750CF1C8432E500A66178 /* CustomedToolBar.m */; };
+		4C77BC671D24F36B00BC5508 /* RegitserViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C77BC691D24F36B00BC5508 /* RegitserViewController.storyboard */; };
 		4C7833D51C88203200EAD2F7 /* check@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7833D41C88203200EAD2F7 /* check@3x.png */; };
 		4C7833D71C88203E00EAD2F7 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7833D61C88203E00EAD2F7 /* check@2x.png */; };
 		4C7833D91C88236B00EAD2F7 /* error@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7833D81C88236B00EAD2F7 /* error@3x.png */; };
@@ -315,7 +316,6 @@
 		4C93B79C1C9BE2AD00D34F63 /* UserCenterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C93B79B1C9BE2AD00D34F63 /* UserCenterView.xib */; };
 		4C93B79E1C9BF39F00D34F63 /* user_male.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C93B79D1C9BF39F00D34F63 /* user_male.png */; };
 		4C9A7A181D07C14C00AB6C71 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9A7A171D07C14C00AB6C71 /* RegisterViewController.m */; };
-		4C9A7A1A1D07C16A00AB6C71 /* RegitserViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C9A7A191D07C16A00AB6C71 /* RegitserViewController.storyboard */; };
 		4C9A7A271D08158E00AB6C71 /* qq@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9A7A231D08158E00AB6C71 /* qq@2x.png */; };
 		4C9A7A281D08158E00AB6C71 /* qq@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9A7A241D08158E00AB6C71 /* qq@3x.png */; };
 		4C9A7A291D08158E00AB6C71 /* wechat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C9A7A251D08158E00AB6C71 /* wechat@2x.png */; };
@@ -652,8 +652,6 @@
 		4C74CF0D1C33C9BD00A0F97B /* BLMovieEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLMovieEncoder.m; sourceTree = "<group>"; };
 		4C75566D1CF557D400091BF6 /* DiscoverTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscoverTableViewCell.xib; sourceTree = "<group>"; };
 		4C7556701CF57C0A00091BF6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
-		4C7556731CF57C1300091BF6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Login.strings; sourceTree = "<group>"; };
-		4C7556751CF57C1900091BF6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Login.strings"; sourceTree = "<group>"; };
 		4C7586261C5F608100FC46AD /* visibleView@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visibleView@2x.png"; sourceTree = "<group>"; };
 		4C7586281C5F618400FC46AD /* visibleView@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visibleView@3x.png"; sourceTree = "<group>"; };
 		4C75862A1C5F62C500FC46AD /* invisibleView@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "invisibleView@3x.png"; sourceTree = "<group>"; };
@@ -664,6 +662,11 @@
 		4C76BE451BD76542000E6505 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
 		4C7750CE1C8432E500A66178 /* CustomedToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomedToolBar.h; sourceTree = "<group>"; };
 		4C7750CF1C8432E500A66178 /* CustomedToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomedToolBar.m; sourceTree = "<group>"; };
+		4C77BC641D24EEDF00BC5508 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Login.strings"; sourceTree = "<group>"; };
+		4C77BC661D24EF0900BC5508 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Login.strings; sourceTree = "<group>"; };
+		4C77BC681D24F36B00BC5508 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/RegitserViewController.storyboard; sourceTree = "<group>"; };
+		4C77BC6B1D24F36E00BC5508 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RegitserViewController.strings; sourceTree = "<group>"; };
+		4C77BC6D1D24F37100BC5508 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/RegitserViewController.strings"; sourceTree = "<group>"; };
 		4C7833D41C88203200EAD2F7 /* check@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@3x.png"; sourceTree = "<group>"; };
 		4C7833D61C88203E00EAD2F7 /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@2x.png"; sourceTree = "<group>"; };
 		4C7833D81C88236B00EAD2F7 /* error@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "error@3x.png"; sourceTree = "<group>"; };
@@ -862,7 +865,6 @@
 		4C93B79D1C9BF39F00D34F63 /* user_male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_male.png; sourceTree = "<group>"; };
 		4C9A7A161D07C14C00AB6C71 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		4C9A7A171D07C14C00AB6C71 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
-		4C9A7A191D07C16A00AB6C71 /* RegitserViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RegitserViewController.storyboard; sourceTree = "<group>"; };
 		4C9A7A231D08158E00AB6C71 /* qq@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qq@2x.png"; sourceTree = "<group>"; };
 		4C9A7A241D08158E00AB6C71 /* qq@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qq@3x.png"; sourceTree = "<group>"; };
 		4C9A7A251D08158E00AB6C71 /* wechat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wechat@2x.png"; sourceTree = "<group>"; };
@@ -2339,7 +2341,7 @@
 			children = (
 				4C9A7A161D07C14C00AB6C71 /* RegisterViewController.h */,
 				4C9A7A171D07C14C00AB6C71 /* RegisterViewController.m */,
-				4C9A7A191D07C16A00AB6C71 /* RegitserViewController.storyboard */,
+				4C77BC691D24F36B00BC5508 /* RegitserViewController.storyboard */,
 			);
 			name = Register;
 			sourceTree = "<group>";
@@ -2928,7 +2930,7 @@
 				4C75566F1CF57C0A00091BF6 /* Login.storyboard in Resources */,
 				4CFAA0AD1B01F1990018DF13 /* button_zipai_main@3x.png in Resources */,
 				4C70B4881CB6660400A3DA53 /* Play@2x.png in Resources */,
-				4C9A7A1A1D07C16A00AB6C71 /* RegitserViewController.storyboard in Resources */,
+				4C77BC671D24F36B00BC5508 /* RegitserViewController.storyboard in Resources */,
 				4C6485A81C23F94C005423E1 /* shot_bomb.wav in Resources */,
 				4C9A7A281D08158E00AB6C71 /* qq@3x.png in Resources */,
 				4C9A7A2E1D08232600AB6C71 /* dialPad@3x.png in Resources */,
@@ -3224,10 +3226,20 @@
 			isa = PBXVariantGroup;
 			children = (
 				4C7556701CF57C0A00091BF6 /* Base */,
-				4C7556731CF57C1300091BF6 /* en */,
-				4C7556751CF57C1900091BF6 /* zh-Hans */,
+				4C77BC641D24EEDF00BC5508 /* zh-Hans */,
+				4C77BC661D24EF0900BC5508 /* en */,
 			);
 			name = Login.storyboard;
+			sourceTree = "<group>";
+		};
+		4C77BC691D24F36B00BC5508 /* RegitserViewController.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C77BC681D24F36B00BC5508 /* Base */,
+				4C77BC6B1D24F36E00BC5508 /* en */,
+				4C77BC6D1D24F37100BC5508 /* zh-Hans */,
+			);
+			name = RegitserViewController.storyboard;
 			sourceTree = "<group>";
 		};
 		4C8082DE1B42386000BF35A5 /* Main.storyboard */ = {

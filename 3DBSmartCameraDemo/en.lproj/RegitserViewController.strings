@@ -1,0 +1,33 @@
+
+/* Class = "UIButton"; normalTitle = "隐私政策"; ObjectID = "EKW-mo-ngW"; */
+"EKW-mo-ngW.normalTitle" = "Policy";
+
+/* Class = "UITextField"; placeholder = "  请输入验证码"; ObjectID = "QMf-RB-MFy"; */
+"QMf-RB-MFy.placeholder" = "  Valid Code";
+
+/* Class = "UITextField"; placeholder = "  请输入昵称"; ObjectID = "Rw4-oB-dP3"; */
+"Rw4-oB-dP3.placeholder" = "  Nickname";
+
+/* Class = "UILabel"; text = "及"; ObjectID = "Sh9-ip-BPM"; */
+"Sh9-ip-BPM.text" = "&";
+
+/* Class = "UITextField"; placeholder = "  请输入手机号码"; ObjectID = "afR-Vr-Pcc"; */
+"afR-Vr-Pcc.placeholder" = "  Phone Number";
+
+/* Class = "UITextField"; placeholder = "  请输入密码"; ObjectID = "dob-6a-bfy"; */
+"dob-6a-bfy.placeholder" = "  Password";
+
+/* Class = "UILabel"; text = "使用手机号码注册"; ObjectID = "eQZ-R2-1fc"; */
+"eQZ-R2-1fc.text" = "Register With Phone Number";
+
+/* Class = "UIButton"; normalTitle = "获取验证码"; ObjectID = "eha-7A-ILG"; */
+"eha-7A-ILG.normalTitle" = "Get code";
+
+/* Class = "UILabel"; text = "点击注册新用户，即同意"; ObjectID = "gc9-bD-kxI"; */
+"gc9-bD-kxI.text" = "Register means agree to";
+
+/* Class = "UIButton"; normalTitle = "注册新用户"; ObjectID = "grL-PO-10U"; */
+"grL-PO-10U.normalTitle" = "Register";
+
+/* Class = "UIButton"; normalTitle = "用户服务协议"; ObjectID = "r71-Td-liZ"; */
+"r71-Td-liZ.normalTitle" = "Our Service";

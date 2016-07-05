@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  请输入手机号码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="afR-Vr-Pcc">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="  请输入手机号码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="afR-Vr-Pcc">
                                 <rect key="frame" x="20" y="204" width="560" height="45"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="0.30091594830000001" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -33,7 +33,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  请输入密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dob-6a-bfy">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="  请输入密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dob-6a-bfy">
                                 <rect key="frame" x="20" y="259" width="560" height="45"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="0.30091594830000001" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -48,7 +48,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  请输入昵称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rw4-oB-dP3">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="  请输入昵称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rw4-oB-dP3">
                                 <rect key="frame" x="20" y="314" width="560" height="45"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="0.3011314655172414" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -69,7 +69,7 @@
                                     <constraint firstAttribute="height" constant="55" id="svt-Hc-rJk"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="  请输入验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QMf-RB-MFy">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="  请输入验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QMf-RB-MFy">
                                 <rect key="frame" x="20" y="369" width="452" height="45"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="0.3011314655172414" colorSpace="calibratedWhite"/>
                                 <constraints>

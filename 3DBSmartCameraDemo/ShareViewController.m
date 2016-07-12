@@ -55,7 +55,14 @@
 
 - (void)setUpImageView
 {
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 54, 100, 100)];
+    
+    //iPad界面优化
+    if ([[UIScreen mainScreen] bounds].size.width == 768) {
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(50, 54, 200, 200)];
+    }
+    else {
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 54, 100, 100)];
+    }
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.imageView setImage:[UIImage imageWithData:self.uploadData]];
     [self.view addSubview:self.imageView];
@@ -65,7 +72,15 @@
 {
     self.rotateButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     [self.rotateButton setImage:[UIImage imageNamed:@"rotating.png"] forState:UIControlStateNormal];
-    self.rotateButton.center = CGPointMake(self.imageView.center.x, self.imageView.center.y + 75);
+    
+    //iPad界面优化
+    if ([[UIScreen mainScreen] bounds].size.width == 768) {
+        self.rotateButton.center = CGPointMake(self.imageView.center.x, self.imageView.center.y + 125);
+    }
+    else {
+        self.rotateButton.center = CGPointMake(self.imageView.center.x, self.imageView.center.y + 75);
+    }
+        
     //self.rotateButton.backgroundColor = [[UIColor clearColor] colorWithAlphaComponent:1];
     self.rotateButton.layer.masksToBounds = YES;
     self.rotateButton.layer.cornerRadius = 5;

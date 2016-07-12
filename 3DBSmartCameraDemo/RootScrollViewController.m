@@ -86,7 +86,7 @@
     NSLog(@"view will disappear");
     [super viewWillDisappear:YES];
     //[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    self.view.backgroundColor = [UIColor colorWithRed:251./255. green:32./255. blue:7./255. alpha:1];
+    //self.view.backgroundColor = [UIColor colorWithRed:251./255. green:32./255. blue:7./255. alpha:1];
     
     [self.imageView.timer invalidate];
     [self.device endGeneratingDeviceOrientationNotifications];

@@ -89,6 +89,11 @@ typedef enum _VideoRecorderMode {
     [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDBeginRecordConifg(RESOLUTION_960_540, 250)];
 }
 
+- (void)startTimeLapseRecording
+{
+    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDTimeLapseRecordConifg(RESOLUTION_1920_1080, kPIN10SECOND, 0, 700)];
+}
+
 - (void)startLDRecordingWithEyemoreVideo:(EyemoreVideo *)dict
 {
     self.sampleVideo = dict;
@@ -170,7 +175,7 @@ typedef enum _VideoRecorderMode {
     self.finishEyemoreBlock = videoBlock;
     self.downloadProcessBlock = progressBlock;
     downloadprogressing = 0.0;
-    if (eyemoreVideo.resolution.height == 540.0f) {
+    if (eyemoreVideo.resolution.height == 540.0f || eyemoreVideo.resolution.height == 1080.0f) {
         self.kDownloadFrameCount = kDownloadHDFrameCount;
     }
     else self.kDownloadFrameCount = kDownloadLDFrameCount;
@@ -278,10 +283,21 @@ typedef enum _VideoRecorderMode {
             }
         }
     }
-//    if (ACK.cmd == SDB_SET_RECV_OK_ACK && ACK.param0 == 2) {
-//
-//    }
+    if (ACK.cmd == SDB_CURRENT_RECORD_NUM_ACK) {
+        if (ACK.state == SDB_STATE_SUCCESS) {
+            
+            if ([self.delegate respondsToSelector:@selector(videoRecorder:didGetTimeLapseNum:)]) {
+                [self.delegate videoRecorder:self didGetTimeLapseNum:ACK.paramn[0]];
+            }
+        }
+        else if (ACK.state == SDB_SERVER_NOT_READY){
+            if ([self.delegate respondsToSelector:@selector(videoRecorder:didGetTimeLapseNum:)]) {
+                [self.delegate videoRecorder:self didGetTimeLapseNum:-1];
+            }
+        }
+    }
 }
+
 - (void)didDisconnectSocket
 {}
 - (void)didReceiveLensStatus:(LENS_PARAMS)lensStatus

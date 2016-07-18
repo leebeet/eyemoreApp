@@ -355,6 +355,11 @@
         [self sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDOpenDataChannel];
         count = 0;
     }
+//    if (devInfo.camera_mode == MODE_CAPTION_DELAY_VEDIO) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [[NSNotificationCenter defaultCenter] postNotificationName:eyemoreCamInTimeLapseNoti object:nil];
+//        });        
+//    }
 }
 #pragma mark - Socket Connection Operations
 

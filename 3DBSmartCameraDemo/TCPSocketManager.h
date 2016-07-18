@@ -10,6 +10,7 @@
 #import "GCDAsyncSocket.h"
 #import "GCDAsyncUdpSocket.h"
 #include "net_interface_params.h"
+#import "eyemoreNotificaitions.h"
 
 enum
 {

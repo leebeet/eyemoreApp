@@ -74,6 +74,7 @@
 "Aperture"                        = "光圈";
 "Polaroid"                        = "拍立得";
 "Photo"                           = "抓拍";
+"Time-Lapse"                      = "延时摄影";
 "Photos"                          = "照片";
 "Video"                           = "视频";
 "Standard"                        = "标准";
@@ -96,3 +97,4 @@
 "Share with QQ friends"           = "分享至QQ好友";
 "Wrong number"                    = "请输入正确的号码";
 "reply"                           = "回复";
+"Done"                            = "完成";

@@ -73,6 +73,7 @@
 "Shutter"                         = "S";
 "Aperture"                        = "A";
 "Polaroid"                        = "Polaroid";
+"Time-Lapse"                      = "Time-Lapse";
 "Photo"                           = "Photo";
 "Photos"                          = "Photos";
 "Video"                           = "Video";
@@ -96,4 +97,5 @@
 "Share with QQ friends"           = "Share with QQ friends";
 "Wrong number"                    = "Wrong number";
 "reply"                           = "reply";
+"Done"                            = "Done";
 

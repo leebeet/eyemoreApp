@@ -13,4 +13,5 @@
 
 #define eyemoreDeleteBlogNoti @"eyemoreDeleteBlogNoti"
 
+#define eyemoreCamInTimeLapseNoti @"eyemoreCamInTimeLapseNoti"
 #endif /* eyemoreNotificaitions_h */

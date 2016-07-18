@@ -53,6 +53,7 @@
 
 //video CMD
 #define CMDBeginRecordConifg(RESOLUTION, FPS) {SDB_BEGIN_RECORD,            0,                       0,                       0, {RESOLUTION, FPS}}
+#define CMDTimeLapseRecordConifg(RESOLUTION, FPS, MULTI, FRAMECOUNT) {SDB_BEGIN_RECORD,              0,                       0,  0, {RESOLUTION, FPS, MULTI, FRAMECOUNT}}
 
 #define CMDEndingRecord                   {SDB_END_RECORD,                  0,                       0,                       0, {0}}
 #define CMDGetRecordNum                   {SDB_GET_RECORD_NUM,              0,                       0,                       0, {0}}
@@ -62,6 +63,7 @@
 #define CMDGetFrameWithIDWithStartIndexWithAmount(NO,INDEX,NUM) {SDB_GET_FRAME,   0,                 0,                       0, {NO,INDEX,NUM}}
 #define CMDDeleteVideoWithID(NO)          {SDB_DELETE_VIDEO,                0,                       0,                       0, {NO}}
 #define CMDGetLiveFrameWithIndex(INDEX)   {SDB_GET_LIVE_FRAME,              0,                       0,                       0, {INDEX}}
+#define CMDGetCurrentRecordNum            {SDB_CURRENT_RECORD_NUM,          0,                       0,                       0, {0}}
 
 //Sound CMD
 #define CMDSetSoundEnable(ENABLE)         {SDB_SET_SOUND_ENABLE,            ENABLE,                  0,                       0, {0}}

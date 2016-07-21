@@ -112,42 +112,48 @@
             }
             if (self.writerInput.readyForMoreMediaData) {
                 NSLog(@"Processing video frame (%ld,%lu)", (long)i, (unsigned long)images.count);
-                CVPixelBufferRef sampleBuffer = [self newPixelBufferFromCGImage:[[images objectAtIndex:i] CGImage]];
+                //CVPixelBufferRef sampleBuffer = [self newPixelBufferFromCGImage:[[images objectAtIndex:i] CGImage]];
+                @autoreleasepool {
+                    CGImageRef image = [[self imageWithURL:[images objectAtIndex:i]] CGImage];
+                    CVPixelBufferRef sampleBuffer = [self newPixelBufferFromCGImage:image];
                 
-                if (sampleBuffer) {
-                    if (b == 0) {
-                        append_ok = [self.bufferAdapter appendPixelBuffer:sampleBuffer withPresentationTime:kCMTimeZero];
-                    }
-                    else{
-                        CMTime lastTime;
-                        if (self.frameTime.value == 2) {
-                            //带浮点型帧数
-                            lastTime = CMTimeMake(2 * (b-1), self.frameTime.timescale);
+                    if (sampleBuffer) {
+                        if (b == 0) {
+                            append_ok = [self.bufferAdapter appendPixelBuffer:sampleBuffer withPresentationTime:kCMTimeZero];
+                        }
+                        else{
+                            CMTime lastTime;
+                            if (self.frameTime.value == 2) {
+                                //带浮点型帧数
+                                lastTime = CMTimeMake(2 * (b-1), self.frameTime.timescale);
+                            }
+                            else {
+                                //不带浮点型帧数
+                                lastTime = CMTimeMake(1 * (b-1), self.frameTime.timescale);}
+                            CMTime presentTime = CMTimeAdd(lastTime, self.frameTime);
+                            append_ok = [self.bufferAdapter appendPixelBuffer:sampleBuffer withPresentationTime:presentTime];
+                        }
+                        
+                        if (append_ok) {
+                            CVPixelBufferRelease(sampleBuffer);
+                            //CGImageRelease(image);
+                            b++;
                         }
                         else {
-                            //不带浮点型帧数
-                            lastTime = CMTimeMake(1 * (b-1), self.frameTime.timescale);}
-                        CMTime presentTime = CMTimeAdd(lastTime, self.frameTime);
-                        append_ok = [self.bufferAdapter appendPixelBuffer:sampleBuffer withPresentationTime:presentTime];
-                    }
-                    
-                    if (append_ok) {
-                        CVPixelBufferRelease(sampleBuffer);
-                        b++;
+                            NSError *error = self.assetWriter.error;
+                            if (error != nil) {
+                                NSLog(@"Unresolved error %@,%@.", error, [error userInfo]);
+                            }
+                            NSLog(@"error appending image %ld, with error.", (long)i);
+                            break;
+                        }
+                        i++;
                     }
                     else {
-                        NSError *error = self.assetWriter.error;
-                        if (error != nil) {
-                            NSLog(@"Unresolved error %@,%@.", error, [error userInfo]);
-                        }
-                        NSLog(@"error appending image %ld, with error.", (long)i);
-                        break;
+                        i ++;
                     }
-                    i++;
                 }
-                else {
-                    i ++;
-                }
+
             }
         }
         
@@ -211,10 +217,22 @@
                        image);
     CGColorSpaceRelease(rgbColorSpace);
     CGContextRelease(context);
+    //CGImageRelease(image);
     
     CVPixelBufferUnlockBaseAddress(pxbuffer, 0);
     
     return pxbuffer;
+}
+
+- (UIImage *)imageWithURL:(NSURL *)url
+{
+    if (url) {
+        return [UIImage imageWithData:[NSData dataWithContentsOfURL:url]];
+    }
+    else {
+        NSLog(@"load image failed with url: %@", url);
+        return nil;
+    }
 }
 
 @end

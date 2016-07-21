@@ -12,6 +12,7 @@
 #import "VideoClient.h"
 #import "EyemoreVideo.h"
 
+#define kPIN10SECOND 2
 @class VideoRecorder;
 @protocol VideoRecorderDelegate <NSObject>
 
@@ -23,6 +24,7 @@
 //- (void)videoRecorder:(VideoRecorder *)recorder didDownloadVideoFramesWithEyemoreVideo:(EyemoreVideo *)recordVideo;
 - (void)videoRecorder:(VideoRecorder *)recorder didGetVideoDesList:(VideoConfig *)config;
 - (void)videoRecorder:(VideoRecorder *)recorder didGetDesData:(NSData *)desData;
+- (void)videoRecorder:(VideoRecorder *)recorder didGetTimeLapseNum:(int)number;
 //- (void)videoRecorder:(VideoRecorder *)recorder didGetFirstFrame:(NSData *)frameData forEyemoreVideo:(EyemoreVideo *)EyemoreVideo;
 
 @end
@@ -47,7 +49,11 @@ typedef void (^DeleteRecordHandler)(BOOL isDeleted);
 - (void)startHDRecording;
 - (void)startLDRecordingWithEyemoreVideo:(EyemoreVideo *)dict;
 - (void)startHDRecordingWithEyemoreVideo:(EyemoreVideo *)dict;
+- (void)startTimeLapseRecording;
+- (void)startTimeLapseRecordingWithInterval:(int)seconds;
+
 - (void)endRecording;
+
 - (void)getRecordDesWithID:(int)desId;
 - (void)getRecordDesList;
 - (void)deleteRecordWithID:(int)desID completeHandler:(DeleteRecordHandler)handler;

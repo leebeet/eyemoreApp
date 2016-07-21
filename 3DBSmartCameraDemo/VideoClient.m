@@ -492,17 +492,33 @@
         //framecount = kHDRecordingFrameCount;
         framecount = kHDRecordingFrameCount;
     }
+    if ([videoType isEqualToString:@"HD_TIME_LAPSE"]) {
+        //framecount = kHDRecordingFrameCount;
+        framecount = kHDRecordingFrameCount;
+    }
     //载入帧路径
     NSMutableArray *array = [eyemoreVideo.videoMaterial objectForKey:@"FrameIndexs"];
     long int firstIndex = [array[0] intValue];
+    
+//    for (long int i = firstIndex; i < firstIndex + framecount; i++) {
+//        
+//        if ([eyemoreVideo.videoMaterial objectForKey:[NSString stringWithFormat:@"FrameNo.%ld",i]]) {
+//            NSLog(@"开始获取帧并放入内存%ld", i);
+//            UIImage *image = [[UIImage alloc] initWithData:[self getFrameImageDataWithEyemoreVideo:eyemoreVideo withIndex:i]];
+//            [self.arrayOfImages addObject:image];
+//            image = nil;
+//        }
+//    }
     
     for (long int i = firstIndex; i < firstIndex + framecount; i++) {
         
         if ([eyemoreVideo.videoMaterial objectForKey:[NSString stringWithFormat:@"FrameNo.%ld",i]]) {
             NSLog(@"开始获取帧并放入内存%ld", i);
-            UIImage *image = [[UIImage alloc] initWithData:[self getFrameImageDataWithEyemoreVideo:eyemoreVideo withIndex:i]];
-            [self.arrayOfImages addObject:image];
-            image = nil;
+            NSString *imagePath = [eyemoreVideo.videoMaterial objectForKey:[NSString stringWithFormat:@"FrameNo.%ld",i]];
+            NSURL *imageURL = [self.dataCache fileURLWithKey:imagePath];
+            [self.arrayOfImages addObject:imageURL];
+            imagePath = nil;
+            imageURL = nil;
         }
     }
     
@@ -538,6 +554,28 @@
     if ([videoType isEqualToString:@"HD_RECORDING"]) {
         
         BLMovieEncoder *encoder = [[BLMovieEncoder alloc] initWithEncodec:AVVideoCodecH264 FPS:CMTimeMake(1, kFPS) Width:960 Height:540 OutputFileURL:furl];
+        [encoder encodeMovieWithImages:self.arrayOfImages withCompletion:^(NSURL *fileURL){
+            
+            NSLog(@"file url :%@",fileURL);
+            [self recordVideoDateInfoWithEyemoreVideo:eyemoreVideo];
+            //[self.videoList addObject:dict];
+            NSLog(@"encoded eyemore video material:%@",eyemoreVideo.videoMaterial);
+            
+            //[SaveLoadInfoManager  saveAppInfoWithVideoClient:[VideoClient sharedVideoClient]];
+            [self.arrayOfImages removeAllObjects];
+            
+            if (fileURL) {
+                callBackBlock(YES);
+            }
+            else {
+                callBackBlock(NO);
+            }
+        }];
+    }
+    
+    if ([videoType isEqualToString:@"HD_TIME_LAPSE"]) {
+        
+        BLMovieEncoder *encoder = [[BLMovieEncoder alloc] initWithEncodec:AVVideoCodecH264 FPS:CMTimeMake(1, kFPS) Width:1920 Height:1080 OutputFileURL:furl];
         [encoder encodeMovieWithImages:self.arrayOfImages withCompletion:^(NSURL *fileURL){
             
             NSLog(@"file url :%@",fileURL);
@@ -885,7 +923,10 @@
     }
     //NSLog(@"audio data lenth: %lu, %f", (unsigned long)[data length], (float)[data length] / 96000.0);
     //去除播放开始的渣音
-    return [data subdataWithRange:NSMakeRange(40000, [data length] - 40000)];
+    if ([data length] > 40000) {
+        return [data subdataWithRange:NSMakeRange(40000, [data length] - 40000)];
+    }
+    else return data;
 }
 
 //- (void)storeVideoAudioData:(NSMutableData *)data withVideoDict:(NSMutableDictionary *)dict
@@ -1013,13 +1054,13 @@
     eyemoreVideo.timeScale = videoAsset.duration.value;
     //nextClipStartTime = CMTimeAdd(nextClipStartTime, a_timeRange.duration);
     
-    AVURLAsset* audioAsset = [[AVURLAsset alloc]initWithURL:audio_inputFileUrl options:nil];
-    CMTimeRange audio_timeRange = CMTimeRangeMake(kCMTimeZero, audioAsset.duration);
-    AVMutableCompositionTrack *b_compositionAudioTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
-    [b_compositionAudioTrack insertTimeRange:audio_timeRange ofTrack:[[audioAsset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0] atTime:nextClipStartTime error:nil];
-    
-    
-    
+    if ([[NSData dataWithContentsOfURL:audio_inputFileUrl] length] > 40000) {
+        AVURLAsset* audioAsset = [[AVURLAsset alloc]initWithURL:audio_inputFileUrl options:nil];
+        CMTimeRange audio_timeRange = CMTimeRangeMake(kCMTimeZero, audioAsset.duration);
+        AVMutableCompositionTrack *b_compositionAudioTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
+        [b_compositionAudioTrack insertTimeRange:audio_timeRange ofTrack:[[audioAsset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0] atTime:nextClipStartTime error:nil];
+    }
+   
     AVAssetExportSession* _assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetHighestQuality];
     //_assetExport.shouldOptimizeForNetworkUse = YES;
     //_assetExport.outputFileType = @"com.apple.quicktime-movie";

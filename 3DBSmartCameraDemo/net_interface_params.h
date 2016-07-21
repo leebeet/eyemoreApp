@@ -23,7 +23,8 @@ typedef struct{
     
     unsigned char temp1[8];
     unsigned int datasocketstatus;    /*增加数据socket连接状态指示，为了防止数据socket已经断开手机侧不知道*/
-    unsigned char reserved[8];
+    unsigned char camera_mode;
+    unsigned char reserved[7];
 
     
 } DEV_INFO;
@@ -317,6 +318,12 @@ enum VEDIO_RECORD_RESOLUTION{
     RESOLUTION_1920_1080
 };
 
+enum VEDIO_RECORD_MODE {
+    MODE_CAPTION_VEDIO,      /*录像*/
+    MODE_CAPTION_PHOTO,      /*拍照*/
+    MODE_CAPTION_DELAY_VEDIO /*延时摄影*/
+};
+
 typedef enum _SDB_COMM_SIG_TYPE
 {
 	SDB_UNKNOWN	= 0,
@@ -476,7 +483,10 @@ typedef enum _SDB_COMM_SIG_TYPE
     SDB_DELETE_VIDEO_ACK,
     
     SDB_GET_AUDIO,
-    SDB_GET_AUDIO_ACK
+    SDB_GET_AUDIO_ACK,
+    
+    SDB_CURRENT_RECORD_NUM,
+    SDB_CURRENT_RECORD_NUM_ACK,
     
 }SDB_COMM_SIG_TYPE;
 

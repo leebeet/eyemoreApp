@@ -12,7 +12,7 @@
 #import "LiveViewRecorder.h"
 #import "VideoClient.h"
 #import "VideoRecorder.h"
-
+#import "eyemoreNotificaitions.h"
 typedef enum _SHOOTMODE {
     
     SYNC_MODE = 1,
@@ -25,7 +25,9 @@ typedef enum _SHOOTMODE {
     
     HD_RECORDING_MODE = 5,
     
-    DOWNLOAD_SYNCING_MODE = 6
+    DOWNLOAD_SYNCING_MODE = 6,
+    
+    TIME_LAPSE_MODE = 7
     
 }SHOOTMODE;
 

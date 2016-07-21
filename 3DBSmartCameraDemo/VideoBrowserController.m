@@ -288,6 +288,9 @@
                                                    if (video.resolution.height == 540.0f) {
                                                        video.videoType = @"HD_RECORDING";
                                                    }
+                                                   else if (video.resolution.height == 1080.f){
+                                                       video.videoType = @"HD_TIME_LAPSE";
+                                                   }
                                                    else video.videoType = @"LD_RECORDING";
                                                    [self makeMovieWithVideo:video withIndex:indexPath];
                                                    //[[VideoConfig sharedVideoConfig] addEyemoreVideos:video];

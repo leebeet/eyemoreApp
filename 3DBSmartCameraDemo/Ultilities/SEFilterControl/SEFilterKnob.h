@@ -13,7 +13,7 @@
 
 #define SEFilterKnob_DEFAULT_SHADOW              YES
 #define SEFilterKnob_DEFAULT_SHADOW_COLOR        [UIColor colorWithRed:0 green:0 blue:0 alpha:.4f]
-#define SEFilterKnob_DEFAULT_HANDLER_COLOR       [UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1]
+#define SEFilterKnob_DEFAULT_HANDLER_COLOR       [UIColor whiteColor]
 
 #import <UIKit/UIKit.h>
 @interface SEFilterKnob : UIButton

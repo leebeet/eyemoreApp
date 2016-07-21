@@ -581,15 +581,18 @@
 {
     switch (sender.selectedIndex) {
         case 0:
-            timeLapseSeconds = 2;
+            timeLapseSeconds = 1;
             break;
         case 1:
-            timeLapseSeconds = 3;
+            timeLapseSeconds = 2;
             break;
         case 2:
-            timeLapseSeconds = 4;
+            timeLapseSeconds = 3;
             break;
         case 3:
+            timeLapseSeconds = 4;
+            break;
+        case 4:
             timeLapseSeconds = 5;
             break;
         default:
@@ -2423,9 +2426,9 @@
 - (void)setUpTimeLapseSlider
 {
     if (self.timeLapseSlider == nil) {
-        timeLapseSeconds = 2;
-        self.timeLapseSlider = [[SEFilterControl alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 10 * 7, 50)
-                                                               titles:[NSArray arrayWithObjects:@"2s", @"3s", @"4s", @"5s", nil]];
+        timeLapseSeconds = 1;
+        self.timeLapseSlider = [[SEFilterControl alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 10 * 8, 50)
+                                                               titles:[NSArray arrayWithObjects:@"1s", @"2s", @"3s", @"4s", @"5s", nil]];
         self.timeLapseSlider.center = CGPointMake(self.view.frame.size.width / 2,  self.displayToolView.frame.size.height - 15);
         [self.timeLapseSlider addTarget:self action:@selector(timeLapseSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
         [self.displayToolView addSubview:self.timeLapseSlider];

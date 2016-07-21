@@ -50,7 +50,10 @@ typedef void (^DeleteRecordHandler)(BOOL isDeleted);
 - (void)startLDRecordingWithEyemoreVideo:(EyemoreVideo *)dict;
 - (void)startHDRecordingWithEyemoreVideo:(EyemoreVideo *)dict;
 - (void)startTimeLapseRecording;
+- (void)startTimeLapseRecordingWithInterval:(int)seconds;
+
 - (void)endRecording;
+
 - (void)getRecordDesWithID:(int)desId;
 - (void)getRecordDesList;
 - (void)deleteRecordWithID:(int)desID completeHandler:(DeleteRecordHandler)handler;

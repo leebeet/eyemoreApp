@@ -55,6 +55,7 @@
     BOOL _isSocketManagerTransforing;
     BOOL _firstime;
     int remoteNumber;
+    int timeLapseSeconds;
 }
 //@property (strong, nonatomic)          PAImageView *imageButtom;
 //@property (strong, nonatomic)          NSTimer     *scanShootTimer;
@@ -88,6 +89,7 @@
 @property (strong, nonatomic) SEFilterControl      *exposurevValueFilter;
 @property (strong, nonatomic) SEFilterControl      *shutterFilter;
 @property (strong, nonatomic) SEFilterControl      *irisFilter;
+@property (strong, nonatomic) SEFilterControl      *timeLapseSlider;
 @property (strong, nonatomic) TTRangeSlider        *exposureSlider;
 @property (strong, nonatomic) TTRangeSlider        *shutterSlider;
 @property (strong, nonatomic) TTRangeSlider        *irisSlider;
@@ -406,6 +408,7 @@
         else self.sampleVideoInfo.uid = 0;
         
         //    if (self.shootMode == RECORDING_MOVIE_MODE || self.shootMode == HD_RECORDING_MODE) {
+        [self.toolBar setUserInteractionEnabled:NO];
         [self.segment setUserInteractionEnabled:NO];
         if (self.shootMode == RECORDING_MOVIE_MODE) {
             
@@ -443,19 +446,20 @@
             self.videoRecorder = [VideoRecorder sharedVideoRecorder];
             self.socketManager.delegate = self.videoRecorder;
             self.videoRecorder.delegate = self;
-            [self.videoRecorder startTimeLapseRecording];
+            [self.videoRecorder startTimeLapseRecordingWithInterval:timeLapseSeconds];
+            
+            [self.timeLapseSlider setHidden:YES];
             [self updateUIButton:self.takeButton withRecorded:YES];
             
             //按下延时摄影后，开启定时器，枚5秒获取一次当前已录帧数
             [self.timeLapseTimer invalidate];
             self.timeLapseTimer = nil;
-            self.timeLapseTimer = [NSTimer scheduledTimerWithTimeInterval:(10.0f / kPIN10SECOND) target:self selector:@selector(getCurrentRecordNumber) userInfo:nil repeats:YES];
+            self.timeLapseTimer = [NSTimer scheduledTimerWithTimeInterval:(float)timeLapseSeconds target:self selector:@selector(getCurrentRecordNumber) userInfo:nil repeats:YES];
             [self.timeLapseTimer fire];
         }
     }
     else {
         [self updateUIButton:self.takeButton withRecorded:NO];
-        [self.segment setUserInteractionEnabled:YES];
         [self stopRecording];
         
         if (self.shootMode == TIME_LAPSE_MODE) {
@@ -571,6 +575,27 @@
     controller.isPresentingStyle = YES;
     RootNavigationController *navi = [[RootNavigationController alloc] initWithRootViewController:controller];
     [self presentViewController:navi animated:YES completion:nil];
+}
+
+- (void)timeLapseSliderValueChanged:(SEFilterControl *) sender
+{
+    switch (sender.selectedIndex) {
+        case 0:
+            timeLapseSeconds = 2;
+            break;
+        case 1:
+            timeLapseSeconds = 3;
+            break;
+        case 2:
+            timeLapseSeconds = 4;
+            break;
+        case 3:
+            timeLapseSeconds = 5;
+            break;
+        default:
+            timeLapseSeconds = 5;
+            break;
+    }
 }
 
 - (void)evHandleSwipeFrom:(UISwipeGestureRecognizer *)regonizer
@@ -1057,37 +1082,38 @@
         if (self.shootMode == LIVEVIEW_MODE) {
             [self.liveViewRecorder stopLiveViewing];
             [self hideLiveWindow];
-            [self updateUIWithMode:SYNC_MODE];
+            //[self updateUIWithMode:SYNC_MODE];
         }
         
         if (self.shootMode == SELFIE_MODE) {
             [self.liveViewRecorder stopLiveViewing];
             [self hideLiveWindow];
-            [self updateUIWithMode:SYNC_MODE];
+            //[self updateUIWithMode:SYNC_MODE];
         }
         
         if (self.shootMode == RECORDING_MOVIE_MODE) {
             [self.liveViewRecorder stopLiveViewing];
             [self hideLiveWindow];
-            [self updateUIWithMode:SYNC_MODE];
+            //[self updateUIWithMode:SYNC_MODE];
         }
         
         if (self.shootMode == HD_RECORDING_MODE) {
             [self hideCanvas];
             [self.liveViewRecorder stopLiveViewing];
             [self hideLiveWindow];
-            [self updateUIWithMode:SYNC_MODE];
+            //[self updateUIWithMode:SYNC_MODE];
         }
         if (self.shootMode == TIME_LAPSE_MODE) {
             [self.liveViewRecorder stopLiveViewing];
             [self hideLiveWindow];
-            [self updateUIWithMode:SYNC_MODE];
+            //[self updateUIWithMode:SYNC_MODE];
         }
         //        [self.liveViewRecorder stopLiveViewing];
         //        [self hideLiveWindow];
         //        if (self.shootMode == RECORDING_MOVIE_MODE || self.shootMode == HD_RECORDING_MODE) {
         //            [self updateUIWithMode:SYNC_MODE];
         //        }
+        [self updateUIWithMode:SYNC_MODE];
         self.shootMode = SYNC_MODE;
         self.socketManager.delegate = self;
         
@@ -1098,7 +1124,7 @@
         if (self.shootMode == SYNC_MODE) {
             [self showLiveViewWindow];
             [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
-            [self updateUIWithMode:LIVEVIEW_MODE];
+            //[self updateUIWithMode:LIVEVIEW_MODE];
         }
         
         if (self.shootMode == SELFIE_MODE) {
@@ -1106,18 +1132,19 @@
         
         if (self.shootMode == RECORDING_MOVIE_MODE) {
             [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
-            [self updateUIWithMode:LIVEVIEW_MODE];
+            //[self updateUIWithMode:LIVEVIEW_MODE];
         }
         
         if (self.shootMode == HD_RECORDING_MODE) {
             //[self hideCanvas];
             //[self showLiveViewWindow];
             //[self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
-            [self updateUIWithMode:LIVEVIEW_MODE];
+            //[self updateUIWithMode:LIVEVIEW_MODE];
         }
         if (self.shootMode == TIME_LAPSE_MODE) {
-            [self updateUIWithMode:LIVEVIEW_MODE];
+            //[self updateUIWithMode:LIVEVIEW_MODE];
         }
+        [self updateUIWithMode:LIVEVIEW_MODE];
         self.shootMode = LIVEVIEW_MODE;
         self.socketManager.delegate = self;
     }
@@ -1193,13 +1220,13 @@
             //3.00 modified
             [self showLiveViewWindow];
             [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
-            [self updateUIWithMode:HD_RECORDING_MODE];
+            //[self updateUIWithMode:HD_RECORDING_MODE];
         }
         
         if (self.shootMode == LIVEVIEW_MODE) {
-            [self updateUIWithMode:HD_RECORDING_MODE];
+            //[self updateUIWithMode:HD_RECORDING_MODE];
         }
-        
+        [self updateUIWithMode:HD_RECORDING_MODE];
         self.shootMode = HD_RECORDING_MODE;
 
     }
@@ -1209,11 +1236,12 @@
         if (self.shootMode == SYNC_MODE) {
             [self showLiveViewWindow];
             [self.liveViewRecorder setViewingMode:LIVE_VIEWING_MODE];
-            [self updateUIWithMode:HD_RECORDING_MODE];
+            //[self updateUIWithMode:HD_RECORDING_MODE];
         }
         if (self.shootMode == LIVEVIEW_MODE) {
-            [self updateUIWithMode:HD_RECORDING_MODE];
+            //[self updateUIWithMode:HD_RECORDING_MODE];
         }
+        [self updateUIWithMode:TIME_LAPSE_MODE];
         self.shootMode = TIME_LAPSE_MODE;
     }
     [self updateUIToolBarWithMode:self.shootMode];
@@ -2392,6 +2420,24 @@
 //    }
 }
 
+- (void)setUpTimeLapseSlider
+{
+    if (self.timeLapseSlider == nil) {
+        timeLapseSeconds = 2;
+        self.timeLapseSlider = [[SEFilterControl alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 10 * 7, 50)
+                                                               titles:[NSArray arrayWithObjects:@"2s", @"3s", @"4s", @"5s", nil]];
+        self.timeLapseSlider.center = CGPointMake(self.view.frame.size.width / 2,  self.displayToolView.frame.size.height - 15);
+        [self.timeLapseSlider addTarget:self action:@selector(timeLapseSliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+        [self.displayToolView addSubview:self.timeLapseSlider];
+        self.timeLapseSlider.alpha = 0;
+        
+        [UIView animateWithDuration:0.15f delay:0. options:UIViewAnimationOptionCurveEaseIn animations:^{
+            self.timeLapseSlider.alpha = 1;
+            self.timeLapseSlider.center = CGPointMake(self.view.frame.size.width / 2,  self.displayToolView.frame.size.height - 35);
+        } completion:^(BOOL finished){}];
+    }
+}
+
 - (void)showCanvasAnimation
 {
     
@@ -2591,6 +2637,21 @@
     }];
 }
 
+- (void)unSetUpTimeLapseSlider
+{
+    
+    if (self.timeLapseSlider != nil) {
+        [UIView animateWithDuration:0.15f delay:0. options:UIViewAnimationOptionCurveEaseIn animations:^{
+            self.timeLapseSlider.alpha = 0;
+            self.timeLapseSlider.center = CGPointMake(self.view.frame.size.width / 2, self.displayToolView.frame.size.height - 15);
+        } completion:^(BOOL finished){
+            if (finished) {
+                [self.timeLapseSlider removeFromSuperview];
+                self.timeLapseSlider = nil;
+            }
+        }];
+    }
+}
 //- (void)unSetUpExtendToolView
 //{
 //    [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^(){
@@ -2674,6 +2735,7 @@
         [self unSetUpRecordProgressBar];
         [self unSetUpMovieDetailButton];
         [self unSetUpFocusingCoordinateView];
+        [self unSetUpTimeLapseSlider];
         [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetPhotoToDDR];
     }
     
@@ -2682,6 +2744,7 @@
         [self unSetUpRecordButton];
         [self unSetUpRecordProgressBar];
         [self unSetUpMovieDetailButton];
+        [self unSetUpTimeLapseSlider];
         [self setUpFocusingCoordinateView];
         [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetPhotoToDDR];
     }
@@ -2691,6 +2754,7 @@
         [self setUpRecordButton];
         [self setUpMovieDetailButton];
         [self setUpFocusingCoordinateView];
+        [self unSetUpTimeLapseSlider];
         [self unSetUpRecordLabel];
         [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetPhotoToSDCard];
     }
@@ -2700,6 +2764,15 @@
         [self setUpRecordButton];
         [self setUpMovieDetailButton];
         [self setUpFocusingCoordinateView];
+        [self unSetUpTimeLapseSlider];
+        [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetPhotoToSDCard];
+    }
+    if (mode == TIME_LAPSE_MODE) {
+        
+        [self setUpRecordButton];
+        [self setUpMovieDetailButton];
+        [self setUpFocusingCoordinateView];
+        [self setUpTimeLapseSlider];
         
         [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDSetPhotoToSDCard];
     }
@@ -2979,12 +3052,20 @@
     //[self updateUIButton:self.takeButton withTapped:NO];
     [self.recordAutoProgressTimer invalidate];
     self.recordAutoProgressTimer = nil;
-    //update ui state
     
+    
+    //update ui state
     [self updateUIButton:self.takeButton withRecorded:NO];
     [self updateRecordProgressBarToColor:[UIColor redColor]];
-    [self showCanvasAnimation];
     [self unSetUpRecordProgressBar];
+    [self.segment setUserInteractionEnabled:YES];
+    [self.toolBar setUserInteractionEnabled:YES];
+    [self showCanvasAnimation];
+    
+    if (self.shootMode == TIME_LAPSE_MODE) {
+        [self.timeLapseSlider setHidden:NO];
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"EyemoreVideosUpdated" object:nil];
 }
 #pragma mark - Rotation Setting

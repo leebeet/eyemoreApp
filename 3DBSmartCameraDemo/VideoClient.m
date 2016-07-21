@@ -500,13 +500,25 @@
     NSMutableArray *array = [eyemoreVideo.videoMaterial objectForKey:@"FrameIndexs"];
     long int firstIndex = [array[0] intValue];
     
+//    for (long int i = firstIndex; i < firstIndex + framecount; i++) {
+//        
+//        if ([eyemoreVideo.videoMaterial objectForKey:[NSString stringWithFormat:@"FrameNo.%ld",i]]) {
+//            NSLog(@"开始获取帧并放入内存%ld", i);
+//            UIImage *image = [[UIImage alloc] initWithData:[self getFrameImageDataWithEyemoreVideo:eyemoreVideo withIndex:i]];
+//            [self.arrayOfImages addObject:image];
+//            image = nil;
+//        }
+//    }
+    
     for (long int i = firstIndex; i < firstIndex + framecount; i++) {
         
         if ([eyemoreVideo.videoMaterial objectForKey:[NSString stringWithFormat:@"FrameNo.%ld",i]]) {
             NSLog(@"开始获取帧并放入内存%ld", i);
-            UIImage *image = [[UIImage alloc] initWithData:[self getFrameImageDataWithEyemoreVideo:eyemoreVideo withIndex:i]];
-            [self.arrayOfImages addObject:image];
-            image = nil;
+            NSString *imagePath = [eyemoreVideo.videoMaterial objectForKey:[NSString stringWithFormat:@"FrameNo.%ld",i]];
+            NSURL *imageURL = [self.dataCache fileURLWithKey:imagePath];
+            [self.arrayOfImages addObject:imageURL];
+            imagePath = nil;
+            imageURL = nil;
         }
     }
     

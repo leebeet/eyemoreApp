@@ -94,6 +94,12 @@ typedef enum _VideoRecorderMode {
     [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDTimeLapseRecordConifg(RESOLUTION_1920_1080, kPIN10SECOND, 0, 700)];
 }
 
+- (void)startTimeLapseRecordingWithInterval:(int)seconds
+{
+    int  time = 10 / seconds;
+    [self.socketManager sendMessageWithCMD:(CTL_MESSAGE_PACKET)CMDTimeLapseRecordConifg(RESOLUTION_1920_1080, time, 0, 700)];
+}
+
 - (void)startLDRecordingWithEyemoreVideo:(EyemoreVideo *)dict
 {
     self.sampleVideo = dict;

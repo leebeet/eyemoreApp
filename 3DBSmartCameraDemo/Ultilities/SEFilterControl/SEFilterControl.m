@@ -261,7 +261,7 @@
     
     //Fill Main Path
     
-    CGContextSetFillColorWithColor(context, [UIColor grayColor].CGColor);
+    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
     
     CGContextFillRect(context, CGRectMake(LEFT_OFFSET, rect.size.height - KNOB_WIDTH + 4.5, rect.size.width-RIGHT_OFFSET-LEFT_OFFSET, 0.5));
     

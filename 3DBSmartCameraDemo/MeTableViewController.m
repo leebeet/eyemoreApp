@@ -177,7 +177,7 @@
     dispatch_async(dispatch_get_main_queue(), ^(){
         
         //self.batterLabel.text = [NSString stringWithFormat:@"版本: 3.14  相机: %@  剩余电量: %@％", self.cameraVer, self.cameraChargeState];
-        self.batterLabel.text = [NSString stringWithFormat:@"软件版本: Beta 3.18"];
+        //self.batterLabel.text = [NSString stringWithFormat:@"软件版本: Beta 3.22"];
     });
 }
 

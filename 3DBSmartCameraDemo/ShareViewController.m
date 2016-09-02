@@ -57,7 +57,12 @@
 {
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 54, 100, 100)];
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.imageView setImage:[UIImage imageWithData:self.uploadData]];
+    UIImage *image = [UIImage imageWithData:self.uploadData];
+    [self.imageView setImage:image];
+    if (image.size.width > 1920.0f) {
+        self.uploadData = UIImageJPEGRepresentation([UIImage imageWithData:self.uploadData], 0.4);
+    }
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{});
     [self.view addSubview:self.imageView];
 }
 

@@ -35,12 +35,11 @@
 #define kTimeInterval                    1
 #define kLosePackRate                    5
 
-#define kBroadCastAddr                   @"192.168.1.255"
 #define kHost                            @"192.168.1.134"
 #define kCameraFilePath                  "path/name"
 #define kBatchNumber                     4
 
-#define kSupportSocketState              1.04
+#define kSupportSocketState              1.04                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 
 @interface TCPSocketManager ()
 
@@ -181,11 +180,14 @@
     NSLog(@"send wake up msg");
     // 发送心跳包
     HB_PACKET HBPack      = {"CE1D42C0-EB5E-44DD-AB92-66F8E2D1947A"};
-    
     NSData   *dataStream  = [[NSData alloc] initWithBytes:&HBPack length:sizeof(HBPack)];
+    [self.wakeUpSocket sendData:dataStream toHost:kBROADCASTHOST port:SERVER_WAPEUP_PORT withTimeout:-1 tag:ksendWakeupPacket];
     
-    [self.wakeUpSocket sendData:dataStream toHost:@"192.168.1.1" port:SERVER_WAPEUP_PORT withTimeout:-1 tag:ksendWakeupPacket];
-    [self.wakeUpSocket beginReceiving:nil];
+    NSError *error = nil;
+    [self.wakeUpSocket beginReceiving:&error];
+    if (error) {
+        NSLog(@"wake up socket receiving error:%@", error);
+    }
     //[self.HBSocket sendData:dataStream withTimeout:-1 tag:ksendHBpacket];
 }
 
@@ -379,7 +381,6 @@
     
     NSError *connetError  = nil;
     [self.HBSocket bindToPort:SERVER_BROADCAST_PORT error:&connetError];
-    //[self.HBSocket connectToHost:kBroadCastAddr onPort:SERVER_BROADCAST_PORT error:nil];
     if (connetError) {
         NSLog(@"%@", connetError);
     }
@@ -422,34 +423,30 @@
 
 - (void)initLongWakeupUDPSocketConnect
 {
-    
-    dispatch_queue_t wQueue = dispatch_queue_create("wake up udp socket", NULL);
-    
-    self.wakeUpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:wQueue];
-    [self.wakeUpSocket setIPv4Enabled:YES];
-    [self.wakeUpSocket setIPv6Enabled:NO];
-    
-//    NSError *connetError  = nil;
-//    //[self.wakeUpSocket bindToPort:65001 error:&connetError];
-//    //[self.HBSocket connectToHost:kBroadCastAddr onPort:SERVER_BROADCAST_PORT error:nil];
-//    if (connetError) {
-//        NSLog(@"%@", connetError);
-//    }
-    
-    //NSError *receiveError = nil;
-    
-    [self.wakeUpSocket enableBroadcast:YES error:nil];
-    
-    self.isBroadcast = YES;
-    
-    // 广播一个心跳包出去
-    HB_PACKET HBPack = {"CE1D42C0-EB5E-44DD-AB92-66F8E2D1947A"};
-    //NSLog(@"%lu",sizeof(HBPack));
-    
-    NSData *dataStream = [[NSData alloc] initWithBytes:&HBPack length:sizeof(HBPack)];
-    NSLog(@"%lu", sizeof(HBPack));
-    [self.wakeUpSocket sendData:dataStream toHost:@"192.168.1.1" port:65001 withTimeout:-1 tag:ksendWakeupPacket];
-    [self.wakeUpSocket beginReceiving:nil];
+    if (self.wakeUpSocket == nil) {
+        
+        dispatch_queue_t wQueue = dispatch_queue_create("wake up udp socket", NULL);
+        self.wakeUpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:wQueue];
+        [self.wakeUpSocket setIPv4Enabled:YES];
+        [self.wakeUpSocket setIPv6Enabled:YES];
+        
+        [self.wakeUpSocket enableBroadcast:YES error:nil];
+        self.isBroadcast = YES;
+        
+        NSError *connetError  = nil;
+        [self.wakeUpSocket bindToPort:SERVER_WAPEUP_PORT error:&connetError];
+        if (connetError) {
+            NSLog(@"%@", connetError);
+        }
+        // 广播一个心跳包出去
+        HB_PACKET HBPack = {"CE1D42C0-EB5E-44DD-AB92-66F8E2D1947A"};
+        //NSLog(@"%lu",sizeof(HBPack));
+        
+        NSData *dataStream = [[NSData alloc] initWithBytes:&HBPack length:sizeof(HBPack)];
+        NSLog(@"心跳包长度: %lu", sizeof(HBPack));
+        [self.wakeUpSocket sendData:dataStream toHost:kBROADCASTHOST port:SERVER_WAPEUP_PORT withTimeout:-1 tag:ksendWakeupPacket];
+        [self.wakeUpSocket beginReceiving:nil];
+    }
     
     // 服务器收到广播信息后反馈信息回给客户端
     //[self.HBSocket receiveOnce:&receiveError];
@@ -627,11 +624,10 @@
         [data getBytes:&ACK length:sizeof(ACK)];
         
         _receiveDate = self.connectTimer.fireDate;
-        
-        if (sock == self.wakeUpSocket) {
-            NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSLog(@"wake up ack: %@", string);
-        }
+    }
+    if (sock == self.wakeUpSocket) {
+        NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"wake up ack: %@", string);
     }
 }
 

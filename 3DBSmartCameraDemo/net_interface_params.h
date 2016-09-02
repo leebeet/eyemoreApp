@@ -583,6 +583,7 @@ typedef enum _SDB_COMM_SIG_TYPE
 // SDB_GET_FILTER_MODE                           0                                  0                     0                    {0}
 // SDB_GET_FILTER_MODE_ACK                      DEV_BWDISPLAY_STATE                 0                     0                    {0}
 
+#define kBROADCASTHOST        @"192.168.1.255"
 #define SERVER_CTL_PORT       5102
 #define SERVER_DATA_PORT      5103
 #define SERVER_BROADCAST_PORT 7787

@@ -10,7 +10,7 @@
 #define eyemoreAPI_h
 
 #define eyemoreAPI_ValidCode                @"http://120.25.219.198:8081/api/code?mobile="
-#define eyemoreAPI_HTTP_PREFIX              @"http://120.25.219.198:8081/" //official:120.25.219.198 beta:120.25.163.59
+#define eyemoreAPI_HTTP_PREFIX              @"http://120.25.163.59:8081/" //official:120.25.219.198 beta:120.25.163.59
 
 //eyemore api 1.0
 #define eyemoreAPI_ACCOUNT_REGISTER         @"account/register"

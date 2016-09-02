@@ -764,40 +764,39 @@ typedef enum _downloadButtonStatus{
     cellImage.alpha = 0;
     //cell.backgroundColor = [UIColor colorWithRed:30/255.0 green:30/255.0 blue:34/255.0 alpha:1];
     
-    if ([[UIScreen mainScreen] bounds].size.width == 320) {
-        //小屏幕／5，5s设备滑动卡顿优化
-        [self.imgClient.dataCache dataForKey:self.imgClient.imgPath[indexPath.row] block:^(NSData *data){
-            dispatch_async(dispatch_get_global_queue(0, 0), ^(){
-                NSData *datan = UIImageJPEGRepresentation([UIImage imageWithData:data], 0.1);
-                UIImage *image = [UIImage imageWithData:datan];
-                dispatch_async(dispatch_get_main_queue(), ^(){
-                    
-                    [UIView animateWithDuration:0.3f delay:0.4f options:UIViewAnimationOptionAllowAnimatedContent animations:^(){
-                        cellImage.alpha = 1;
-                        [cellImage setImage:image];
-                    } completion:^(BOOL finished){}];
-                });
-            });
-        }];
- 
-    }
-    else{
+//    if ([[UIScreen mainScreen] bounds].size.width == 320) {
+//        //小屏幕／5，5s设备滑动卡顿优化
+//        [self.imgClient.dataCache dataForKey:self.imgClient.imgPath[indexPath.row] block:^(NSData *data){
+//            dispatch_async(dispatch_get_global_queue(0, 0), ^(){
+//                NSData *datan = UIImageJPEGRepresentation([UIImage imageWithData:data], 0.1);
+//                UIImage *image = [UIImage imageWithData:datan];
+//                dispatch_async(dispatch_get_main_queue(), ^(){
+//                    
+//                    [UIView animateWithDuration:0.3f delay:0.4f options:UIViewAnimationOptionAllowAnimatedContent animations:^(){
+//                        cellImage.alpha = 1;
+//                        [cellImage setImage:image];
+//                    } completion:^(BOOL finished){}];
+//                });
+//            });
+//        }];
+// 
+//    }
+//    else{
         //小屏幕／6，6s, 6p, 6sp设备滑动卡顿优化
         [self.imgClient.dataCache dataForKey:self.imgClient.imgPath[indexPath.row] block:^(NSData *data){
             dispatch_async(dispatch_get_global_queue(0, 0), ^(){
                 //NSData *datan = UIImageJPEGRepresentation([UIImage imageWithData:data], 0.1);
-                UIImage *image = [UIImage imageWithData:data];
-                
+                UIImage *image = [BLUIkitTool imageCompressForWidth:[UIImage imageWithData:data] targetWidth:cell.contentView.frame.size.width];
                 dispatch_async(dispatch_get_main_queue(), ^(){
                     [cell.contentView addSubview:cellImage];
-                    [UIView animateWithDuration:0.3f delay:0.2f options:UIViewAnimationOptionAllowAnimatedContent animations:^(){
+                    [UIView animateWithDuration:0.15f delay:0.1f options:UIViewAnimationOptionAllowAnimatedContent animations:^(){
                         cellImage.alpha = 1;
                         [cellImage setImage:image];
                     } completion:^(BOOL finished){}];
                 });
             });
         }];
-    }
+//    }
     
 //    if (self.collectionView.dragging == NO && self.collectionView.decelerating == NO)
 //    {
@@ -813,6 +812,20 @@ typedef enum _downloadButtonStatus{
    
     return cell;
 }
+
+//-(UIImage *) imageCompressForWidth:(UIImage *)sourceImage targetWidth:(CGFloat)defineWidth
+//{
+//    CGSize imageSize = sourceImage.size;
+//    CGFloat width = imageSize.width;
+//    CGFloat height = imageSize.height;
+//    CGFloat targetWidth = defineWidth;
+//    CGFloat targetHeight = (targetWidth / width) * height;
+//    UIGraphicsBeginImageContext(CGSizeMake(targetWidth, targetHeight));
+//    [sourceImage drawInRect:CGRectMake(0,0,targetWidth,  targetHeight)];
+//    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    return newImage;
+//}
 //
 //// -------------------------------------------------------------------------------
 ////	startIconDownload:forIndexPath:

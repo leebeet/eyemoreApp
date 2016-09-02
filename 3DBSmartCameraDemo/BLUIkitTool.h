@@ -12,8 +12,15 @@
 @interface BLUIkitTool : NSObject
 
 + (UIViewController *)currentRootViewController;
+
 + (NSString*)deviceVersion;
+
 + (void)redirectNSlogToDocumentFolder;
-+ (NSData *)dataFromImage:(UIImage *)image metadata:(NSDictionary *)metadata mimetype:(NSString *)mimetype;
+
++ (NSData *)dataFromImage:(UIImage *)image
+                 metadata:(NSDictionary *)metadata
+                 mimetype:(NSString *)mimetype;
+
++(UIImage *) imageCompressForWidth:(UIImage *)sourceImage targetWidth:(CGFloat)defineWidth;
 
 @end

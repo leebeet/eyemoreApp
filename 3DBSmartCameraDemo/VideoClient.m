@@ -260,6 +260,7 @@
 //        }
 //    }
 //}
+
 - (void)recordMultiFramesContentWithDataArray:(NSArray *)dataArray withStartFrame:(int)startIndex withFrameCount:(int)frameCount withEyemoreVideo:(EyemoreVideo *)eyemoreVideo
 {
     for (int i = 0; i < dataArray.count; i ++) {
@@ -276,10 +277,6 @@
         }
     }
 }
-
-
-
-
 
 - (NSMutableArray *)decodeFrameData:(NSData *)frameData withStartFrame:(int)startIndex withFrameCount:(int)frameCount
 {

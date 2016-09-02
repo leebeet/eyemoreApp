@@ -32,7 +32,6 @@
 #import "BLFocusingIndicator.h"
 #import "FirmwareManager.h"
 #import "CustomedToolBar.h"
-#import "CameraConfiguration.h"
 #import "YAScrollSegmentControl.h"
 #import "BLCountDowner.h"
 #import "EyemoreVideo.h"
@@ -42,12 +41,15 @@
 #import "SettingCamTableViewController.h"
 #import "RootNavigationController.h"
 #import "CamParasConverter.h"
+#import "FirmwareManager.h"
 
 #define kscanShootTimeInterval 0.2
 #define kLanscapeDirection CGAffineTransformMakeRotation(- M_PI / 2);
 #define kPortraitDirection CGAffineTransformMakeRotation( M_PI * 2);
 #define kSelfieShootCount 30
-#define kLiveViewHeight (270 * self.view.frame.size.width / 480 - 4)
+//#define kLiveViewHeight (270 * self.view.frame.size.width / 480 - 4)
+//#define kLiveViewHeight384 (384 * self.view.frame.size.width / 512)
+#define k1200WVerison 4.00
 
 @interface PulseWaveController ()<imageClientDelegate, TCPSocketManagerDelegate, TTRangeSliderDelegate, UIAlertViewDelegate, MMPopLabelDelegate, YJSegmentedControlDelegate, LiveViewRecorderDelegate, VideoRecorderDelegate, YAScrollSegmentControlDelegate, BLCountDownerDelegate>
 {
@@ -56,6 +58,7 @@
     BOOL _firstime;
     int remoteNumber;
     int timeLapseSeconds;
+    float kLiveViewHeight;
 }
 //@property (strong, nonatomic)          PAImageView *imageButtom;
 //@property (strong, nonatomic)          NSTimer     *scanShootTimer;
@@ -217,11 +220,21 @@
     //初始化相机设置控件
     [self setUpParamsToolView];
     
-    //初始化滤镜bar
-    [self setUpDisplayToolView];
+    //初始显示工具条
+    float camValue = [[[FirmwareManager sharedFirmwareManager].camVerison substringFromIndex:1] floatValue];
+    
+    if (camValue >= k1200WVerison) {
+        kLiveViewHeight = self.paramsToolView.frame.origin.y - self.toolBar.frame.size.height;
+        [self setUpDisplayToolViewWithHeight:kLiveViewHeight];
+    }
+    else {
+        kLiveViewHeight = (270 * self.view.frame.size.width / 480 - 4);
+        [self setUpDisplayToolViewWithHeight:kLiveViewHeight];
+        
+        //初始化连接状态控件
+        [self setUpStatusView];
+    }
 
-    //初始化连接状态控件
-    [self setUpStatusView];
 
     //初始化通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modeDetectingFore)    name:@"EnterForeground" object:nil];
@@ -493,7 +506,8 @@
                 self.bottomBar.backgroundColor = [UIColor colorWithRed:20/255. green:20/255. blue:24/255. alpha:1];
             }
 
-            offsetY = self.displayToolView.frame.origin.y;
+            //offsetY = self.displayToolView.frame.origin.y;
+            offsetY = self.paramsToolView.frame.size.height - self.segment.frame.size.height - self.filterBar.frame.size.height;
             self.toolBar.center = CGPointMake(self.toolBar.center.x, self.toolBar.center.y - offsetY);
             self.statusView.center = CGPointMake(self.statusView.center.x, self.statusView.center.y - offsetY);
             self.displayToolView.center = CGPointMake(self.displayToolView.center.x, self.displayToolView.center.y - offsetY);
@@ -1734,20 +1748,23 @@
 - (void)setUpWavePulser
 {
     //初始化wave动画效果
-    self.wavePulser = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 3, 100)];
-    self.wavePulser.backgroundColor = [UIColor clearColor];
-    //CGPoint viewCenter = CGPointMake(self.displayToolView.frame.size.width / 2, (self.scrollSegmentView.frame.origin.y) / 2);
-    self.wavePulser.center = CGPointMake(self.displayToolView.frame.size.width / 2, self.displayToolView.frame.size.height / 2 + 10);;
-    self.wavePulser.layer.cornerRadius = 50;//self.wavePulser.layer.bounds.size.width / 2;
-    self.wavePulser.layer.borderColor = [[UIColor greenColor] CGColor];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 3, 100)];
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [imageView setImage:[UIImage imageNamed:@"logo_mid.png"]];
-    [self.wavePulser addSubview:imageView];
-    //[self.displayToolView insertSubview:self.wavePulser belowSubview:self.filterBar];
-    [self.displayToolView addSubview:self.wavePulser];
-    
+    if (self.wavePulser == nil) {
+        self.wavePulser = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 3, 100)];
+        self.wavePulser.backgroundColor = [UIColor clearColor];
+        //CGPoint viewCenter = CGPointMake(self.displayToolView.frame.size.width / 2, (self.scrollSegmentView.frame.origin.y) / 2);
+        //self.wavePulser.center = CGPointMake(self.displayToolView.frame.size.width / 2, self.displayToolView.frame.size.height / 2 + 10);
+        self.wavePulser.layer.cornerRadius = 50;//self.wavePulser.layer.bounds.size.width / 2;
+        self.wavePulser.layer.borderColor = [[UIColor greenColor] CGColor];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width / 3, 100)];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [imageView setImage:[UIImage imageNamed:@"logo_mid.png"]];
+        [self.wavePulser addSubview:imageView];
+        //[self.displayToolView insertSubview:self.wavePulser belowSubview:self.filterBar];
+        [self.displayToolView addSubview:self.wavePulser];
+    }
+    self.wavePulser.center = CGPointMake(self.displayToolView.frame.size.width / 2, self.displayToolView.frame.size.height / 2 + 10);
+
     self.animation = [JTWavePulser animationWithView:self.wavePulser];
     self.animation.pulseAnimationDuration = 1.0f;
     self.animation.pulseAnimationInterval = 0.3f;
@@ -1839,7 +1856,7 @@
 }
 
 
-- (void)setUpDisplayToolView
+- (void)setUpDisplayToolViewWithHeight:(float)height
 {
 //    [self setUpScrollSegmentControl];
 //    //[self setUpSegmentControl];
@@ -1847,10 +1864,19 @@
     
     //float paramsToolHeight = self.filterBar.frame.size.height + kLiveViewHeight + self.scrollSegmentView.frame.size.height;
     //float paramsToolHeight = self.filterBar.frame.size.height + kLiveViewHeight + self.segment.frame.size.height;
-    float paramsToolHeight = kLiveViewHeight;
+    if (self.displayToolView == nil) {
+        self.displayToolView = [[UIView alloc] init];
+    }
+    float paramsToolHeight = height;
     float paramsToolWidth  = self.view.frame.size.width;
     
-    self.displayToolView = [[UIView alloc] initWithFrame:CGRectMake(0, self.paramsToolView.frame.origin.y - paramsToolHeight , paramsToolWidth, paramsToolHeight)];
+    if (height == kLiveViewHeight) {
+        self.displayToolView.frame = CGRectMake(0, self.paramsToolView.frame.origin.y - paramsToolHeight , paramsToolWidth, paramsToolHeight);
+    }
+    else {
+        self.displayToolView.frame = CGRectMake(0, self.toolBar.frame.size.height , paramsToolWidth, self.paramsToolView.frame.origin.y - self.toolBar.frame.size.height);
+    }
+    
     self.displayToolView.backgroundColor = [UIColor colorWithRed:22/255. green:22/255. blue:26/255. alpha:1.0];
     //self.scrollSegmentView.center = CGPointMake(paramsToolWidth / 2, kLiveViewHeight + self.scrollSegmentView.frame.size.height / 2);
     //self.segment.center = CGPointMake(paramsToolWidth / 2, kLiveViewHeight + self.segment.frame.size.height / 2);
@@ -1979,7 +2005,8 @@
     [self setUpScrollSegmentControl];
     [self setUpFilterBar];
     
-    float paramsToolHeight = self.view.frame.size.height -  kLiveViewHeight - self.bottomBar.frame.size.height;
+//    float paramsToolHeight = self.view.frame.size.height -  kLiveViewHeight - self.bottomBar.frame.size.height;
+    float paramsToolHeight = self.view.frame.size.height -  (270 * self.view.frame.size.width / 480 - 4) - self.bottomBar.frame.size.height;
     float paramsToolWidth  = self.view.frame.size.width;
     float paramsToolHeightForHead = (self.filterBar.frame.size.height + self.segment.frame.size.height);
     float paramsToolHeightForBody = paramsToolHeight - paramsToolHeightForHead;
@@ -2795,10 +2822,12 @@
 {
     if (isTapped) {
         [button  setSelected:YES];
+        [button setEnabled:NO];
         [button setUserInteractionEnabled:NO];
     }
     else {
         [button setSelected:NO];
+        [button setEnabled:YES];
         [button setUserInteractionEnabled:YES];
     }
     //按键按下3秒超时复位

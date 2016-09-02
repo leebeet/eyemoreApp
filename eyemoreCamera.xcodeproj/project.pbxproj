@@ -73,13 +73,14 @@
 		4C6C05371C15755200899F42 /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C05321C15755200899F42 /* MGSwipeButton.m */; };
 		4C6C05381C15755200899F42 /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C05341C15755200899F42 /* MGSwipeTableCell.m */; };
 		4C6C053B1C15770800899F42 /* RootVideoBrowseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6C053A1C15770800899F42 /* RootVideoBrowseViewController.m */; };
+		4C6CD2C71D49B420001D294E /* BLImageEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6CD2C61D49B420001D294E /* BLImageEditor.m */; };
+		4C6CD2CB1D49EB79001D294E /* UserSettingConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6CD2CA1D49EB79001D294E /* UserSettingConfig.m */; };
 		4C6F630A1C8E72380024C57D /* icon-error.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F63041C8E72380024C57D /* icon-error.png */; };
 		4C6F630B1C8E72380024C57D /* icon-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F63051C8E72380024C57D /* icon-error@2x.png */; };
 		4C6F630C1C8E72380024C57D /* icon-info.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F63061C8E72380024C57D /* icon-info.png */; };
 		4C6F630D1C8E72380024C57D /* icon-info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F63071C8E72380024C57D /* icon-info@2x.png */; };
 		4C6F630E1C8E72380024C57D /* icon-success.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F63081C8E72380024C57D /* icon-success.png */; };
 		4C6F630F1C8E72380024C57D /* icon-success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F63091C8E72380024C57D /* icon-success@2x.png */; };
-		4C6F63201C8ED5880024C57D /* CameraConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F631F1C8ED5880024C57D /* CameraConfiguration.m */; };
 		4C6FA6CA1CE18C64005F753E /* HowToConnectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FA6C91CE18C64005F753E /* HowToConnectController.m */; };
 		4C6FA6D21CE1D289005F753E /* PolicyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6FA6D11CE1D289005F753E /* PolicyViewController.m */; };
 		4C70B4751CB6061B00A3DA53 /* RootSyncPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C70B4741CB6061B00A3DA53 /* RootSyncPageController.m */; };
@@ -529,14 +530,16 @@
 		4C6C05341C15755200899F42 /* MGSwipeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeTableCell.m; sourceTree = "<group>"; };
 		4C6C05391C15770800899F42 /* RootVideoBrowseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootVideoBrowseViewController.h; sourceTree = "<group>"; };
 		4C6C053A1C15770800899F42 /* RootVideoBrowseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootVideoBrowseViewController.m; sourceTree = "<group>"; };
+		4C6CD2C51D49B420001D294E /* BLImageEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLImageEditor.h; sourceTree = "<group>"; };
+		4C6CD2C61D49B420001D294E /* BLImageEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLImageEditor.m; sourceTree = "<group>"; };
+		4C6CD2C91D49EB79001D294E /* UserSettingConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSettingConfig.h; sourceTree = "<group>"; };
+		4C6CD2CA1D49EB79001D294E /* UserSettingConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSettingConfig.m; sourceTree = "<group>"; };
 		4C6F63041C8E72380024C57D /* icon-error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error.png"; sourceTree = "<group>"; };
 		4C6F63051C8E72380024C57D /* icon-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-error@2x.png"; sourceTree = "<group>"; };
 		4C6F63061C8E72380024C57D /* icon-info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-info.png"; sourceTree = "<group>"; };
 		4C6F63071C8E72380024C57D /* icon-info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-info@2x.png"; sourceTree = "<group>"; };
 		4C6F63081C8E72380024C57D /* icon-success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-success.png"; sourceTree = "<group>"; };
 		4C6F63091C8E72380024C57D /* icon-success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-success@2x.png"; sourceTree = "<group>"; };
-		4C6F631E1C8ED5880024C57D /* CameraConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraConfiguration.h; sourceTree = "<group>"; };
-		4C6F631F1C8ED5880024C57D /* CameraConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraConfiguration.m; sourceTree = "<group>"; };
 		4C6FA6C81CE18C64005F753E /* HowToConnectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HowToConnectController.h; sourceTree = "<group>"; };
 		4C6FA6C91CE18C64005F753E /* HowToConnectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HowToConnectController.m; sourceTree = "<group>"; };
 		4C6FA6D01CE1D289005F753E /* PolicyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolicyViewController.h; sourceTree = "<group>"; };
@@ -1701,13 +1704,22 @@
 			path = MGSwipeTableCell;
 			sourceTree = "<group>";
 		};
+		4C6CD2C81D49B427001D294E /* BLImageEditor */ = {
+			isa = PBXGroup;
+			children = (
+				4C6CD2C51D49B420001D294E /* BLImageEditor.h */,
+				4C6CD2C61D49B420001D294E /* BLImageEditor.m */,
+			);
+			name = BLImageEditor;
+			sourceTree = "<group>";
+		};
 		4C6E06BE1CB75A3C0037EB39 /* Media Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				4C915B941B3177430002E19C /* SaveLoadInfoManager.h */,
 				4C915B951B3177430002E19C /* SaveLoadInfoManager.m */,
-				4C6F631E1C8ED5880024C57D /* CameraConfiguration.h */,
-				4C6F631F1C8ED5880024C57D /* CameraConfiguration.m */,
+				4C6CD2C91D49EB79001D294E /* UserSettingConfig.h */,
+				4C6CD2CA1D49EB79001D294E /* UserSettingConfig.m */,
 			);
 			name = "Media Utilities";
 			sourceTree = "<group>";
@@ -2070,6 +2082,7 @@
 				4CBFF8441CA3952E00CB783F /* CameraSoundEffects */,
 				4C74CF0B1C33C9BD00A0F97B /* BLMovieEncoder */,
 				4C78E4971CE344AB004D9D3E /* BLUlKitTool */,
+				4C6CD2C81D49B427001D294E /* BLImageEditor */,
 				4CEB44111ACCF63500F186F7 /* BLSeeImageView */,
 				4CFB98901BB28EBA004356A9 /* BL32BitCheckSumValidator */,
 				4C56C4481ACA59A50056D122 /* BLAnimation */,
@@ -3028,6 +3041,7 @@
 				4CFB98931BB28F20004356A9 /* BL32BitCheckSumValidator.m in Sources */,
 				4C0563661BC90B4600DEA72B /* LogViewController.m in Sources */,
 				4CFA44071C7EAF5800995205 /* AFHTTPSessionManager.m in Sources */,
+				4C6CD2CB1D49EB79001D294E /* UserSettingConfig.m in Sources */,
 				4C1B700B1ABFB84900267E49 /* ViewController.m in Sources */,
 				4C8AA73C1CA91A650054D582 /* UIScrollView+MJExtension.m in Sources */,
 				4CC9F1991ACA79E500E68E41 /* JLResourcePath.m in Sources */,
@@ -3047,7 +3061,6 @@
 				4C4F109F1BECA6390029EBF6 /* UpdateViewController.m in Sources */,
 				4CF5B0731B953E7700266A8A /* SEFilterControl.m in Sources */,
 				4C56C48A1ACA59A50056D122 /* UIButton+WebCache.m in Sources */,
-				4C6F63201C8ED5880024C57D /* CameraConfiguration.m in Sources */,
 				4C8AA7331CA91A650054D582 /* MJRefreshAutoStateFooter.m in Sources */,
 				4C719F571CD1FD430021C217 /* UIApplication+JTSImageViewController.m in Sources */,
 				4C8F16211CE9AEE700412A33 /* ConnectionProgressView.m in Sources */,
@@ -3094,6 +3107,7 @@
 				4CFA44081C7EAF5800995205 /* AFNetworkReachabilityManager.m in Sources */,
 				4C70B4861CB65C8200A3DA53 /* VideoSectionHeader.m in Sources */,
 				4C7A35381CB36BDE00871A74 /* CommentTableCell.m in Sources */,
+				4C6CD2C71D49B420001D294E /* BLImageEditor.m in Sources */,
 				4CAAF1801C02F049008487C3 /* ImageRecorder.m in Sources */,
 				4C8AA72D1CA91A650054D582 /* MJRefreshBackFooter.m in Sources */,
 				4C8D72B21CBB4F6700621479 /* VideoUndownloadCell.m in Sources */,

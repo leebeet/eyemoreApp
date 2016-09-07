@@ -98,3 +98,5 @@
 "Wrong number"                    = "请输入正确的号码";
 "reply"                           = "回复";
 "Done"                            = "完成";
+"Detecting Version"               = "正在检查版本...";
+"Detected"                        = "已检查";

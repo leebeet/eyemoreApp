@@ -20,4 +20,11 @@ typedef enum _BLWaterMarkPosition {
 
 @interface BLImageEditor : NSObject
 
++ (UIImage *)waterMarkImageWithBackgroundImage:(UIImage *)background
+                                     waterMark:(UIImage *)markImage
+                                  markPosition:(BLWaterMarkPosition)position;
+
++ (NSData *)dataFromImage:(UIImage *)image
+                 metadata:(NSDictionary *)metadata
+                 mimetype:(NSString *)mimetype;
 @end

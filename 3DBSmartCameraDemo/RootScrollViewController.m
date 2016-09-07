@@ -17,6 +17,8 @@
 #import "Config.h"
 #import "LoginViewController.h"
 #import "ShareViewController.h"
+#import "UserSettingConfig.h"
+#import "BLImageEditor.h"
 
 #define kSelfieTime
 
@@ -574,18 +576,52 @@
 - (IBAction)saveButtonTapped:(id)sender {
     
     [(UIButton *)sender setEnabled:NO];
+    dispatch_async(dispatch_get_main_queue(), ^{ [ProgressHUD show:NSLocalizedString(@"Save", nil) Interaction:NO]; });
+    
     //UIImage *image = [UIImage imageWithContentsOfFile:[self.imageView returnCurrentImagePath]];
     //UIImage *image = [self.imgClient getImageForKey:[self.imageView returnCurrentImagePath]];
     ImageAlbumManager *albumManager = [ImageAlbumManager sharedImageAlbumManager];
-    NSData *imageData = [self.imgClient getImageDataForKey:[self.imageView  returnCurrentImagePath]];
+    __block NSData *imageData = [self.imgClient getImageDataForKey:[self.imageView  returnCurrentImagePath]];
+    //__weak NSData *weakImageData = imageData;
     
-    //dispatch_async(dispatch_get_global_queue(0, 0), ^(){
+
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        if ([UserSettingConfig waterMarkIsEnabled]) {
+            
+            UIImage *markImage = [BLImageEditor waterMarkImageWithBackgroundImage:[UIImage imageWithData:imageData]
+                                                                        waterMark:[UIImage imageNamed:@"waterMark.png"]
+                                                                     markPosition:PositionRightBottom];
+            
+            imageData = [BLImageEditor dataFromImage:markImage metadata:nil mimetype:@"image/jpeg"];
+
+            
+        }
+        
         [albumManager saveToAlbumWithMetadata:nil
                                     imageData:imageData
                               customAlbumName:@"eyemore Album"
                               completionBlock:^{
-                                  [(UIButton *)sender setEnabled:YES];
-                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"AlbumUpdation" object:nil];
+                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                      
+                                      [(UIButton *)sender setEnabled:YES];
+                                      [ProgressHUD showSuccess:NSLocalizedString(@"Done", nil)];
+                                      [[NSNotificationCenter defaultCenter] postNotificationName:@"AlbumUpdation" object:nil];
+                                      
+                                      NSString *path = [self.imageView removeCurrentImage];
+                                      [self.imgClient.imgPath removeObject:path];
+                                      
+                                      self.imgPathCount = self.imgClient.imgPath.count;
+                                      [SaveLoadInfoManager saveAppInfoWithClient:self.imgClient];
+                                      
+                                      if (self.imgClient.imgPath.count == 0) {
+                                          [self dismissViewControllerAnimated:YES completion:nil];
+                                      }
+                                      [self.imgClient removeImageDataWithPath:path WithCameraMode:SYNCMODE];
+                                      [self.imageView reMonitoringSleeping];
+                                      
+                                      NSLog(@"remove image at path : %@", path);
+                                  });
+                                  
                               }
                                  failureBlock:^(NSError *error)
          {
@@ -602,23 +638,23 @@
                  }
              });
          }];
-    //});
+    });
     
-    NSString *path = [self.imageView removeCurrentImage];
-    //if (self.imgClient.cameraMode == SYNCMODE) {
-        [self.imgClient.imgPath removeObject:path];
-        self.imgPathCount = self.imgClient.imgPath.count;
-        [SaveLoadInfoManager saveAppInfoWithClient:self.imgClient];
-    
-        if (self.imgClient.imgPath.count == 0) {
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-    //}
-    [self.imgClient removeImageDataWithPath:path WithCameraMode:SYNCMODE];
-    
-    [self.imageView reMonitoringSleeping];
-    
-    NSLog(@"remove image at path : %@", path);
+//    NSString *path = [self.imageView removeCurrentImage];
+//    //if (self.imgClient.cameraMode == SYNCMODE) {
+//        [self.imgClient.imgPath removeObject:path];
+//        self.imgPathCount = self.imgClient.imgPath.count;
+//        [SaveLoadInfoManager saveAppInfoWithClient:self.imgClient];
+//    
+//        if (self.imgClient.imgPath.count == 0) {
+//            [self dismissViewControllerAnimated:YES completion:nil];
+//        }
+//    //}
+//    [self.imgClient removeImageDataWithPath:path WithCameraMode:SYNCMODE];
+//    
+//    [self.imageView reMonitoringSleeping];
+//    
+//    NSLog(@"remove image at path : %@", path);
 }
 - (IBAction)removeButtonTapped:(id)sender {
     

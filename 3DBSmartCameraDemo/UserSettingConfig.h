@@ -10,4 +10,7 @@
 
 @interface UserSettingConfig : NSObject
 
++ (void)SetWaterMarkEnabled:(BOOL)isEnable;
++ (BOOL)waterMarkIsEnabled;
+
 @end

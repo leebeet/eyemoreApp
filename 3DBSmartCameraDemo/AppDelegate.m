@@ -197,12 +197,12 @@
 - (void)checkingCameraFirmware
 {
     //检查固件更新
-//    FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
-///* Desperated on R version, but works on beta version updation logic / OTA  */
-//    [manager getFirmwareJsonDescriptionSuccess:^(NSArray *descriptions){
-//        if (descriptions != nil) {
-//            [manager checkingLatestUpdateWithArray:descriptions];
-//        }
+    FirmwareManager *manager = [FirmwareManager sharedFirmwareManager];
+/* Desperated on R version, but works on beta version updation logic / OTA  */
+    [manager getFirmwareJsonDescriptionSuccess:^(NSArray *descriptions){
+        if (descriptions != nil) {
+            [manager checkingLatestUpdateWithArray:descriptions];
+        }
 //        if ([manager checkingCameraShouldUpdateWithCamVer:manager.camVerison]) {
 //            if (manager.firmwareFileName && [[manager.latestUpdateURL substringWithRange:NSMakeRange(37 + 13, 14)] isEqualToString:manager.firmwareFileName]) {
 //                NSLog(@"已有更新包");
@@ -250,7 +250,7 @@
 //                                       }];
 //            }
 //        }
-//    }];
+    }];
 ///* R version firmware updation logic / offline */
 //    float     camValue     = [[manager.camVerison substringFromIndex:1] floatValue];
 //    float     updateValue  = [[kFirmwareVersion substringFromIndex:1] floatValue];

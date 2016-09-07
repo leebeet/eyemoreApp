@@ -19,6 +19,8 @@
 #import "MeTableViewController.h"
 #import "SocialRequestAssistant.h"
 #import "ActionSheetHelper.h"
+#import "BLImageEditor.h"
+#import "UserSettingConfig.h"
 
 static NSString *kNewsCellID = @"NewsCell";
 static CGFloat   kfixedPartHeight = 123.0;
@@ -326,6 +328,15 @@ static CGFloat   kfixedPartHeight = 123.0;
                                                                     if (error) {
                                                                         [ProgressHUD showError:NSLocalizedString(@"Save Failed", nil)];
                                                                     }
+                                                                    
+                                                                    if ([UserSettingConfig waterMarkIsEnabled]) {
+                                                                        
+                                                                        UIImage *markImage = [BLImageEditor waterMarkImageWithBackgroundImage:image
+                                                                                                                                    waterMark:[UIImage imageNamed:@"waterMark.png"]
+                                                                                                                                 markPosition:PositionRightBottom];
+                                                                        data = [BLImageEditor dataFromImage:markImage metadata:nil mimetype:@"image/jpeg"];
+                                                                    }
+                                                                    
                                                                     [albumManager saveToAlbumWithMetadata:nil
                                                                                                 imageData:data
                                                                                           customAlbumName:@"eyemore Album"

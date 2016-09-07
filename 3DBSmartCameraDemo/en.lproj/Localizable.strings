@@ -98,4 +98,7 @@
 "Wrong number"                    = "Wrong number";
 "reply"                           = "reply";
 "Done"                            = "Done";
+"Detecting Version"               = "Detecting Version...";
+"Detected"                        = "Detected...";
+
 

@@ -140,6 +140,7 @@
 		4C7D0F6C1AF1CF6700A3C9D9 /* TCPSocketManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7D0F6B1AF1CF6700A3C9D9 /* TCPSocketManager.m */; };
 		4C8082E01B42386000BF35A5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C8082DE1B42386000BF35A5 /* Main.storyboard */; };
 		4C8082E21B42811F00BF35A5 /* ImageClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8082E11B42811F00BF35A5 /* ImageClient.m */; };
+		4C8263751D7EA560008779FC /* waterMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C8263741D7EA560008779FC /* waterMark.png */; };
 		4C837E041BF9DAF600C1056F /* playImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C837E031BF9DAF600C1056F /* playImageViewController.m */; };
 		4C85FDAF1C55C6BD008134A4 /* BLFocusingIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C85FDAE1C55C6BD008134A4 /* BLFocusingIndicator.m */; };
 		4C863E691C9FC996005CFFB0 /* MyProfileTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C863E681C9FC996005CFFB0 /* MyProfileTableController.m */; };
@@ -199,7 +200,6 @@
 		4CA50F771B0D8E2600A71AAF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA50F761B0D8E2600A71AAF /* QuartzCore.framework */; };
 		4CA9C03F1BF2E66A0081F5F8 /* TimeoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA9C03E1BF2E66A0081F5F8 /* TimeoutManager.m */; };
 		4CAAF1801C02F049008487C3 /* ImageRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAF17F1C02F049008487C3 /* ImageRecorder.m */; };
-		4CB3A0D31D2B5DA500CDD510 /* 3dbLogo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CB3A03F1D2B5DA500CDD510 /* 3dbLogo.jpg */; };
 		4CB3A0D41D2B5DA500CDD510 /* 11-photos_meitu_9@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB3A0401D2B5DA500CDD510 /* 11-photos_meitu_9@2x.png */; };
 		4CB3A0D51D2B5DA500CDD510 /* 11-photos_meitu_9@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CB3A0411D2B5DA500CDD510 /* 11-photos_meitu_9@3x.png */; };
 		4CB3A0D61D2B5DA500CDD510 /* begin_classic.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4CB3A0421D2B5DA500CDD510 /* begin_classic.wav */; };
@@ -648,6 +648,7 @@
 		4C7D0F6B1AF1CF6700A3C9D9 /* TCPSocketManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCPSocketManager.m; sourceTree = "<group>"; };
 		4C8082DF1B42386000BF35A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4C8082E11B42811F00BF35A5 /* ImageClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageClient.m; sourceTree = "<group>"; };
+		4C8263741D7EA560008779FC /* waterMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waterMark.png; sourceTree = "<group>"; };
 		4C837E021BF9DAF600C1056F /* playImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = playImageViewController.h; sourceTree = "<group>"; };
 		4C837E031BF9DAF600C1056F /* playImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = playImageViewController.m; sourceTree = "<group>"; };
 		4C85FDAD1C55C6BD008134A4 /* BLFocusingIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLFocusingIndicator.h; sourceTree = "<group>"; };
@@ -755,7 +756,6 @@
 		4CA9C03E1BF2E66A0081F5F8 /* TimeoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeoutManager.m; sourceTree = "<group>"; };
 		4CAAF17E1C02F049008487C3 /* ImageRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageRecorder.h; sourceTree = "<group>"; };
 		4CAAF17F1C02F049008487C3 /* ImageRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageRecorder.m; sourceTree = "<group>"; };
-		4CB3A03F1D2B5DA500CDD510 /* 3dbLogo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 3dbLogo.jpg; path = Resources/3dbLogo.jpg; sourceTree = "<group>"; };
 		4CB3A0401D2B5DA500CDD510 /* 11-photos_meitu_9@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "11-photos_meitu_9@2x.png"; path = "Resources/11-photos_meitu_9@2x.png"; sourceTree = "<group>"; };
 		4CB3A0411D2B5DA500CDD510 /* 11-photos_meitu_9@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "11-photos_meitu_9@3x.png"; path = "Resources/11-photos_meitu_9@3x.png"; sourceTree = "<group>"; };
 		4CB3A0421D2B5DA500CDD510 /* begin_classic.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = begin_classic.wav; path = Resources/begin_classic.wav; sourceTree = "<group>"; };
@@ -1055,7 +1055,7 @@
 		4C05B3381ADE47C500B6F36F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4CB3A03F1D2B5DA500CDD510 /* 3dbLogo.jpg */,
+				4C8263741D7EA560008779FC /* waterMark.png */,
 				4CB3A0401D2B5DA500CDD510 /* 11-photos_meitu_9@2x.png */,
 				4CB3A0411D2B5DA500CDD510 /* 11-photos_meitu_9@3x.png */,
 				4CB3A0421D2B5DA500CDD510 /* begin_classic.wav */,
@@ -2841,6 +2841,7 @@
 				4CB3A11A1D2B5DA500CDD510 /* img_connect@3x.png in Resources */,
 				4CB3A0F81D2B5DA500CDD510 /* download@2x.png in Resources */,
 				4CB3A1481D2B5DA500CDD510 /* shootGun.wav in Resources */,
+				4C8263751D7EA560008779FC /* waterMark.png in Resources */,
 				4CB3A0D41D2B5DA500CDD510 /* 11-photos_meitu_9@2x.png in Resources */,
 				4CF4D2181CD9AFCA00087425 /* eyemoreLaunchScreen.storyboard in Resources */,
 				4CB3A0D71D2B5DA500CDD510 /* begin_startwin.wav in Resources */,
@@ -2989,7 +2990,6 @@
 				4CB3A1081D2B5DA500CDD510 /* flit_noncolor@3x.png in Resources */,
 				4CB3A13A1D2B5DA500CDD510 /* rotating@2x.png in Resources */,
 				4CB3A0E61D2B5DA500CDD510 /* connected_check@2x.png in Resources */,
-				4CB3A0D31D2B5DA500CDD510 /* 3dbLogo.jpg in Resources */,
 				4CB3A1461D2B5DA500CDD510 /* shareBlog@2x.png in Resources */,
 				4CB3A1001D2B5DA500CDD510 /* exper_front@2x.png in Resources */,
 				4CB3A1281D2B5DA500CDD510 /* me_active@3x.png in Resources */,

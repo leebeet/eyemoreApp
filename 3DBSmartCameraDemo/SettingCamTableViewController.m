@@ -15,6 +15,7 @@
 #import "ImageClient.h"
 #import "UpdateViewController.h"
 #import "CamParasConverter.h"
+#import "UserSettingConfig.h"
 
 @interface SettingCamTableViewController ()<TCPSocketManagerDelegate, UITableViewDelegate, UIAlertViewDelegate>
 
@@ -41,6 +42,8 @@
 @property (weak, nonatomic) IBOutlet UISlider *EVFBackLightSlider;
 @property (weak, nonatomic) IBOutlet UISlider *cameraVolumeSlider;
 @property (weak, nonatomic) IBOutlet UISlider *recordingVolumeSlider;
+
+@property (weak, nonatomic) IBOutlet UISwitch *waterMarkSwitcher;
 
 @property (strong, nonatomic) NSMutableArray  *exposureArray;
 @property (strong, nonatomic) NSMutableArray  *camModeArray;
@@ -114,6 +117,14 @@
     
     if (self.isPresentingStyle) {
         [self setUpNaviBar];
+    }
+    
+    //set up water mark switch
+    if ([UserSettingConfig waterMarkIsEnabled]) {
+        [self.waterMarkSwitcher setOn:YES animated:YES];
+    }
+    else {
+        [self.waterMarkSwitcher setOn:NO animated:YES];
     }
 }
 
@@ -253,6 +264,15 @@
          [ImageClient sharedImageClient].isShownJpgInfo = YES;
     }
     else [ImageClient sharedImageClient].isShownJpgInfo = NO;
+}
+
+- (IBAction)waterMarkValueChanged:(id)sender {
+    if (self.waterMarkSwitcher.on) {
+        [UserSettingConfig SetWaterMarkEnabled:YES];
+    }
+    else {
+        [UserSettingConfig SetWaterMarkEnabled:NO];
+    }
 }
 
 - (void)updateUIWithLensParam:(LENS_PARAMS)status 
@@ -493,7 +513,10 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section != 3) {
+    if (indexPath.section == 3 || indexPath.section == 4) {
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    }
+    else {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 }
@@ -681,9 +704,6 @@
     if (section == 0) {
         return 4;
     }
-    if (section == 2) {
-        return 5;
-    }
     if (section == 1)
     {
         if (self.isDevelopUse) {
@@ -691,9 +711,16 @@
         }
         else return 0;
     }
+    if (section == 2) {
+        return 5;
+    }
     if (section == 3)
     {
         return 2;
+    }
+    if (section == 4)
+    {
+        return 1;
     }
     return 0;
 }
